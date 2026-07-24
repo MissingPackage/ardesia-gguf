@@ -1,0 +1,32 @@
+# venv (uv)
+.venv/
+# Path B venv (uv) — transformers-5 fork + torch-ggml-ops CUDA build
+.venv-pathb/
+# any conda/mamba prefix must never appear (uv-native only) but guard anyway
+.mamba/
+# upstream clones (woct0rdho) — vendored working copies, not ours to commit
+vendor/
+# python caches
+__pycache__/
+*.py[cod]
+unsloth_compiled_cache/
+
+# secrets — never commit
+.env
+.env.*
+*.key
+*.pem
+
+# heavy artifacts — never in git (weights are downloaded, not committed)
+models/
+artifacts/
+eval_out/
+trainer_output/
+*.gguf
+*.safetensors
+*.bin
+
+# logs and scratch (perf-result JSONs under outputs/ ARE committed; logs are not)
+/tmp/
+*.log
+outputs/*.log

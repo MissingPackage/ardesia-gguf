@@ -1,0 +1,104 @@
+diff --git a/qwen3_moe_fused/quantize_gguf/dequant.py b/qwen3_moe_fused/quantize_gguf/dequant.py
+index f36c2ae..0a82aed 100644
+--- a/qwen3_moe_fused/quantize_gguf/dequant.py
++++ b/qwen3_moe_fused/quantize_gguf/dequant.py
+@@ -6,7 +6,7 @@ from functools import partial
+ import gguf
+ import numpy as np
+ import torch
+-from gguf.quants import IQ1_M, IQ1_S, IQ2_S, IQ2_XXS, IQ3_S, IQ3_XXS
++from gguf.quants import IQ1_M, IQ1_S, IQ2_S, IQ2_XS, IQ2_XXS, IQ3_S, IQ3_XXS
+ 
+ 
+ torch._dynamo.config.recompile_limit = max(torch._dynamo.config.recompile_limit, 64)
+@@ -32,14 +32,26 @@ def dequantize(data, qtype, oshape, device=None, dtype=None):
+ 
+ 
+ def wrap_dequantize_function(func):
+-    @partial(torch.compile, fullgraph=True, mode="max-autotune-no-cudagraphs")
++    # ardesia-gguf run 12: dentro il trainer (checkpointing unsloth) le guardie dynamo falliscono
++    # sistematicamente e il contesto impone recompile_limit=8 → il dequant compilato è inagibile lì
++    # (run 3-12); l'eager monolitico materializza intermedi fp32 da ~768 MiB sui tensori fused e
++    # OOMa (run 7/9). Terza via: eager a CHUNK — intermedi fp32 limitati a ~32 MiB per chunk,
++    # nessun dynamo coinvolto. Più lento del kernel fuso: throughput da misurare, upstream TODO.
++    CHUNK_BLOCKS = 32768
++
+     @torch.no_grad()
+     def _func(data, block_size, type_size, dtype):
+         rows = data.view(-1, data.shape[-1]).view(torch.uint8)
+         n_blocks = rows.numel() // type_size
+         blocks = rows.view(n_blocks, type_size)
+-        # Always use float32 for intermediate results
+-        return func(blocks, block_size, type_size, torch.float32).to(dtype)
++        if n_blocks <= CHUNK_BLOCKS:
++            # Always use float32 for intermediate results
++            return func(blocks, block_size, type_size, torch.float32).to(dtype)
++        out = torch.empty(n_blocks, block_size, dtype=dtype, device=blocks.device)
++        for i in range(0, n_blocks, CHUNK_BLOCKS):
++            chunk = blocks[i : i + CHUNK_BLOCKS]
++            out[i : i + chunk.shape[0]] = func(chunk, block_size, type_size, torch.float32).to(dtype)
++        return out
+ 
+     return _func
+ 
+@@ -295,6 +307,9 @@ IQ2_XXS.init_grid()
+ GRID_IQ2_XXS = torch.from_numpy(IQ2_XXS.grid).squeeze()
+ KSIGNS_IQ2_XXS = torch.from_numpy(np.frombuffer(IQ2_XXS.ksigns, dtype=np.uint8).copy())
+ 
++IQ2_XS.init_grid()
++GRID_IQ2_XS = torch.from_numpy(IQ2_XS.grid).squeeze()
++
+ IQ1_M.init_grid()  # Uses same grid as IQ1_S internally
+ 
+ IQ1_S.init_grid()
+@@ -487,6 +502,42 @@ def dequantize_blocks_IQ2_XXS(blocks, block_size, type_size, dtype=None):
+     return res.view(n_blocks, 256)
+ 
+ 
++# ardesia-gguf: IQ2_XS mancava upstream (KeyError con le UD-quant, es. UD-IQ2_M dove copre 3.8 GiB
++# su 70 tensori). Port in torch della reference numpy gguf.quants.IQ2_XS, stile IQ2_XXS qui sopra.
++# Layout blocco (256 elementi, 74 byte): d fp16 | 32×uint16 qs (9 bit indice griglia 512×8,
++# 7 bit indice ksigns) | 8 byte di scale a nibble (16 scale, una ogni 2 qs).
++def dequantize_blocks_IQ2_XS(blocks, block_size, type_size, dtype=None):
++    n_blocks = blocks.shape[0]
++
++    d, qs, scales = split_block_dims(blocks, 2, 2 * 256 // 8)
++    d = d.view(torch.float16).to(dtype)
++
++    qs = qs.contiguous().view(n_blocks, 32, 2).to(torch.int32)
++    qs = qs[:, :, 0] | (qs[:, :, 1] << 8)  # (n_blocks, 32) uint16 little-endian
++
++    # db
++    shifts_sc = torch.tensor([0, 4], device=d.device, dtype=torch.uint8).view(1, 1, 2)
++    sc = (scales.unsqueeze(-1) >> shifts_sc) & 0x0F  # (n_blocks, 8, 2)
++    db = d.view(n_blocks, 1) * (0.5 + sc.view(n_blocks, 16).to(dtype)) * 0.25
++    db = db.view(n_blocks, 16, 1, 1)
++
++    # signs (7 bit alti, tabella ksigns condivisa con IQ2_XXS)
++    sign_bytes = KSIGNS_IQ2_XXS.to(d.device)[(qs >> 9).to(torch.long)]  # (n_blocks, 32)
++    shifts_bits = torch.arange(8, device=d.device, dtype=torch.uint8).view(1, 1, 8)
++    signs = (sign_bytes.unsqueeze(-1) >> shifts_bits) & 1
++    signs = torch.where(
++        signs == 0, torch.tensor(1.0, dtype=dtype, device=d.device), torch.tensor(-1.0, dtype=dtype, device=d.device)
++    )
++    signs = signs.view(n_blocks, 16, 2, 8)
++
++    # grid (9 bit bassi)
++    grid_val = GRID_IQ2_XS.to(dtype=dtype, device=d.device)[(qs & 511).to(torch.long)]  # (n_blocks, 32, 8)
++    grid_val = grid_val.view(n_blocks, 16, 2, 8)
++
++    res = db * grid_val * signs
++    return res.view(n_blocks, 256)
++
++
+ def dequantize_blocks_IQ1_M(blocks, block_size, type_size, dtype=None):
+     n_blocks = blocks.shape[0]
+ 
+@@ -599,6 +650,7 @@ dequantize_functions = {
+     gguf.GGMLQuantizationType.IQ3_S: dequantize_blocks_IQ3_S,
+     gguf.GGMLQuantizationType.IQ3_XXS: dequantize_blocks_IQ3_XXS,
+     gguf.GGMLQuantizationType.IQ2_S: dequantize_blocks_IQ2_S,
++    gguf.GGMLQuantizationType.IQ2_XS: dequantize_blocks_IQ2_XS,
+     gguf.GGMLQuantizationType.IQ2_XXS: dequantize_blocks_IQ2_XXS,
+     gguf.GGMLQuantizationType.IQ1_M: dequantize_blocks_IQ1_M,
+     gguf.GGMLQuantizationType.IQ1_S: dequantize_blocks_IQ1_S,

@@ -1,0 +1,16 @@
+[project]
+name = "ardesia-gguf"
+version = "0.1.0"
+description = "LoRA-over-GGUF training stack for the Ardesia ~35B MoE tier jump (sibling of ardesia-unsloth)"
+requires-python = ">=3.12"
+# Deps left EMPTY on purpose: the toolchain is decided by spike-zero (CUDA support of
+# torch-ggml-ops vs the moe-fused/Triton path). See docs/00-intent-and-open-questions.md.
+# Candidate deps to pin AFTER the spike:
+#   torch>=2.10            (CUDA build, matches torch-ggml-ops requirement)
+#   transformers           (5.x fork for the recipe, OR 4.x for moe-fused)
+#   peft, trl, accelerate
+#   git deps: woct0rdho/torch-ggml-ops, woct0rdho/transformers-qwen3-moe-fused
+dependencies = []
+
+[tool.uv]
+# uv-managed venv, kept fully separate from the unsloth studio venv.
