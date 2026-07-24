@@ -1,0 +1,81 @@
+# 03 — Da comunicare a woct0rdho (bozze upstream, 2026-07-24)
+
+Materiale pronto per `transformers-qwen3-moe-fused` (Apache-2.0). Tre pezzi indipendenti:
+una PR pronta, una proposta, un issue riproducibile. Bozze in inglese, copy-paste-abili.
+Diff locali in `vendor/transformers-qwen3-moe-fused` (vs upstream @ a087104).
+
+---
+
+## 1. PR: Add IQ2_XS support to the GGUF dequant map
+
+**Titolo:** `Add IQ2_XS dequantization (used heavily by Unsloth UD 2-bit quants)`
+
+> `quantize_gguf/dequant.py` covers IQ2_S and IQ2_XXS but not IQ2_XS, so loading e.g.
+> `unsloth/Qwen3-30B-A3B-Instruct-2507-GGUF:UD-IQ2_M` fails with
+> `KeyError: <GGMLQuantizationType.IQ2_XS: 17>`. In that file IQ2_XS is actually the dominant
+> type: 70 tensors / 3.79 GiB.
+>
+> This PR ports the gguf-py numpy reference (`gguf.quants.IQ2_XS.dequantize_blocks`) to torch,
+> following the style of the existing IQ2_XXS implementation (shared ksigns table, low-9-bits
+> grid index / high-7-bits sign index, nibble scales). Verified bit-exact against the numpy
+> reference on CPU and CUDA (`max |diff| = 0.0`, random blocks incl. >32768-block tensors).
+
+Contenuto: import `IQ2_XS`, `GRID_IQ2_XS` init, `dequantize_blocks_IQ2_XS`, voce nella mappa.
+(Nel nostro vendored è già tutto in `quantize_gguf/dequant.py` — estrarre il diff pulito senza
+la parte chunked se si vogliono PR separate.)
+
+---
+
+## 2. Proposta: chunked fallback in `wrap_dequantize_function`
+
+**Titolo:** `Chunk the eager dequant path to cap fp32 intermediates (OOM on 16 GB otherwise)`
+
+> When the compiled dequant path is unavailable (see issue below) the monolithic eager dequant
+> materializes fp32 intermediates of ~768 MiB per fused expert tensor
+> (`db * grid_val * signs` over 128-expert fused projections), which OOMs a 16 GB card that
+> already holds the quantized weights. Chunking the block dimension (we used 32768 blocks
+> ≈ 32 MiB fp32 per intermediate) makes the eager path viable at negligible cost, and is
+> bit-identical (verified vs the numpy reference across the chunk boundary).
+>
+> Suggested as a fallback (or default) for the non-compiled path.
+
+---
+
+## 3. Issue: compiled dequant hits `FailOnRecompileLimitHit` with limit stuck at 8 under Unsloth SFTTrainer
+
+**Titolo:** `GGUF LoRA training: dequant recompile_limit reads 8 inside the Unsloth trainer context regardless of torch._dynamo.config settings`
+
+> **Setup:** torch 2.13.0+cu130, transformers 4.57.6, triton 3.7.1, current Unsloth
+> (2026-07-24), RTX 4090 Laptop 16 GB, `example_train_30b_a3b_gguf.py` adapted (batch 1,
+> ctx 2048, rank 4, `use_gradient_checkpointing="unsloth"`). Note: on this stack
+> `FastModel.get_peft_model` raises "Unsuccessfully patched inner_training_loop" (your
+> documented workaround applied), so Unsloth runs its fallback path.
+>
+> **Symptom:** on the first training step every call into the compiled `_func` of
+> `wrap_dequantize_function` recompiles (guards never hit), and after 8 recompiles dynamo hard
+> fails (`fullgraph=True`) with *"exceeding the recompile_limit cache size limit (currently set
+> to 8)"* — even though `torch._dynamo.config.recompile_limit` is 1024 in the main process,
+> verified by printing it immediately before `trainer.train()`.
+>
+> **Tried, all ineffective:** raising `recompile_limit`/`accumulated_recompile_limit` (at
+> interpreter start / after imports / right before train), `dynamic=True` on the dequant
+> compile, pre-warming every (qtype × 2 sizes) variant before entering the trainer (warms fine,
+> in-trainer calls still miss), `torch_compile=False` in `SFTConfig`, clearing Triton/inductor
+> caches. In isolation (same venv, no trainer) the compiled dequant handles 70 distinct shapes
+> with zero issues.
+>
+> **Reading:** something in the training context (Unsloth gradient checkpointing / a
+> `config.patch` around the step?) both restores the default recompile limit and changes the
+> tracing context so cached entries never match. Not root-caused. Happy to run diagnostics
+> (`TORCH_LOGS=recompiles` traces) if useful.
+>
+> **Workaround we shipped:** dropped `torch.compile` from the dequant wrapper and chunked the
+> eager path (see proposal above). Costs throughput (~62 s/step on our smoke vs your 6.5 s/it
+> on Strix Halo with the fused path) but trains within 16 GB.
+
+---
+
+## Contesto nostro (non per l'upstream)
+- Motivazione: smoke spike-1 (vedi `docs/02`). I tre pezzi valgono anche come biglietto da
+  visita prima del port CUDA di `torch-ggml-ops` (Path B), dove il rapporto con l'autore conta.
+- Prima di aprire PR/issue: rebase su upstream HEAD e ri-test (il clone è @ a087104 di oggi).

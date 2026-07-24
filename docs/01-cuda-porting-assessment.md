@@ -1,5 +1,15 @@
 # 01 — Portabilità su CUDA: assessment (evidence-based)
 
+> **⚠ ERRATA (2026-07-24, spike-1):** la conclusione "la GGUF `mudler/Qwen3.6-35B-A3B-APEX` è
+> caricabile sul Path A" è **sbagliata**. Valutava solo la copertura dei *quant-type*, non
+> l'**architettura**: Qwen3.6-35B-A3B è `qwen3_5_moe` — ibrido **GatedDeltaNet** (3 layer
+> linear-attention ogni full-attention, `full_attention_interval: 4`) + VLM wrapper + shared expert
+> + MTP (config.json di `Qwen/Qwen3.6-35B-A3B`). `Qwen3MoeFusedForCausalLM` modella solo il
+> `qwen3_moe` full-attention puro (grep: zero supporto qwen3_5/GDN nel repo; transformers 4.57
+> non registra `qwen3_5_moe`). Il post "35B in 16GB" era sullo stack della *ricetta transformers5*
+> (= Path B), non su moe-fused. **Conseguenza: il 35B su Path A non è raggiungibile; per il 35B
+> serve il Path B. Path A resta valido per i modelli `qwen3_moe` (es. Qwen3-30B-A3B).**
+
 Fatto leggendo le sorgenti dei tre repo woct0rdho (clone in `/tmp/ggml-port`, 2026-07-24). Domanda:
 *"LoRA over GGUF si può portare/usare sul nostro 4090 CUDA?"* — **Sì**, e ci sono **due vie indipendenti**,
 una delle quali **non richiede scrivere kernel**.

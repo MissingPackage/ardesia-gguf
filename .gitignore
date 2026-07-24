@@ -1,5 +1,8 @@
 # venv (uv) — separate from ardesia-unsloth's
 .venv/
+# upstream clones (woct0rdho) — vendored working copies, not ours to commit
+vendor/
+outputs/
 __pycache__/
 *.py[cod]
 
@@ -17,3 +20,5 @@ eval_out/
 # scratch
 /tmp/
 *.log
+# generata a runtime da unsloth nella cwd
+unsloth_compiled_cache/

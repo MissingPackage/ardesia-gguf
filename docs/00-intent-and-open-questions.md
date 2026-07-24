@@ -46,6 +46,34 @@ Sotto-domande da chiudere (una osservazione alla volta):
 4. Copiare da ardesia-unsloth i dati riusabili (persona-v7 / calibration-v1 / persona.py) — **copia**.
 5. Train persona → serve **unmerged** → eval su `calibration-v1` (assert ≥85% / trap ≥70%) comparabile a round-9.
 
+## Docket (decisioni PI-gated)
+
+- ✅ **RISOLTO da Cristiano (2026-07-24, in sessione): si va di Path B diretto.** Motivazione:
+  round-10 su base ~2.7 bpw (unico quant 30B che sta in VRAM) non vale — la quantizzazione
+  aggressiva sarebbe variabile confusa sull'esperimento-fabbricazione. Round-10 sul 30B scartato;
+  il PASS dello smoke resta come validazione dello stack e baseline di riferimento.
+
+
+- **[2026-07-24] Target del tier jump, dopo l'errata di docs/01:** il 35B (qwen3_5_moe, ibrido GDN)
+  non è caricabile sul Path A; è raggiungibile solo via Path B (port CUDA di torch-ggml-ops + fork
+  transformers 5 dell'autore + sostituzione dei pezzi AMD-only tipo AITER — giorni-settimane).
+  Opzioni: **(1)** testare l'ipotesi-scala sul Qwen3-30B-A3B-Instruct-2507 (gen Qwen3, supporto
+  Path A oggi); **(2)** investire nel port Path B per il vero Qwen3.6-35B; **(3)** 30B subito come
+  round-10 E port in parallelo. Lo smoke 30B in corso valida lo stack in ogni ramo e non ipoteca
+  la scelta.
+  **Dato nuovo (smoke run-2):** il tetto VRAM *effettivo* sul 4090 Laptop con desktop KDE è
+  **~14.7 GiB** (15.57 usabili − ~0.9 di compositor/app). L'IQ3_XXS 30B (12.02 GiB di pesi) è andato
+  OOM a 14.0 GiB di processo sul Path A. Implicazione per l'opzione (2): l'APEX-I-Mini 35B è
+  13.33 GiB di soli pesi — su Path B l'overhead MMQ è più basso (niente bf16 materializzato) ma
+  non misurato su una 16 GB discreta; mudler non pubblica quant 35B più piccoli. Il fit del 35B
+  resta un rischio anche a port fatto.
+  **Esito smoke (run-13, PASS):** loop 8/8 step su UD-IQ2_M, picco **14.16 GiB** (< 16), loss sane.
+  Costo: dequant eager-chunked (dynamo inagibile nel contesto trainer, limite-8 non root-caused)
+  → **~62 s/step** allo smoke (primo-step compile incluso). Vs 6.5 s/it del Path B su Strix Halo.
+  **Confound di qualità per l'opzione (1):** l'unico quant 30B che ci sta è IQ2_M (~2.7 bpw); il
+  riferimento dell'autore (IQ3_XXS ~3.1 bpw) NON ci sta sul nostro 16 GB con desktop attivo.
+  Un esperimento sulla fabbricazione con base ~2.7 bpw ha la quantizzazione come variabile confusa.
+
 ## Riferimenti
 - Post: r/LocalLLaMA "LoRA over GGUF: Train Qwen3.6-35B-A3B in 16G VRAM"
 - https://github.com/woct0rdho/transformers5-qwen3.5-recipe
