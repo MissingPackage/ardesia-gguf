@@ -1,0 +1,19 @@
+# venv (uv) — separate from ardesia-unsloth's
+.venv/
+__pycache__/
+*.py[cod]
+
+# secrets — never commit (see ardesia-unsloth CLAUDE.md)
+.env
+
+# heavy artifacts — never in git
+models/
+artifacts/
+eval_out/
+*.gguf
+*.safetensors
+*.bin
+
+# scratch
+/tmp/
+*.log
