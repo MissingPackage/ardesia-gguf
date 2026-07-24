@@ -60,8 +60,11 @@ variabile confusa; docket in `docs/00`). **Spike-2, prima sessione fresca:**
 - Throughput reale: 62 s/step è smoke-con-compile; misurare a regime e valutare se il dequant
   compilato è recuperabile (root-cause del limite-8: candidato = checkpointing/patch unsloth;
   da isolare con TORCH_LOGS=recompiles) o se si upstream-a il chunked.
-- **Upstream-abili a woct0rdho** (Apache-2.0, "buon risultato da condividere"): port IQ2_XS
-  (verificato) + chunked eager wrap + issue sul recompile-limit in contesto unsloth.
+- **Upstream: port IQ2_XS MERGIATO** (PR #23 → moe-fused a4f3c52, 2026-07-24). Conseguenza:
+  un re-clone di vendor da master GIÀ include IQ2_XS; della nostra patch resta "solo nostro"
+  il wrap chunked. L'autore invita su llama.cpp#25681 (gguf.torch_quants, sua PR: IQ2_XS già
+  dentro) — eventuale contributo lì = commento di validazione (⚠ AI-disclosure obbligatoria su
+  llama.cpp). Issue recompile-limit su moe-fused ancora da aprire (docs/03 §3).
 - Working tree NON committato (scaffold + docs + scripts + .gitignore) — decidere cosa fissare.
 - Prossimo passo tecnico se opzione (1): copiare dati da ardesia-unsloth (persona-v7,
   calibration-v1, persona.py — COPIA, mai symlink) e preparare il train vero.

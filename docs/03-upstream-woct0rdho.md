@@ -1,8 +1,17 @@
-# 03 — Da comunicare a woct0rdho (bozze upstream, 2026-07-24)
+# 03 — Upstream woct0rdho: stato (agg. 2026-07-24 sera)
 
-Materiale pronto per `transformers-qwen3-moe-fused` (Apache-2.0). Tre pezzi indipendenti:
-una PR pronta, una proposta, un issue riproducibile. Bozze in inglese, copy-paste-abili.
-Diff locali in `vendor/transformers-qwen3-moe-fused` (vs upstream @ a087104).
+- ✅ **§1 IQ2_XS: FATTO E MERGIATO** — PR #23 su `transformers-qwen3-moe-fused`, mergiata
+  dall'autore in minuti (commit a4f3c52). Risposta sua: *"You can add everything in
+  ggml-org/llama.cpp#25681 if you want."*
+- **#25681** = la SUA PR aperta su llama.cpp: `gguf.torch_quants` (API dequant torch autorevole
+  in gguf-py, **IQ2_XS già incluso**, test parametrici su tutti i tipi anche sotto compile).
+  → Niente codice nostro da portare lì; contributo utile = commento di validazione downstream
+  (bit-exact CUDA + training reale su GGUF IQ2_XS-dominante in 16 GB) + dato memoria
+  (768 MiB eager monolitico vs ~32 MiB chunked) a supporto del suo "wrap in torch.compile".
+  ⚠ **llama.cpp richiede AI-usage disclosure e restringe contenuti AI-generated**
+  (AGENTS.md/CONTRIBUTING.md) — qualunque submission là va dichiarata onestamente.
+- **§2 (chunked)**: non più PR a moe-fused — semmai commento su #25681 (sopra).
+- **§3 (issue recompile-limit)**: ancora valido su moe-fused, invariato sotto.
 
 ---
 
