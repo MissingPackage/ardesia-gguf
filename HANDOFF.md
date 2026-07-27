@@ -1,4 +1,4 @@
-# HANDOFF — Ardesia-GGUF (aggiornato 2026-07-24, sessione 4 — Path B su CUDA + tensor core, PR APERTA)
+# HANDOFF — Ardesia-GGUF (aggiornato 2026-07-28, sessione 5 — main pubblicato, PR APERTA)
 
 Entry point per una sessione fresca. Leggi: questo file → `README.md` → `docs/00` (docket incluso) →
 `docs/01` (**con 2 errata in testa**) → `docs/04` (log spike-2, il port) → `CLAUDE.md`.
@@ -120,11 +120,15 @@ stanno in `NVCC_APPEND_FLAGS` via `pathb-env.sh`). Poi `source scripts/pathb-env
 (`c6f4467`, 10 file, +660/−322). Testo inviato = `patches/torch-ggml-ops-pr-body.md`. Stato
 pre-riscrittura recuperabile in locale su `backup-pre-restructure` (`8b5dc0b`).
 
-**Working tree main repo NON committato** (docs/04, docs/port-microtests, scripts/pathb-*, patches/*,
-HANDOFF, docs/01, .gitignore). Sono su disco (una sessione fresca li legge); committarli è a
-discrezione di Cristiano (regola: commit solo su richiesta).
+**Main repo PUBBLICATO** (2026-07-28): `origin/main` punta a `be33842`, che riconcilia la storia
+pubblica (`c1453ad Initial public release`) con i 4 commit locali senza alterare il tree corrente.
+Backup locale pre-merge: `backup/pre-push-fix-20260728-013251` → `5110f9a`.
 
-## 2. Stato (sessione 2, 2026-07-24)
+## 2. Stato (sessione 5, 2026-07-28)
+- **Pubblicazione repo risolta:** `main` locale e remoto erano su **storie non correlate**
+  (nessun `merge-base`; remoto = `c1453ad Initial public release`). Fix applicato: merge
+  `--allow-unrelated-histories` con strategia `ours` per preservare il contenuto locale, poi push
+  riuscito. Stato verificato: `git status` pulito, `origin/main` = `be33842`.
 - **Smoke PASS (run 13/13):** Qwen3-30B-A3B UD-IQ2_M, LoRA r4, batch 1 / ctx 2048, 8/8 step,
   loss 0.55-0.59, grad_norm ~0.21, **picco VRAM 14.16 GiB alloc / 14.31 reserved** (< 16),
   train_runtime 495 s → **~62 s/step allo smoke** (incluso compile primo step). Entry point:
@@ -168,8 +172,9 @@ discrezione di Cristiano (regola: commit solo su richiesta).
   il wrap chunked. L'autore invita su llama.cpp#25681 (gguf.torch_quants, sua PR: IQ2_XS già
   dentro) — eventuale contributo lì = commento di validazione (⚠ AI-disclosure obbligatoria su
   llama.cpp). Issue recompile-limit su moe-fused ancora da aprire (docs/03 §3).
-- Working tree main repo NON committato (scaffold + docs + scripts + .gitignore) — decidere cosa
-  fissare (regola: commit solo su richiesta).
+- Nota di storia: `main` remoto e locale sono stati **riconciliati** con il merge commit `be33842`
+  (strategia `ours`, storie non correlate). Se serve tornare allo stato pre-fix: branch
+  `backup/pre-push-fix-20260728-013251`.
 - **Prossimo passo tecnico (M6, ora sbloccato):** wire `transformers5-qwen3.5-recipe` +
   `transformers-gguf`, caricare il 35B APEX-I-Mini, **misurare VRAM forward-only** (⚠ fit: 13.33 GiB
   pesi vs ~15 effettivi). Solo dopo: copiare i dati da ardesia-unsloth (persona-v7, calibration-v1,
