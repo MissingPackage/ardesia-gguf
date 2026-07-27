@@ -10,6 +10,16 @@
 > (= Path B), non su moe-fused. **Conseguenza: il 35B su Path A non è raggiungibile; per il 35B
 > serve il Path B. Path A resta valido per i modelli `qwen3_moe` (es. Qwen3-30B-A3B).**
 
+> **⚠ ERRATA 2 (2026-07-24, spike-2, dal mapping sorgenti):** la caratterizzazione del port Path B
+> come "**CK Tile → CuTe**" + "sostituire **AITER / GEMM rocBLAS**" è **imprecisa**. Il namespace
+> `ck` in `torch-ggml-ops` è **locale** (`torch_ggml_ops::ck` = *custom kernels*), **non** AMD
+> Composable Kernel; e nel tree **non esiste alcuna dipendenza** da AITER, rocBLAS/hipBLAS o CK
+> library (grep: zero occorrenze). Il forward `mma.cuh`/`mmq-*-targets.cuh` è **dual-path** llama.cpp
+> (il ramo NVIDIA `TURING_MMA_AVAILABLE` è già presente, solo dormiente). Il **solo** vero port di
+> kernel è `ck/bf16_wmma.cuh` (42 righe): l'intrinsic gfx11 `__builtin_amdgcn_wmma_f32_16x16x16_bf16`
+> + il layout per-lane del C-fragment. Tutti i kernel backward toccano l'MMA **solo** via quel
+> header. Il resto è de-HIP meccanico (shim tipi/handle). Vedi memoria `pathb-build-toolchain`.
+
 Fatto leggendo le sorgenti dei tre repo woct0rdho (clone in `/tmp/ggml-port`, 2026-07-24). Domanda:
 *"LoRA over GGUF si può portare/usare sul nostro 4090 CUDA?"* — **Sì**, e ci sono **due vie indipendenti**,
 una delle quali **non richiede scrivere kernel**.

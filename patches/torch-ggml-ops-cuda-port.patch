@@ -1,0 +1,1433 @@
+diff --git a/csrc/ck/bf16_wmma.cuh b/csrc/ck/bf16_wmma.cuh
+index 27e1688..d93d7de 100644
+--- a/csrc/ck/bf16_wmma.cuh
++++ b/csrc/ck/bf16_wmma.cuh
+@@ -1,42 +1,255 @@
+ #pragma once
+ 
++#if defined(__HIP__)
+ #include <hip/hip_bf16.h>
++#else
++#include "port_cuda.cuh"
++#include "vendor/llama_cpp/mma.cuh"
++#include <cstdint>
++#endif
+ 
+ namespace torch_ggml_ops::ck {
+ 
+-using bf16x16_t = __attribute__((ext_vector_type(16))) __bf16;
+-using floatx8_t = __attribute__((ext_vector_type(8))) float;
++#if !defined(__HIP__)
++// llama.cpp's tested tensor-core tile abstraction (mma.sync.m16n8k16), pulled in
++// so the CUDA side of this seam can spell tile<>/mma() unqualified.
++using namespace ggml_cuda_mma;
++#endif
++
++// ----------------------------------------------------------------------------
++// 16x16x16 bf16 matrix-core seam.
++//
++// Every ck/ backward kernel reaches the matrix cores only through this header,
++// so the two vendors' per-lane fragment layouts stay confined here and the
++// kernel bodies remain single-source. The operation is
++//
++//     C[m][n] += sum_{k < 16} A[m][k] * B[n][k]
++//
++// with A and B both supplied row-major as [row][k] -- i.e. the N-side operand is
++// transposed, which is what grad_input = grad_output @ W wants for a W stored
++// [out_features][in_features].
++//
++//   bf16_fragment_a          one 16(M) x 16(K) operand tile
++//   bf16_fragment_b          one 16(N) x 16(K) operand tile
++//   f32_accumulator          one 16(M) x 16(N) fp32 tile
++//   load_a_fragment<>()      fill A from a row-major matrix (global memory)
++//   load_b_fragment()        fill B from a row-major shared-memory tile
++//   wmma_f32_16x16x16_bf16() the multiply-accumulate itself
++//   acc_m() / acc_n()        where lane `lane`'s accumulator element lands in C
++//
++// A lane holds ACCUMULATOR_ELEMENTS values of C. Kernels must not index the
++// fragments or the accumulator by hand: the layouts have nothing in common.
++//
++// AMD (gfx11, wave32): one __builtin_amdgcn_wmma_f32_16x16x16_bf16_w32. A lane
++// owns row (lane & 15) of BOTH operands and holds all 16 K values of it; its C
++// values are C[2*element + lane/16][lane & 15].
++//
++// NVIDIA (Ampere and later): two mma.sync.aligned.m16n8k16.f32.bf16.bf16.f32,
++// one per 8-wide half of N. A lane holds a quarter of each operand row-block.
++// Note that the backward kernels launch a FLAT (BACKWARD_THREADS, 1) block, so
++// threadIdx.x is NOT the warp lane -- everything here takes `lane` explicitly
++// and never calls tile<>::get_i/get_j (which read threadIdx.x directly).
++// ----------------------------------------------------------------------------
++
++static constexpr int ACCUMULATOR_ELEMENTS = 8;
++
++#if defined(__HIP__)
+ 
+ struct bf16_fragment {
+     __hip_bfloat162 values[8];
+ };
+ 
++using bf16_fragment_a = bf16_fragment;
++using bf16_fragment_b = bf16_fragment;
++
+ struct f32_accumulator {
+-    float values[8] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
++    float values[ACCUMULATOR_ELEMENTS] = {
++        0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
++
++    __device__ __forceinline__ float & value(int element) {
++        return values[element];
++    }
++    __device__ __forceinline__ float value(int element) const {
++        return values[element];
++    }
+ };
+ 
+ static __device__ __forceinline__ __hip_bfloat16 * fragment_data(bf16_fragment & fragment) {
+     return reinterpret_cast<__hip_bfloat16 *>(fragment.values);
+ }
+ 
++// The operand row this lane owns, and the C position of its element-th value.
++static __device__ __forceinline__ int fragment_row(int lane) {
++    return lane & 15;
++}
++
++static __device__ __forceinline__ int acc_m(int lane, int element) {
++    return 2 * element + (lane >> 4);
++}
++
++static __device__ __forceinline__ int acc_n(int lane, int element) {
++    (void) element;
++    return lane & 15;
++}
++
++using bf16x16_t = __attribute__((ext_vector_type(16))) __bf16;
++using floatx8_t = __attribute__((ext_vector_type(8))) float;
++
+ static __device__ __forceinline__ void wmma_f32_16x16x16_bf16(
+         f32_accumulator & accumulator,
+-        const bf16_fragment & a,
+-        const bf16_fragment & b) {
++        const bf16_fragment_a & a,
++        const bf16_fragment_b & b) {
+     auto & acc = reinterpret_cast<floatx8_t &>(accumulator.values[0]);
+     const auto & a_vec = reinterpret_cast<const bf16x16_t &>(a.values[0]);
+     const auto & b_vec = reinterpret_cast<const bf16x16_t &>(b.values[0]);
+     acc = __builtin_amdgcn_wmma_f32_16x16x16_bf16_w32(a_vec, b_vec, acc);
+ }
+ 
+-// gfx11 WMMA returns eight FP32 C values per lane. For a logical row-major
+-// 16x16 C tile, lane L owns row L%16 and columns 2*i + L/16, i in [0, 8).
+-static __device__ __forceinline__ int c_row(int lane) {
+-    return lane & 15;
++// Fill the A operand from a row-major [*][source_stride] bf16 matrix, taking the
++// 16x16 tile at (m_base, k_base). CHECK_M / CHECK_K zero-fill out-of-range rows
++// / contraction columns; pass false where the caller knows the tile is full so
++// no guard is emitted at all.
++template <bool CHECK_M, bool CHECK_K>
++static __device__ __forceinline__ void load_a_fragment(
++        bf16_fragment_a & fragment,
++        const __hip_bfloat16 * __restrict__ source,
++        int64_t source_stride,
++        int m_base,
++        int k_base,
++        int m_limit,
++        int k_limit,
++        int lane) {
++    __hip_bfloat16 * a = fragment_data(fragment);
++    const int m = m_base + fragment_row(lane);
++    const bool row_in_range = !CHECK_M || m < m_limit;
++    const int64_t row_offset = static_cast<int64_t>(m) * source_stride;
++#pragma unroll
++    for (int k = 0; k < 16; ++k) {
++        const bool in_range =
++            row_in_range && (!CHECK_K || k_base + k < k_limit);
++        a[k] = in_range
++            ? source[row_offset + k_base + k]
++            : __float2bfloat16(0.0f);
++    }
+ }
+ 
+-static __device__ __forceinline__ int c_column(int lane, int element) {
+-    return 2 * element + (lane >> 4);
++// Fill the B operand from a row-major [*][source_stride] shared-memory tile,
++// taking the 16(N) x 16(K) tile at (n_base, k_base). Callers zero-fill the
++// shared tile for out-of-range columns, so no guard is needed here.
++static __device__ __forceinline__ void load_b_fragment(
++        bf16_fragment_b & fragment,
++        const __hip_bfloat16 * source,
++        int source_stride,
++        int n_base,
++        int k_base,
++        int lane) {
++    __hip_bfloat16 * b = fragment_data(fragment);
++    const int row_offset = (n_base + fragment_row(lane)) * source_stride;
++#pragma unroll
++    for (int k = 0; k < 16; ++k) {
++        b[k] = source[row_offset + k_base + k];
++    }
+ }
+ 
++#else // CUDA
++
++// A: 16(M) x 8(K as bf16 pairs); B: 8(N) x 8(K as bf16 pairs), two per 16-wide N.
++using bf16_fragment_a = tile<16, 8, nv_bfloat162>;
++
++struct bf16_fragment_b {
++    tile<8, 8, nv_bfloat162> halves[2]; // N in [0,8) and [8,16)
++};
++
++struct f32_accumulator {
++    tile<16, 8, float> halves[2]; // N in [0,8) and [8,16)
++
++    __device__ __forceinline__ float & value(int element) {
++        return halves[element >> 2].x[element & 3];
++    }
++    __device__ __forceinline__ float value(int element) const {
++        return halves[element >> 2].x[element & 3];
++    }
++};
++
++static_assert(bf16_fragment_a::ne == 4, "unexpected m16n8k16 A fragment size");
++static_assert(tile<8, 8, nv_bfloat162>::ne == 2, "unexpected m16n8k16 B fragment size");
++static_assert(tile<16, 8, float>::ne == 4, "unexpected m16n8k16 C fragment size");
++static_assert(2 * tile<16, 8, float>::ne == ACCUMULATOR_ELEMENTS, "");
++
++// Per-lane m16n8k16 fragment layouts, spelled out rather than taken from
++// tile<>::get_i/get_j because those read threadIdx.x, which is not the warp lane
++// in the backward kernels' flat block. Validated standalone in
++// docs/port-microtests/03_multiwarp_lane_formulas.cu.
++//   A tile<16,8,bf162>: i = (l % 2) * 8 + lane / 4 , pair = (l / 2) * 4 + lane % 4
++//   B tile<8,8,bf162> : i = lane / 4              , pair =  l      * 4 + lane % 4
++//   C tile<16,8,float>: i = (l / 2) * 8 + lane / 4 , j    = (lane % 4) * 2 + l % 2
++static __device__ __forceinline__ int acc_m(int lane, int element) {
++    const int l = element & 3;
++    return (l >> 1) * 8 + (lane >> 2);
++}
++
++static __device__ __forceinline__ int acc_n(int lane, int element) {
++    const int l = element & 3;
++    return (element >> 2) * 8 + (lane & 3) * 2 + (l & 1);
++}
++
++static __device__ __forceinline__ void wmma_f32_16x16x16_bf16(
++        f32_accumulator & accumulator,
++        const bf16_fragment_a & a,
++        const bf16_fragment_b & b) {
++    mma(accumulator.halves[0], a, b.halves[0]);
++    mma(accumulator.halves[1], a, b.halves[1]);
++}
++
++template <bool CHECK_M, bool CHECK_K>
++static __device__ __forceinline__ void load_a_fragment(
++        bf16_fragment_a & fragment,
++        const __nv_bfloat16 * __restrict__ source,
++        int64_t source_stride,
++        int m_base,
++        int k_base,
++        int m_limit,
++        int k_limit,
++        int lane) {
++#pragma unroll
++    for (int l = 0; l < bf16_fragment_a::ne; ++l) {
++        const int m = m_base + (l & 1) * 8 + (lane >> 2);
++        const int k = k_base + 2 * ((l >> 1) * 4 + (lane & 3));
++        __nv_bfloat16 low = __float2bfloat16(0.0f);
++        __nv_bfloat16 high = __float2bfloat16(0.0f);
++        if (!CHECK_M || m < m_limit) {
++            const int64_t row_offset = static_cast<int64_t>(m) * source_stride;
++            if (!CHECK_K || k < k_limit) {
++                low = source[row_offset + k];
++            }
++            if (!CHECK_K || k + 1 < k_limit) {
++                high = source[row_offset + k + 1];
++            }
++        }
++        fragment.x[l] = __halves2bfloat162(low, high);
++    }
++}
++
++static __device__ __forceinline__ void load_b_fragment(
++        bf16_fragment_b & fragment,
++        const __nv_bfloat16 * source,
++        int source_stride,
++        int n_base,
++        int k_base,
++        int lane) {
++#pragma unroll
++    for (int half = 0; half < 2; ++half) {
++        const int row_offset =
++            (n_base + half * 8 + (lane >> 2)) * source_stride;
++#pragma unroll
++        for (int l = 0; l < tile<8, 8, nv_bfloat162>::ne; ++l) {
++            const int k = k_base + 2 * (l * 4 + (lane & 3));
++            fragment.halves[half].x[l] = __halves2bfloat162(
++                source[row_offset + k], source[row_offset + k + 1]);
++        }
++    }
++}
++
++#endif // __HIP__
++
+ } // namespace torch_ggml_ops::ck
+diff --git a/csrc/ck/grouped_mmq_backward.cuh b/csrc/ck/grouped_mmq_backward.cuh
+index 8866c56..766d328 100644
+--- a/csrc/ck/grouped_mmq_backward.cuh
++++ b/csrc/ck/grouped_mmq_backward.cuh
+@@ -4,8 +4,10 @@
+ #include "gguf_decode.cuh"
+ #include "grouped_mmq_backward_tiled.cuh"
+ 
++#if defined(__HIP__)
+ #include <hip/hip_bf16.h>
+ #include <hip/hip_runtime.h>
++#endif
+ 
+ namespace torch_ggml_ops::ck {
+ 
+@@ -111,41 +113,39 @@ static __global__ void grouped_mmq_grad_input_kernel(
+             }
+             __syncthreads();
+ 
+-            bf16_fragment a_fragment{};
+-            bf16_fragment b_fragment{};
+-            __hip_bfloat16 * a = fragment_data(a_fragment);
+-            __hip_bfloat16 * b = fragment_data(b_fragment);
+-            const int a_row = wave_row_start + c_row(lane);
+-#pragma unroll
+-            for (int k_fragment = 0;
+-                 k_fragment < GROUPED_BACKWARD_K_PER_ITERATION;
+-                 ++k_fragment) {
+-                const int output_feature = output_start + k_fragment;
+-                a[k_fragment] =
+-                    a_row < row_end && output_feature < out_features
+-                    ? grad_output[
+-                          static_cast<int64_t>(a_row) * out_features +
+-                          output_feature]
+-                    : __float2bfloat16(0.0f);
+-                b[k_fragment] = shared_b[
+-                    c_row(lane) * GROUPED_BACKWARD_K_PER_ITERATION +
+-                    k_fragment];
+-            }
++            bf16_fragment_a a_fragment{};
++            bf16_fragment_b b_fragment{};
++            load_a_fragment<true, true>(
++                a_fragment,
++                grad_output,
++                out_features,
++                wave_row_start,
++                output_start,
++                row_end,
++                out_features,
++                lane);
++            load_b_fragment(
++                b_fragment,
++                shared_b,
++                GROUPED_BACKWARD_K_PER_ITERATION,
++                0,
++                0,
++                lane);
+ 
+             wmma_f32_16x16x16_bf16(accumulator, a_fragment, b_fragment);
+             __syncthreads();
+         }
+ 
+ #pragma unroll
+-        for (int element = 0; element < 8; ++element) {
+-            const int output_row =
+-                wave_row_start + c_column(lane, element);
+-            const int output_column = input_column_start + c_row(lane);
++        for (int element = 0; element < ACCUMULATOR_ELEMENTS; ++element) {
++            const int output_row = wave_row_start + acc_m(lane, element);
++            const int output_column =
++                input_column_start + acc_n(lane, element);
+             if (output_row < row_end && output_column < in_features) {
+                 grad_input[
+                     static_cast<int64_t>(output_row) * in_features +
+                     output_column] =
+-                    __float2bfloat16(accumulator.values[element]);
++                    __float2bfloat16(accumulator.value(element));
+             }
+         }
+     }
+@@ -390,52 +390,26 @@ static __global__ void grouped_mmq_pair_grad_input_kernel(
+             }
+             __syncthreads();
+ 
+-            const int a_row = wave_row_start + c_row(lane);
+-            {
+-                bf16_fragment a_fragment{};
+-                bf16_fragment b_fragment{};
+-                __hip_bfloat16 * a = fragment_data(a_fragment);
+-                __hip_bfloat16 * b = fragment_data(b_fragment);
+-#pragma unroll
+-                for (int k_fragment = 0;
+-                     k_fragment < GROUPED_BACKWARD_K_PER_ITERATION;
+-                     ++k_fragment) {
+-                    const int output_feature = output_start + k_fragment;
+-                    const bool valid =
+-                        a_row < row_end && output_feature < out_features;
+-                    const int64_t grad_offset =
+-                        static_cast<int64_t>(a_row) * out_features + output_feature;
+-                    a[k_fragment] = valid
+-                        ? first_grad_output[grad_offset]
+-                        : __float2bfloat16(0.0f);
+-                    b[k_fragment] = shared_b[0][
+-                        c_row(lane) * GROUPED_BACKWARD_K_PER_ITERATION +
+-                        k_fragment];
+-                }
+-                wmma_f32_16x16x16_bf16(
+-                    accumulator, a_fragment, b_fragment);
+-            }
+-            {
+-                bf16_fragment a_fragment{};
+-                bf16_fragment b_fragment{};
+-                __hip_bfloat16 * a = fragment_data(a_fragment);
+-                __hip_bfloat16 * b = fragment_data(b_fragment);
+ #pragma unroll
+-                for (int k_fragment = 0;
+-                     k_fragment < GROUPED_BACKWARD_K_PER_ITERATION;
+-                     ++k_fragment) {
+-                    const int output_feature = output_start + k_fragment;
+-                    const bool valid =
+-                        a_row < row_end && output_feature < out_features;
+-                    const int64_t grad_offset =
+-                        static_cast<int64_t>(a_row) * out_features + output_feature;
+-                    a[k_fragment] = valid
+-                        ? second_grad_output[grad_offset]
+-                        : __float2bfloat16(0.0f);
+-                    b[k_fragment] = shared_b[1][
+-                        c_row(lane) * GROUPED_BACKWARD_K_PER_ITERATION +
+-                        k_fragment];
+-                }
++            for (int projection = 0; projection < 2; ++projection) {
++                bf16_fragment_a a_fragment{};
++                bf16_fragment_b b_fragment{};
++                load_a_fragment<true, true>(
++                    a_fragment,
++                    projection == 0 ? first_grad_output : second_grad_output,
++                    out_features,
++                    wave_row_start,
++                    output_start,
++                    row_end,
++                    out_features,
++                    lane);
++                load_b_fragment(
++                    b_fragment,
++                    shared_b[projection],
++                    GROUPED_BACKWARD_K_PER_ITERATION,
++                    0,
++                    0,
++                    lane);
+                 wmma_f32_16x16x16_bf16(
+                     accumulator, a_fragment, b_fragment);
+             }
+@@ -443,15 +417,15 @@ static __global__ void grouped_mmq_pair_grad_input_kernel(
+         }
+ 
+ #pragma unroll
+-        for (int element = 0; element < 8; ++element) {
+-            const int output_row =
+-                wave_row_start + c_column(lane, element);
+-            const int output_column = input_column_start + c_row(lane);
++        for (int element = 0; element < ACCUMULATOR_ELEMENTS; ++element) {
++            const int output_row = wave_row_start + acc_m(lane, element);
++            const int output_column =
++                input_column_start + acc_n(lane, element);
+             if (output_row < row_end && output_column < in_features) {
+                 grad_input[
+                     static_cast<int64_t>(output_row) * in_features +
+                     output_column] =
+-                    __float2bfloat16(accumulator.values[element]);
++                    __float2bfloat16(accumulator.value(element));
+             }
+         }
+     }
+diff --git a/csrc/ck/grouped_mmq_backward_tiled.cuh b/csrc/ck/grouped_mmq_backward_tiled.cuh
+index bbfc72f..07fff1b 100644
+--- a/csrc/ck/grouped_mmq_backward_tiled.cuh
++++ b/csrc/ck/grouped_mmq_backward_tiled.cuh
+@@ -85,46 +85,32 @@ static __device__ __forceinline__ void grouped_mmq_grad_input_q4_tile(
+ 
+ #pragma unroll
+         for (int k_tile = 0; k_tile < GROUPED_BACKWARD_TILED_K; k_tile += 16) {
+-            bf16_fragment a_fragments[GROUPED_BACKWARD_TILED_M_TILES_PER_WAVE];
++            bf16_fragment_a a_fragments[GROUPED_BACKWARD_TILED_M_TILES_PER_WAVE];
+ #pragma unroll
+             for (int m_tile = 0;
+                  m_tile < GROUPED_BACKWARD_TILED_M_TILES_PER_WAVE;
+                  ++m_tile) {
+-                __hip_bfloat16 * a = fragment_data(a_fragments[m_tile]);
+-                const int a_row = wave_row_start +
+-                    m_tile * BACKWARD_M_PER_TILE + c_row(lane);
+-#pragma unroll
+-                for (int k = 0; k < 16; ++k) {
+-                    if constexpr (FULL_ROWS) {
+-                        a[k] = grad_output[
+-                            static_cast<int64_t>(a_row) *
+-                                GROUPED_BACKWARD_TILED_Q4_OUT_FEATURES +
+-                            output_start + k_tile + k];
+-                    } else {
+-                        a[k] = a_row < row_end
+-                            ? grad_output[
+-                                static_cast<int64_t>(a_row) *
+-                                    GROUPED_BACKWARD_TILED_Q4_OUT_FEATURES +
+-                                output_start + k_tile + k]
+-                            : __float2bfloat16(0.0f);
+-                    }
+-                }
++                load_a_fragment<!FULL_ROWS, false>(
++                    a_fragments[m_tile],
++                    grad_output,
++                    GROUPED_BACKWARD_TILED_Q4_OUT_FEATURES,
++                    wave_row_start + m_tile * BACKWARD_M_PER_TILE,
++                    output_start + k_tile,
++                    row_end,
++                    0,
++                    lane);
+             }
+ 
+ #pragma unroll
+             for (int n_tile = 0;
+                  n_tile < GROUPED_BACKWARD_TILED_N_TILES;
+                  n_tile += 2) {
+-                bf16_fragment b_first{};
+-                bf16_fragment b_second{};
+-                shared_b.load_fragment_vector(
+-                    b_first,
+-                    n_tile * BACKWARD_N_PER_TILE + c_row(lane),
+-                    k_tile);
+-                shared_b.load_fragment_vector(
+-                    b_second,
+-                    (n_tile + 1) * BACKWARD_N_PER_TILE + c_row(lane),
+-                    k_tile);
++                bf16_fragment_b b_first{};
++                bf16_fragment_b b_second{};
++                shared_b.load_b_fragment(
++                    b_first, n_tile * BACKWARD_N_PER_TILE, k_tile, lane);
++                shared_b.load_b_fragment(
++                    b_second, (n_tile + 1) * BACKWARD_N_PER_TILE, k_tile, lane);
+ #pragma unroll
+                 for (int m_tile = 0;
+                      m_tile < GROUPED_BACKWARD_TILED_M_TILES_PER_WAVE;
+@@ -157,24 +143,24 @@ static __device__ __forceinline__ void grouped_mmq_grad_input_q4_tile(
+              n_tile < GROUPED_BACKWARD_TILED_N_TILES;
+              ++n_tile) {
+ #pragma unroll
+-            for (int element = 0; element < 8; ++element) {
++            for (int element = 0; element < ACCUMULATOR_ELEMENTS; ++element) {
+                 const int output_row = wave_row_start +
+                     m_tile * BACKWARD_M_PER_TILE +
+-                    c_column(lane, element);
++                    acc_m(lane, element);
+                 const int output_column = input_column_start +
+-                    n_tile * BACKWARD_N_PER_TILE + c_row(lane);
++                    n_tile * BACKWARD_N_PER_TILE + acc_n(lane, element);
+                 if constexpr (FULL_ROWS) {
+                     grad_input[
+                         static_cast<int64_t>(output_row) *
+                             GROUPED_BACKWARD_TILED_Q4_IN_FEATURES +
+                         output_column] = __float2bfloat16(
+-                            accumulators[m_tile][n_tile].values[element]);
++                            accumulators[m_tile][n_tile].value(element));
+                 } else if (output_row < row_end) {
+                     grad_input[
+                         static_cast<int64_t>(output_row) *
+                             GROUPED_BACKWARD_TILED_Q4_IN_FEATURES +
+                         output_column] = __float2bfloat16(
+-                            accumulators[m_tile][n_tile].values[element]);
++                            accumulators[m_tile][n_tile].value(element));
+                 }
+             }
+         }
+@@ -333,46 +319,32 @@ static __device__ __forceinline__ void grouped_mmq_pair_grad_input_q3_tile(
+ #pragma unroll
+         for (int k_tile = 0; k_tile < GROUPED_BACKWARD_TILED_K; k_tile += 16) {
+             {
+-                bf16_fragment a_fragments
++                bf16_fragment_a a_fragments
+                     [GROUPED_BACKWARD_TILED_M_TILES_PER_WAVE];
+ #pragma unroll
+                 for (int m_tile = 0;
+                      m_tile < GROUPED_BACKWARD_TILED_M_TILES_PER_WAVE;
+                      ++m_tile) {
+-                    __hip_bfloat16 * a = fragment_data(a_fragments[m_tile]);
+-                    const int a_row = wave_row_start +
+-                        m_tile * BACKWARD_M_PER_TILE + c_row(lane);
+-#pragma unroll
+-                    for (int k = 0; k < 16; ++k) {
+-                        if constexpr (FULL_ROWS) {
+-                            a[k] = first_grad_output[
+-                                static_cast<int64_t>(a_row) *
+-                                    GROUPED_BACKWARD_TILED_Q3_OUT_FEATURES +
+-                                output_start + k_tile + k];
+-                        } else {
+-                            a[k] = a_row < row_end
+-                                ? first_grad_output[
+-                                    static_cast<int64_t>(a_row) *
+-                                        GROUPED_BACKWARD_TILED_Q3_OUT_FEATURES +
+-                                    output_start + k_tile + k]
+-                                : __float2bfloat16(0.0f);
+-                        }
+-                    }
++                    load_a_fragment<!FULL_ROWS, false>(
++                        a_fragments[m_tile],
++                        first_grad_output,
++                        GROUPED_BACKWARD_TILED_Q3_OUT_FEATURES,
++                        wave_row_start + m_tile * BACKWARD_M_PER_TILE,
++                        output_start + k_tile,
++                        row_end,
++                        0,
++                        lane);
+                 }
+ #pragma unroll
+                 for (int n_tile = 0;
+                      n_tile < GROUPED_BACKWARD_TILED_N_TILES;
+                      n_tile += 2) {
+-                    bf16_fragment b_first{};
+-                    bf16_fragment b_second{};
+-                    first_shared_b.load_fragment_vector(
+-                        b_first,
+-                        n_tile * BACKWARD_N_PER_TILE + c_row(lane),
+-                        k_tile);
+-                    first_shared_b.load_fragment_vector(
+-                        b_second,
+-                        (n_tile + 1) * BACKWARD_N_PER_TILE + c_row(lane),
+-                        k_tile);
++                    bf16_fragment_b b_first{};
++                    bf16_fragment_b b_second{};
++                    first_shared_b.load_b_fragment(
++                        b_first, n_tile * BACKWARD_N_PER_TILE, k_tile, lane);
++                    first_shared_b.load_b_fragment(
++                        b_second, (n_tile + 1) * BACKWARD_N_PER_TILE, k_tile, lane);
+ #pragma unroll
+                     for (int m_tile = 0;
+                          m_tile < GROUPED_BACKWARD_TILED_M_TILES_PER_WAVE;
+@@ -394,46 +366,32 @@ static __device__ __forceinline__ void grouped_mmq_pair_grad_input_q3_tile(
+                 }
+             }
+             {
+-                bf16_fragment a_fragments
++                bf16_fragment_a a_fragments
+                     [GROUPED_BACKWARD_TILED_M_TILES_PER_WAVE];
+ #pragma unroll
+                 for (int m_tile = 0;
+                      m_tile < GROUPED_BACKWARD_TILED_M_TILES_PER_WAVE;
+                      ++m_tile) {
+-                    __hip_bfloat16 * a = fragment_data(a_fragments[m_tile]);
+-                    const int a_row = wave_row_start +
+-                        m_tile * BACKWARD_M_PER_TILE + c_row(lane);
+-#pragma unroll
+-                    for (int k = 0; k < 16; ++k) {
+-                        if constexpr (FULL_ROWS) {
+-                            a[k] = second_grad_output[
+-                                static_cast<int64_t>(a_row) *
+-                                    GROUPED_BACKWARD_TILED_Q3_OUT_FEATURES +
+-                                output_start + k_tile + k];
+-                        } else {
+-                            a[k] = a_row < row_end
+-                                ? second_grad_output[
+-                                    static_cast<int64_t>(a_row) *
+-                                        GROUPED_BACKWARD_TILED_Q3_OUT_FEATURES +
+-                                    output_start + k_tile + k]
+-                                : __float2bfloat16(0.0f);
+-                        }
+-                    }
++                    load_a_fragment<!FULL_ROWS, false>(
++                        a_fragments[m_tile],
++                        second_grad_output,
++                        GROUPED_BACKWARD_TILED_Q3_OUT_FEATURES,
++                        wave_row_start + m_tile * BACKWARD_M_PER_TILE,
++                        output_start + k_tile,
++                        row_end,
++                        0,
++                        lane);
+                 }
+ #pragma unroll
+                 for (int n_tile = 0;
+                      n_tile < GROUPED_BACKWARD_TILED_N_TILES;
+                      n_tile += 2) {
+-                    bf16_fragment b_first{};
+-                    bf16_fragment b_second{};
+-                    second_shared_b.load_fragment_vector(
+-                        b_first,
+-                        n_tile * BACKWARD_N_PER_TILE + c_row(lane),
+-                        k_tile);
+-                    second_shared_b.load_fragment_vector(
+-                        b_second,
+-                        (n_tile + 1) * BACKWARD_N_PER_TILE + c_row(lane),
+-                        k_tile);
++                    bf16_fragment_b b_first{};
++                    bf16_fragment_b b_second{};
++                    second_shared_b.load_b_fragment(
++                        b_first, n_tile * BACKWARD_N_PER_TILE, k_tile, lane);
++                    second_shared_b.load_b_fragment(
++                        b_second, (n_tile + 1) * BACKWARD_N_PER_TILE, k_tile, lane);
+ #pragma unroll
+                     for (int m_tile = 0;
+                          m_tile < GROUPED_BACKWARD_TILED_M_TILES_PER_WAVE;
+@@ -467,24 +425,24 @@ static __device__ __forceinline__ void grouped_mmq_pair_grad_input_q3_tile(
+              n_tile < GROUPED_BACKWARD_TILED_N_TILES;
+              ++n_tile) {
+ #pragma unroll
+-            for (int element = 0; element < 8; ++element) {
++            for (int element = 0; element < ACCUMULATOR_ELEMENTS; ++element) {
+                 const int output_row = wave_row_start +
+                     m_tile * BACKWARD_M_PER_TILE +
+-                    c_column(lane, element);
++                    acc_m(lane, element);
+                 const int output_column = input_column_start +
+-                    n_tile * BACKWARD_N_PER_TILE + c_row(lane);
++                    n_tile * BACKWARD_N_PER_TILE + acc_n(lane, element);
+                 if constexpr (FULL_ROWS) {
+                     grad_input[
+                         static_cast<int64_t>(output_row) *
+                             GROUPED_BACKWARD_TILED_Q3_IN_FEATURES +
+                         output_column] = __float2bfloat16(
+-                            accumulators[m_tile][n_tile].values[element]);
++                            accumulators[m_tile][n_tile].value(element));
+                 } else if (output_row < row_end) {
+                     grad_input[
+                         static_cast<int64_t>(output_row) *
+                             GROUPED_BACKWARD_TILED_Q3_IN_FEATURES +
+                         output_column] = __float2bfloat16(
+-                            accumulators[m_tile][n_tile].values[element]);
++                            accumulators[m_tile][n_tile].value(element));
+                 }
+             }
+         }
+@@ -615,39 +573,27 @@ static __device__ __forceinline__ void grouped_backward_accumulate_projection(
+         int lane) {
+ #pragma unroll
+     for (int k_tile = 0; k_tile < GROUPED_BACKWARD_TILED_K; k_tile += 16) {
+-        bf16_fragment a_fragments[M_TILES_PER_WAVE];
++        bf16_fragment_a a_fragments[M_TILES_PER_WAVE];
+ #pragma unroll
+         for (int m_tile = 0; m_tile < M_TILES_PER_WAVE; ++m_tile) {
+-            __hip_bfloat16 * a = fragment_data(a_fragments[m_tile]);
+-            const int a_row = wave_row_start +
+-                m_tile * BACKWARD_M_PER_TILE + c_row(lane);
+-#pragma unroll
+-            for (int k = 0; k < 16; ++k) {
+-                if constexpr (FULL_ROWS) {
+-                    a[k] = grad_output[
+-                        static_cast<int64_t>(a_row) * OUT_FEATURES +
+-                        output_start + k_tile + k];
+-                } else {
+-                    a[k] = a_row < row_end
+-                        ? grad_output[
+-                            static_cast<int64_t>(a_row) * OUT_FEATURES +
+-                            output_start + k_tile + k]
+-                        : __float2bfloat16(0.0f);
+-                }
+-            }
++            load_a_fragment<!FULL_ROWS, false>(
++                a_fragments[m_tile],
++                grad_output,
++                OUT_FEATURES,
++                wave_row_start + m_tile * BACKWARD_M_PER_TILE,
++                output_start + k_tile,
++                row_end,
++                0,
++                lane);
+         }
+ #pragma unroll
+         for (int n_tile = 0; n_tile < N_TILES; n_tile += 2) {
+-            bf16_fragment b_first{};
+-            bf16_fragment b_second{};
+-            shared_b.load_fragment_vector(
+-                b_first,
+-                n_tile * BACKWARD_N_PER_TILE + c_row(lane),
+-                k_tile);
+-            shared_b.load_fragment_vector(
+-                b_second,
+-                (n_tile + 1) * BACKWARD_N_PER_TILE + c_row(lane),
+-                k_tile);
++            bf16_fragment_b b_first{};
++            bf16_fragment_b b_second{};
++            shared_b.load_b_fragment(
++                b_first, n_tile * BACKWARD_N_PER_TILE, k_tile, lane);
++            shared_b.load_b_fragment(
++                b_second, (n_tile + 1) * BACKWARD_N_PER_TILE, k_tile, lane);
+ #pragma unroll
+             for (int m_tile = 0; m_tile < M_TILES_PER_WAVE; ++m_tile) {
+                 wmma_f32_16x16x16_bf16(
+@@ -683,21 +629,21 @@ static __device__ __forceinline__ void grouped_backward_store_tile(
+ #pragma unroll
+         for (int n_tile = 0; n_tile < N_TILES; ++n_tile) {
+ #pragma unroll
+-            for (int element = 0; element < 8; ++element) {
++            for (int element = 0; element < ACCUMULATOR_ELEMENTS; ++element) {
+                 const int output_row = wave_row_start +
+-                    m_tile * BACKWARD_M_PER_TILE + c_column(lane, element);
++                    m_tile * BACKWARD_M_PER_TILE + acc_m(lane, element);
+                 const int output_column = input_column_start +
+-                    n_tile * BACKWARD_N_PER_TILE + c_row(lane);
++                    n_tile * BACKWARD_N_PER_TILE + acc_n(lane, element);
+                 if constexpr (FULL_ROWS) {
+                     grad_input[
+                         static_cast<int64_t>(output_row) * IN_FEATURES +
+                         output_column] = __float2bfloat16(
+-                            accumulators[m_tile][n_tile].values[element]);
++                            accumulators[m_tile][n_tile].value(element));
+                 } else if (output_row < row_end) {
+                     grad_input[
+                         static_cast<int64_t>(output_row) * IN_FEATURES +
+                         output_column] = __float2bfloat16(
+-                            accumulators[m_tile][n_tile].values[element]);
++                            accumulators[m_tile][n_tile].value(element));
+                 }
+             }
+         }
+diff --git a/csrc/ck/mmq_backward.cuh b/csrc/ck/mmq_backward.cuh
+index d967f9c..873f366 100644
+--- a/csrc/ck/mmq_backward.cuh
++++ b/csrc/ck/mmq_backward.cuh
+@@ -3,8 +3,10 @@
+ #include "bf16_wmma.cuh"
+ #include "gguf_decode.cuh"
+ 
++#if defined(__HIP__)
+ #include <hip/hip_bf16.h>
+ #include <hip/hip_runtime.h>
++#endif
+ 
+ namespace torch_ggml_ops::ck {
+ 
+@@ -468,6 +470,9 @@ struct backward_shared_b_tile {
+         return values[physical_index(index)];
+     }
+ 
++#if defined(__HIP__)
++    // Wide load of one lane's whole 16-value gfx11 operand row. The NVIDIA
++    // fragment is a quarter of a row, so it has no use for this.
+     __device__ __forceinline__ void load_fragment_vector(
+             bf16_fragment & fragment,
+             int row,
+@@ -491,6 +496,60 @@ struct backward_shared_b_tile {
+             destination[1] = second[0];
+         }
+     }
++#endif // __HIP__
++
++    // Fill a B operand with the 16(N) x 16(K) block at (n_base, column). The
++    // per-lane layout is the matrix core's, so this goes through the seam's
++    // fragment description rather than being indexed by the kernels.
++    // VECTOR_LOAD selects the gfx11 wide-load path (a per-config tuning knob on
++    // AMD); the NVIDIA fragment is a quarter of a row and takes 32-bit loads
++    // either way, so it ignores the knob.
++    template <bool VECTOR_LOAD = true>
++    __device__ __forceinline__ void load_b_fragment(
++            bf16_fragment_b & fragment,
++            int n_base,
++            int column,
++            int lane) const {
++#if defined(__HIP__)
++        const int row = n_base + fragment_row(lane);
++        if constexpr (VECTOR_LOAD) {
++            load_fragment_vector(fragment, row, column);
++        } else {
++            __hip_bfloat16 * b = fragment_data(fragment);
++#pragma unroll
++            for (int k = 0; k < 16; ++k) {
++                b[k] = (*this)[row * COLUMNS + column + k];
++            }
++        }
++#else
++        // A (k, k+1) pair must be physically adjacent for this to be a pair load
++        // at all: k is even, so an even chunk width keeps both halves in the same
++        // chunk. Every instantiation in the tree uses 0, 4, 8 or 16.
++        static_assert(SWIZZLE_CHUNK % 2 == 0,
++                      "odd swizzle chunk would split a bf16 pair across chunks");
++        // m16n8k16 wants two 8-row N halves; a lane holds two bf16 pairs of each.
++#pragma unroll
++        for (int half = 0; half < 2; ++half) {
++            const int row = n_base + half * 8 + (lane >> 2);
++#pragma unroll
++            for (int l = 0; l < tile<8, 8, nv_bfloat162>::ne; ++l) {
++                const int k = column + 2 * (l * 4 + (lane & 3));
++                const __nv_bfloat16 * pair =
++                    values + physical_index(row * COLUMNS + k);
++                if constexpr (PADDING % 2 == 0) {
++                    // COLUMNS is a multiple of 16 and the chunk width is even, so
++                    // an even row stride makes the pair's element index even too,
++                    // i.e. 4-byte aligned: take it in a single load.
++                    fragment.halves[half].x[l] =
++                        *reinterpret_cast<const nv_bfloat162 *>(pair);
++                } else {
++                    fragment.halves[half].x[l] =
++                        __halves2bfloat162(pair[0], pair[1]);
++                }
++            }
++        }
++#endif
++    }
+ };
+ 
+ template <
+@@ -852,56 +911,29 @@ static __global__ void dense_mmq_grad_input_kernel(
+ 
+ #pragma unroll
+         for (int k_tile = 0; k_tile < K_ITERATION; k_tile += 16) {
+-            bf16_fragment a_fragments[M_TILES_PER_WAVE];
++            bf16_fragment_a a_fragments[M_TILES_PER_WAVE];
+ #pragma unroll
+             for (int m_tile = 0; m_tile < M_TILES_PER_WAVE; ++m_tile) {
+-                __hip_bfloat16 * a = fragment_data(a_fragments[m_tile]);
+-                const int a_row =
+-                    wave_row_start + m_tile * BACKWARD_M_PER_TILE + c_row(lane);
+-#pragma unroll
+-                for (int k = 0; k < 16; ++k) {
+-                    const int output_column = output_start + k_tile + k;
+-                    if constexpr (FULL_TILES) {
+-                        a[k] = grad_output[
+-                            static_cast<int64_t>(a_row) * out_features + output_column];
+-                    } else {
+-                        a[k] = a_row < rows && output_column < out_features
+-                            ? grad_output[
+-                                static_cast<int64_t>(a_row) * out_features + output_column]
+-                            : __float2bfloat16(0.0f);
+-                    }
+-                }
++                load_a_fragment<!FULL_TILES, !FULL_TILES>(
++                    a_fragments[m_tile],
++                    grad_output,
++                    out_features,
++                    wave_row_start + m_tile * BACKWARD_M_PER_TILE,
++                    output_start + k_tile,
++                    rows,
++                    out_features,
++                    lane);
+             }
+ 
+             if constexpr (PREFETCH_LOCAL) {
+ #pragma unroll
+                 for (int n_tile = 0; n_tile < N_TILES - 1; n_tile += 2) {
+-                    bf16_fragment b_first{};
+-                    bf16_fragment b_second{};
+-                    if constexpr (VECTOR_LOCAL_LOAD) {
+-                        shared_b.load_fragment_vector(
+-                            b_first,
+-                            n_tile * BACKWARD_N_PER_TILE + c_row(lane),
+-                            k_tile);
+-                        shared_b.load_fragment_vector(
+-                            b_second,
+-                            (n_tile + 1) * BACKWARD_N_PER_TILE + c_row(lane),
+-                            k_tile);
+-                    } else {
+-                        __hip_bfloat16 * first = fragment_data(b_first);
+-                        __hip_bfloat16 * second = fragment_data(b_second);
+-#pragma unroll
+-                        for (int k = 0; k < 16; ++k) {
+-                            first[k] = shared_b[
+-                                (n_tile * BACKWARD_N_PER_TILE + c_row(lane)) *
+-                                    K_ITERATION +
+-                                k_tile + k];
+-                            second[k] = shared_b[
+-                                ((n_tile + 1) * BACKWARD_N_PER_TILE + c_row(lane)) *
+-                                    K_ITERATION +
+-                                k_tile + k];
+-                        }
+-                    }
++                    bf16_fragment_b b_first{};
++                    bf16_fragment_b b_second{};
++                    shared_b.template load_b_fragment<VECTOR_LOCAL_LOAD>(
++                        b_first, n_tile * BACKWARD_N_PER_TILE, k_tile, lane);
++                    shared_b.template load_b_fragment<VECTOR_LOCAL_LOAD>(
++                        b_second, (n_tile + 1) * BACKWARD_N_PER_TILE, k_tile, lane);
+ #pragma unroll
+                     for (int m_tile = 0; m_tile < M_TILES_PER_WAVE; ++m_tile) {
+                         wmma_f32_16x16x16_bf16(
+@@ -919,22 +951,9 @@ static __global__ void dense_mmq_grad_input_kernel(
+                 }
+                 if constexpr (N_TILES % 2 != 0) {
+                     constexpr int n_tile = N_TILES - 1;
+-                    bf16_fragment b_fragment{};
+-                    if constexpr (VECTOR_LOCAL_LOAD) {
+-                        shared_b.load_fragment_vector(
+-                            b_fragment,
+-                            n_tile * BACKWARD_N_PER_TILE + c_row(lane),
+-                            k_tile);
+-                    } else {
+-                        __hip_bfloat16 * b = fragment_data(b_fragment);
+-#pragma unroll
+-                        for (int k = 0; k < 16; ++k) {
+-                            b[k] = shared_b[
+-                                (n_tile * BACKWARD_N_PER_TILE + c_row(lane)) *
+-                                    K_ITERATION +
+-                                k_tile + k];
+-                        }
+-                    }
++                    bf16_fragment_b b_fragment{};
++                    shared_b.template load_b_fragment<VECTOR_LOCAL_LOAD>(
++                        b_fragment, n_tile * BACKWARD_N_PER_TILE, k_tile, lane);
+ #pragma unroll
+                     for (int m_tile = 0; m_tile < M_TILES_PER_WAVE; ++m_tile) {
+                         wmma_f32_16x16x16_bf16(
+@@ -946,22 +965,9 @@ static __global__ void dense_mmq_grad_input_kernel(
+             } else {
+ #pragma unroll
+                 for (int n_tile = 0; n_tile < N_TILES; ++n_tile) {
+-                    bf16_fragment b_fragment{};
+-                    if constexpr (VECTOR_LOCAL_LOAD) {
+-                        shared_b.load_fragment_vector(
+-                            b_fragment,
+-                            n_tile * BACKWARD_N_PER_TILE + c_row(lane),
+-                            k_tile);
+-                    } else {
+-                        __hip_bfloat16 * b = fragment_data(b_fragment);
+-#pragma unroll
+-                        for (int k = 0; k < 16; ++k) {
+-                            b[k] = shared_b[
+-                                (n_tile * BACKWARD_N_PER_TILE + c_row(lane)) *
+-                                    K_ITERATION +
+-                                k_tile + k];
+-                        }
+-                    }
++                    bf16_fragment_b b_fragment{};
++                    shared_b.template load_b_fragment<VECTOR_LOCAL_LOAD>(
++                        b_fragment, n_tile * BACKWARD_N_PER_TILE, k_tile, lane);
+ #pragma unroll
+                     for (int m_tile = 0; m_tile < M_TILES_PER_WAVE; ++m_tile) {
+                         wmma_f32_16x16x16_bf16(
+@@ -980,23 +986,21 @@ static __global__ void dense_mmq_grad_input_kernel(
+ #pragma unroll
+         for (int n_tile = 0; n_tile < N_TILES; ++n_tile) {
+ #pragma unroll
+-            for (int element = 0; element < 8; ++element) {
+-                // gfx11's physical C fragment is J-major for this A/B layout: the
+-                // I-major lane coordinates are transposed when written to row-major C.
++            for (int element = 0; element < ACCUMULATOR_ELEMENTS; ++element) {
+                 const int output_row = wave_row_start +
+-                    m_tile * BACKWARD_M_PER_TILE + c_column(lane, element);
++                    m_tile * BACKWARD_M_PER_TILE + acc_m(lane, element);
+                 const int output_column = input_column_start +
+-                    n_tile * BACKWARD_N_PER_TILE + c_row(lane);
++                    n_tile * BACKWARD_N_PER_TILE + acc_n(lane, element);
+                 if constexpr (FULL_TILES) {
+                     grad_input[
+                         static_cast<int64_t>(output_row) * in_features + output_column] =
+                         __float2bfloat16(
+-                            accumulators[m_tile][n_tile].values[element]);
++                            accumulators[m_tile][n_tile].value(element));
+                 } else if (output_row < rows && output_column < in_features) {
+                     grad_input[
+                         static_cast<int64_t>(output_row) * in_features + output_column] =
+                         __float2bfloat16(
+-                            accumulators[m_tile][n_tile].values[element]);
++                            accumulators[m_tile][n_tile].value(element));
+                 }
+             }
+         }
+diff --git a/csrc/mmq_core.cuh b/csrc/mmq_core.cuh
+index 2e03aae..1ebcfde 100644
+--- a/csrc/mmq_core.cuh
++++ b/csrc/mmq_core.cuh
+@@ -11,6 +11,13 @@
+ #define MMQ_TILE_NE_K 32
+ #define MMQ_TILE_Y_K (MMQ_TILE_NE_K + MMQ_TILE_NE_K / QI8_1)
+ 
++// Vec-dot ratio for the Q3_K Q8_1 MMQ path (llama.cpp vecdotq.cuh). The upstream
++// subset pruned this because the AMD build never compiles the TURING_MMA branch
++// that uses it; the CUDA (Turing) forward path does. Value is llama.cpp-canonical.
++#ifndef VDR_Q3_K_Q8_1_MMQ
++#define VDR_Q3_K_Q8_1_MMQ 2
++#endif
++
+ static constexpr int MMQ_I = 64;
+ static constexpr int MMQ_J = 128;
+ static constexpr int MMQ_J_SMALL = 64;
+@@ -118,7 +125,15 @@ template <ggml_type type, int J, bool full_i = false, bool full_j = false>
+ static __device__ __forceinline__ void mmq_write_back_bf16(
+         const float * sum, __hip_bfloat16 * dst, int stride, int i_max, int j_max) {
+     using namespace ggml_cuda_mma;
++    // tile_C MUST mirror the vec-dot's accumulator layout so the sum[] indexing
++    // matches: RDNA3/CDNA use the J-major int C tile; NVIDIA (Turing/Ampere/Ada)
++    // use the I-major tile<16,8,int>. Reading sum with the wrong layout scrambles
++    // the output (nrmse ~2.4 on the 4090 before this fix).
++#if defined(AMD_MFMA_AVAILABLE) || defined(AMD_WMMA_AVAILABLE)
+     using tile_C = tile<16, 16, int, DATA_LAYOUT_J_MAJOR>;
++#else
++    using tile_C = tile<16, 8, int>;
++#endif
+     constexpr int ntx = 16 / tile_C::I;
+     const int i0 = (threadIdx.y / ntx) * (ntx * tile_C::I);
+ 
+diff --git a/csrc/mmq_hip.cu b/csrc/mmq_hip.cu
+index 151e47c..31cf306 100644
+--- a/csrc/mmq_hip.cu
++++ b/csrc/mmq_hip.cu
+@@ -1,4 +1,4 @@
+-// torch.utils.cpp_extension disables HIP half operators/conversions by default.
++// torch.utils.cpp_extension disables half operators/conversions by default.
+ // llama.cpp MMQ deliberately uses the native half/half2 arithmetic surface.
+ #ifdef __HIP_NO_HALF_OPERATORS__
+ #undef __HIP_NO_HALF_OPERATORS__
+@@ -6,12 +6,32 @@
+ #ifdef __HIP_NO_HALF_CONVERSIONS__
+ #undef __HIP_NO_HALF_CONVERSIONS__
+ #endif
++#ifdef __CUDA_NO_HALF_OPERATORS__
++#undef __CUDA_NO_HALF_OPERATORS__
++#endif
++#ifdef __CUDA_NO_HALF_CONVERSIONS__
++#undef __CUDA_NO_HALF_CONVERSIONS__
++#endif
++#ifdef __CUDA_NO_HALF2_OPERATORS__
++#undef __CUDA_NO_HALF2_OPERATORS__
++#endif
++#ifdef __CUDA_NO_BFLOAT16_CONVERSIONS__
++#undef __CUDA_NO_BFLOAT16_CONVERSIONS__
++#endif
+ 
+ #include "mmq_core.cuh"
+ #include "ck/grouped_mmq_backward.cuh"
+ #include "ck/mmq_backward.cuh"
+ 
++#if defined(__HIP__)
+ #include <hip/hip_runtime.h>
++#else
++// torch 2.13's stable C shim no longer re-declares aoti_torch_get_current_cuda_stream,
++// and the inductor C shim guards it behind USE_CUDA (undefined in this stable-ABI
++// build). The symbol is still exported by libtorch_cuda, so forward-declare just it
++// with matching C linkage (AOTITorchError == int32_t, 0 == success).
++extern "C" int32_t aoti_torch_get_current_cuda_stream(int32_t device_index, void ** ret_stream);
++#endif
+ #include <Python.h>
+ #include <torch/csrc/stable/accelerator.h>
+ #include <torch/csrc/stable/c/shim.h>
+diff --git a/csrc/port_cuda.cuh b/csrc/port_cuda.cuh
+new file mode 100644
+index 0000000..11f2f34
+--- /dev/null
++++ b/csrc/port_cuda.cuh
+@@ -0,0 +1,34 @@
++#pragma once
++//
++// CUDA compatibility shim for the NVIDIA (CuTe/PTX) port of torch-ggml-ops.
++//
++// The upstream sources target ROCm/HIP (gfx1151). This header lets the SAME
++// sources compile with nvcc by mapping the small HIP name surface onto CUDA.
++// It is included by common.cuh / the ck/ backward headers / mmq_hip.cu ONLY on
++// the CUDA path (see the `#if defined(__HIP__)` guards there); under hipcc the
++// original HIP headers are used unchanged, so the AMD build is preserved.
++//
++// Ported for RTX 4090 Laptop (Ada, sm_89), CUDA 13.3 toolchain. 2026-07.
++
++#include <cuda_runtime.h>
++#include <cuda_bf16.h>
++#include <cuda_fp16.h>
++
++// --- bfloat16 type names -------------------------------------------------
++// HIP calls them __hip_bfloat16 / __hip_bfloat162; CUDA provides the __nv_
++// variants with an identical scalar layout and the same __float2bfloat16 /
++// __bfloat162float device helpers.
++using __hip_bfloat16  = __nv_bfloat16;
++using __hip_bfloat162 = __nv_bfloat162;
++
++// --- runtime handle / error names ---------------------------------------
++using hipStream_t = cudaStream_t;
++using hipError_t  = cudaError_t;
++static const cudaError_t hipSuccess = cudaSuccess;
++
++static inline const char * hipGetErrorString(cudaError_t e) {
++    return cudaGetErrorString(e);
++}
++static inline cudaError_t hipGetLastError() {
++    return cudaGetLastError();
++}
+diff --git a/csrc/vendor/llama_cpp/common.cuh b/csrc/vendor/llama_cpp/common.cuh
+index edf89ca..1170616 100644
+--- a/csrc/vendor/llama_cpp/common.cuh
++++ b/csrc/vendor/llama_cpp/common.cuh
+@@ -4,28 +4,57 @@
+ // Derived from ggml/src/ggml-common.h, ggml/src/ggml-cuda/common.cuh, and ggml/src/ggml-cuda/vendors/hip.h
+ // at commit 39d54170de9c963eca32cbe062ee8c7bb7e57cde.
+ 
++#if defined(__HIP__)
+ #include <hip/hip_bf16.h>
+ #include <hip/hip_fp16.h>
+ #include <hip/hip_runtime.h>
++#else
++#include "port_cuda.cuh"
++#endif
+ 
+ #include <cstdint>
+ #include <type_traits>
+ 
++#if defined(__HIP__)
+ #define GGML_USE_HIP 1
+ #define RDNA 1
+ #define RDNA3 1
+ #define RDNA3_5 1
+ #define AMD_WMMA_AVAILABLE 1
++#else
++// CUDA: enable the dormant NVIDIA MMA paths that llama.cpp's mma.cuh /
++// mmq-*-targets.cuh already carry side-by-side with the AMD path. Gated on the
++// architecture the way upstream llama.cpp gates them, rather than hard-defined:
++// the bf16 backward compiles to mma.sync.aligned.m16n8k16.f32.bf16.bf16.f32,
++// which is Ampere and later. Without the gate a pre-Ampere build emits that
++// instruction anyway and dies inside ptxas with no indication why.
++#define GGML_CUDA_CC_TURING 750
++#define GGML_CUDA_CC_AMPERE 800
++#if !defined(__CUDA_ARCH__) || __CUDA_ARCH__ >= GGML_CUDA_CC_TURING
++#define TURING_MMA_AVAILABLE 1
++#endif
++#if !defined(__CUDA_ARCH__) || __CUDA_ARCH__ >= GGML_CUDA_CC_AMPERE
++#define AMPERE_MMA_AVAILABLE 1
++#endif
++#if defined(__CUDA_ARCH__) && __CUDA_ARCH__ < GGML_CUDA_CC_AMPERE
++#error "torch-ggml-ops on CUDA needs compute capability 8.0+ (the bf16 backward uses mma.sync.m16n8k16.bf16)"
++#endif
++#endif
+ #define WARP_SIZE 32
++#ifndef GGML_CUDA_CC_AMPERE
+ #define GGML_CUDA_CC_AMPERE 800
++#endif
+ 
+ #ifndef CUDART_VERSION
+ #define CUDART_VERSION 12000
+ #endif
+ 
++#if defined(__HIP__)
++// HIP's __shfl* take no mask; on CUDA the native *_sync intrinsics are used.
+ #define __shfl_sync(mask, var, lane, width) __shfl((var), (lane), (width))
+ #define __shfl_up_sync(mask, var, delta, width) __shfl_up((var), (delta), (width))
+ #define __shfl_xor_sync(mask, var, lane_mask, width) __shfl_xor((var), (lane_mask), (width))
++#endif
+ 
+ #define GGML_UNUSED(x) (void)(x)
+ template <typename... Args>
+@@ -36,8 +65,11 @@ __host__ __device__ constexpr inline void ggml_unused_vars_impl(Args &&...) noex
+ 
+ using ggml_half = half;
+ using ggml_half2 = half2;
++#if defined(__HIP__)
+ using nv_bfloat16 = __hip_bfloat16;
+ using nv_bfloat162 = __hip_bfloat162;
++#endif
++// On CUDA, nv_bfloat16 / nv_bfloat162 are provided natively by cuda_bf16.h.
+ 
+ // GGML quantization identifiers used by the checkpoint.
+ enum ggml_type : int32_t {
+@@ -84,26 +116,21 @@ struct block_q3_K {
+ static_assert(sizeof(block_q3_K) == 110, "wrong q3_K block size");
+ 
+ struct block_q4_K {
+-    union {
+-        struct {
+-            half d;
+-            half dmin;
+-        };
+-        half2 dm;
+-    };
++    // Upstream aliases (d, dmin) with a half2 `dm` via an anonymous union, but on
++    // CUDA `half` is __half (has a constructor) and cannot live in an anonymous
++    // aggregate. Store the two scales flat (identical 4-byte layout) and build the
++    // half2 on demand via make_half2(d, dmin) at the (few) former `dm` use sites.
++    half d;
++    half dmin;
+     uint8_t scales[K_SCALE_SIZE];
+     uint8_t qs[QK_K / 2];
+ };
+ static_assert(sizeof(block_q4_K) == 144, "wrong q4_K block size");
+ 
+ struct block_q5_K {
+-    union {
+-        struct {
+-            half d;
+-            half dmin;
+-        };
+-        half2 dm;
+-    };
++    // See block_q4_K: flat (d, dmin) instead of an anonymous union with half2 dm.
++    half d;
++    half dmin;
+     uint8_t scales[K_SCALE_SIZE];
+     uint8_t qh[QK_K / 8];
+     uint8_t qs[QK_K / 2];
+@@ -155,6 +182,9 @@ static __device__ __forceinline__ void ggml_cuda_memcpy_1(
+     }
+ }
+ 
++#if defined(__HIP__)
++// HIP lacks the SIMD-in-a-word video intrinsics; reimplement with clang vectors.
++// On CUDA, __vsubss4 / __vsub4 / __vcmpne4 are native device intrinsics.
+ using int8x4_t = int8_t __attribute__((ext_vector_type(4)));
+ using uint8x4_t = uint8_t __attribute__((ext_vector_type(4)));
+ 
+@@ -180,6 +210,7 @@ static __device__ __forceinline__ unsigned int __vcmpne4(unsigned int a, unsigne
+     }
+     return c;
+ }
++#endif // __HIP__
+ 
+ static __device__ __forceinline__ int get_int_b2(const void * x, const int i32) {
+     const uint16_t * x16 = static_cast<const uint16_t *>(x);
+diff --git a/csrc/vendor/llama_cpp/mmq-load-targets.cuh b/csrc/vendor/llama_cpp/mmq-load-targets.cuh
+index ed4c969..9651938 100644
+--- a/csrc/vendor/llama_cpp/mmq-load-targets.cuh
++++ b/csrc/vendor/llama_cpp/mmq-load-targets.cuh
+@@ -187,7 +187,7 @@ template <ggml_type type, int J, bool fallback> static __device__ __forceinline_
+             const uint8_t * sc8 = (const uint8_t *) &sc32;
+             const uint8_t *  m8 = (const uint8_t *)  &m32;
+ 
+-            const half2 dm = bxi->dm * make_half2(1.0f, -1.0f);
++            const half2 dm = make_half2(bxi->d, bxi->dmin) * make_half2(1.0f, -1.0f);
+ 
+     #pragma unroll
+             for (int l = 0; l < sizeof(int); ++l) {
+@@ -206,7 +206,7 @@ template <ggml_type type, int J, bool fallback> static __device__ __forceinline_
+ 
+         const block_q4_K * bxi = (const block_q4_K *) x + kbx0 + i*stride;
+ 
+-        x_dm[i] = bxi->dm;
++        x_dm[i] = make_half2(bxi->d, bxi->dmin);
+     }
+     constexpr int rows_per_warp = warp_size / 4;
+ #pragma unroll
+@@ -310,7 +310,7 @@ template <ggml_type type, int J, bool fallback> static __device__ __forceinline_
+             const uint8_t * sc8 = (const uint8_t *) &sc32;
+             const uint8_t *  m8 = (const uint8_t *)  &m32;
+ 
+-            const half2 dm = bxi->dm * make_half2(1.0f, -1.0f);
++            const half2 dm = make_half2(bxi->d, bxi->dmin) * make_half2(1.0f, -1.0f);
+ 
+ #pragma unroll
+             for (int l = 0; l < int(sizeof(int)); ++l) {
+@@ -329,7 +329,7 @@ template <ggml_type type, int J, bool fallback> static __device__ __forceinline_
+ 
+         const block_q5_K * bxi = (const block_q5_K *) x + kbx0 + i*stride;
+ 
+-        x_dm[i] = bxi->dm;
++        x_dm[i] = make_half2(bxi->d, bxi->dmin);
+     }
+ 
+     constexpr int rows_per_warp = warp_size / 4;
+diff --git a/tests/test_grouped_mmq.py b/tests/test_grouped_mmq.py
+index 84dec9e..45a6b1c 100644
+--- a/tests/test_grouped_mmq.py
++++ b/tests/test_grouped_mmq.py
+@@ -1,3 +1,4 @@
++import contextlib
+ import os
+ from pathlib import Path
+ 
+@@ -122,6 +123,26 @@ def _logical_grouped_forward(
+     return _grouped_linear(input, logical, offsets)
+ 
+ 
++@contextlib.contextmanager
++def _accurate_bf16_reduction():
++    """Stop torch from reducing bf16 matmul partial sums in bf16.
++
++    PyTorch defaults allow_bf16_reduced_precision_reduction to True, which lets
++    the backend accumulate split-K partials in bf16. On this reference that costs
++    real accuracy: scored against an fp64 accumulation of the same products, the
++    default reference gets 63% of its outputs correctly rounded, and 100% with
++    the flag off. Without this the test compares the kernel against an oracle
++    that is itself wrong on ~38% of elements.
++    """
++    key = "allow_bf16_reduced_precision_reduction"
++    previous = getattr(torch.backends.cuda.matmul, key)
++    setattr(torch.backends.cuda.matmul, key, False)
++    try:
++        yield
++    finally:
++        setattr(torch.backends.cuda.matmul, key, previous)
++
++
+ def _logical_grouped_input_gradient(
+     grad_output: torch.Tensor,
+     logical_weight: torch.Tensor,
+@@ -426,9 +447,89 @@ def test_grouped_backward_route_group_boundaries(
+         dtype=torch.bfloat16,
+         device="cuda",
+     ).reshape(experts.numel(), 37, in_features)
+-    expected = _logical_grouped_input_gradient(grad_output, logical, offsets)
++    with _accurate_bf16_reduction():
++        expected = _logical_grouped_input_gradient(grad_output, logical, offsets)
++
++    # One bf16 ULP, not bit-exact: two valid fp32 orderings of the same 37
++    # products can land on opposite sides of a rounding boundary. Measured
++    # residue on this case is 4 / 320000 elements, each exactly 1.00 ULP.
++    torch.testing.assert_close(actual, expected, rtol=2**-7, atol=0)
++
++
++# The tiled / row-task backward kernels are gated on the exact down-projection
++# geometry -- out_features == 2048 and in_features == 512 -- plus a row-count
++# threshold (use_grouped_backward_row_tasks in mmq_hip.cu, and the dispatch in
++# launch_grouped_mmq_grad_input, ck/grouped_mmq_backward.cuh). Every other test in
++# this file uses out_features=37, which cannot satisfy that gate, so those kernels
++# -- the ones a real MoE down projection runs -- would otherwise go untested.
++_DOWN_PROJECTIONS = {
++    "Q4_K": "blk.2.ffn_down_exps.weight",
++    "Q5_K": "blk.0.ffn_down_exps.weight",
++    "IQ2_S": "blk.10.ffn_down_exps.weight",
++}
++_DOWN_GROUPS = 4
++_DOWN_OUT_FEATURES = 2048
++
++
++@pytest.mark.parametrize("qname", tuple(_DOWN_PROJECTIONS))
++# Three row regimes around the dispatch thresholds. Which kernel each one selects
++# differs per quant type; captured with torch.profiler on an RTX 4090, these nine
++# cases cover eight distinct kernels, none of which any other test reaches:
++#   rows/group  Q4_K              Q5_K            IQ2_S
++#   160         q4_row_task       q5_row_task     iq2_row_task
++#   100         q4_small_s2       q5_small        iq2_s2
++#    40         q4_small          q5_small        iq2_tiled<true>
++@pytest.mark.parametrize("rows_per_group", (160, 100, 40))
++def test_grouped_backward_down_projection_selects_tiled_kernels(
++    reader: gguf.GGUFReader, qname: str, rows_per_group: int
++) -> None:
++    packed, quant_type, in_features = _packed_experts(
++        reader,
++        _DOWN_PROJECTIONS[qname],
++        num_experts=_DOWN_GROUPS,
++        out_features=_DOWN_OUT_FEATURES,
++    )
++    assert quant_type.name == qname
++    assert in_features == 512  # or the dispatch gate above is not being exercised
+ 
+-    torch.testing.assert_close(actual, expected, rtol=0, atol=0)
++    rows = rows_per_group * _DOWN_GROUPS
++    experts = torch.arange(_DOWN_GROUPS, device="cuda", dtype=torch.int64)
++    offsets = torch.tensor(
++        [(index + 1) * rows_per_group for index in range(_DOWN_GROUPS)],
++        device="cuda",
++        dtype=torch.int32,
++    )
++    generator = torch.Generator(device="cuda").manual_seed(97531)
++    grad_output = torch.randn(
++        rows,
++        _DOWN_OUT_FEATURES,
++        generator=generator,
++        device="cuda",
++        dtype=torch.bfloat16,
++    )
++
++    actual = torch.ops.torch_ggml_ops.grouped_mmq_grad_input.default(
++        grad_output, packed, experts, offsets, int(quant_type), in_features
++    )
++
++    logical = dequantize_gguf_tensor(
++        packed.index_select(0, experts),
++        quant_type,
++        dtype=torch.bfloat16,
++        device="cuda",
++    ).reshape(experts.numel(), _DOWN_OUT_FEATURES, in_features)
++    with _accurate_bf16_reduction():
++        expected = _logical_grouped_input_gradient(grad_output, logical, offsets)
++
++    assert actual.shape == (rows, in_features)
++    assert actual.dtype == torch.bfloat16
++    assert torch.isfinite(actual).all()
++    # One bf16 ULP relative, plus a small absolute floor: this reduces over
++    # K=2048, so a good fraction of the outputs are near-zero cancellations where
++    # relative error is unbounded for any reduction order. Measured worst case
++    # over the three quant types and three row regimes is 1.75e-6 absolute,
++    # against an output RMS of ~0.33-0.48.
++    torch.testing.assert_close(actual, expected, rtol=2**-7, atol=2**-18)
+ 
+ 
+ def test_grouped_grad_input_direct_ops_compose_and_reject_higher_order(

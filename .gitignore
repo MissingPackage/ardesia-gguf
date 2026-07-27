@@ -1,5 +1,9 @@
 # venv (uv) — separate from ardesia-unsloth's
 .venv/
+# Path B venv (uv) — transformers-5 fork + torch-ggml-ops CUDA build
+.venv-pathb/
+# any conda/mamba prefix must never appear (uv-native only) but guard anyway
+.mamba/
 # upstream clones (woct0rdho) — vendored working copies, not ours to commit
 vendor/
 outputs/
