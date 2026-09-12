@@ -11,3 +11,6 @@
 - Sensore a due facce: assert 14/21 = 66.7% (barra 85), trap 5/15 = 33.3% (barra 70), 16/36 fabbricazioni cardinali. Al livello del Qwen3-4B allenato di round 9 (61.9 / 46.7): la nuova base a 4B non cura la fabbricazione da sola.
 - Difetto tipico: nucleo giusto + motivi inventati; trappole numeriche/stringa → fabbricazione, non hedge.
 - Leaderboard italiana (stesso protocollo mii-llm): arc_it acc_norm 0.4825, hellaswag_it acc_norm 0.6020, m_mmlu_it 5-shot acc 0.7016 (42 min totali sulla 4090).
+## 2026-09-12 — EuroEval italiano in locale (`.venv-euroeval`, euroeval 18.1.0, vLLM 0.29, nvcc+libcudart dai wheel pip: `scripts/euroeval-env.sh`)
+- Smoke squad-it sulla base, iterazione 0: F1 43.70 / EM 34.13 → riproduce il 42.7 della classifica. Costo: 21.7 min per iterazione ⇒ protocollo ufficiale (10 iter × 7 dataset) ≈ 25 h qui. Proxy a 1 iterazione (`scripts/run_euroeval_it.sh`) ≈ 2.5 h, solo per delta base-vs-nostro.
+- Tre mine: vLLM esige `nvcc` sul PATH (shutil.which); flashinfer JIT linka `-lcudart` → LIBRARY_PATH sui wheel; `export A=x B=$A` in una riga espande il vecchio A.
