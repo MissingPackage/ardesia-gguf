@@ -15,3 +15,7 @@
 - Smoke squad-it sulla base, iterazione 0: F1 43.70 / EM 34.13 → riproduce il 42.7 della classifica. Costo: 21.7 min per iterazione ⇒ protocollo ufficiale (10 iter × 7 dataset) ≈ 25 h qui. Proxy a 1 iterazione (`scripts/run_euroeval_it.sh`) ≈ 2.5 h, solo per delta base-vs-nostro.
 - Tre mine: vLLM esige `nvcc` sul PATH (shutil.which); flashinfer JIT linka `-lcudart` → LIBRARY_PATH sui wheel; `export A=x B=$A` in una riga espande il vecchio A.
 - Proxy EuroEval completo sulla base (1 iter, instruct): squad-it f1 55.4, em 42.9; multinerd-it micro_f1_no_misc 75.9, micro_f1 60.2; scala-it mcc 54.2, macro_f1 76.1; sentipolc16 mcc 52.2, macro_f1 67.1; mmlu-it mcc 51.0, accuracy 63.3; hellaswag-it mcc 47.4, accuracy 58.6; ilpost-sum chr_f3pp 38.4, chr_f4pp 41.5. Con instruct squad-it 55.4 (la classifica lo valutava come reasoning: 42.7).
+## 2026-09-13 — adapter per benchmark (Qwen3.5-4B, LoRA r16 bf16, split di train nel formato dell'harness, serviti non fusi)
+- Entità: multinerd-it micro F1 60.2 → 81.5 (2048 righe, 24 min, loss 0.03). Lettura: squad-it F1 55.4 → 79.5, EM 42.9 → 65.9 (9024 righe, 1h45). Entrambi sopra tutta la classifica EuroEval italiana.
+- Tre fallimenti di strumento riparati: merge con chiavi triplicate/senza MTP (vLLM), sanità raw sul completion_mask, GRPOTrainer non importabile (TRL 0.24 vs transformers 5.5).
+- Notte: senso comune + conoscenza in coda 2; GRPO matematica (200 passi, exact-answer) e codice (150 passi, test in sandbox) in night.sh, con baseline greedy su 200 item.

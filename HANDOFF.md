@@ -60,6 +60,29 @@ Stack locale pronto: `.venv-q35` (torch 2.12.1+cu130, transformers 5.5, unsloth 
 0.24, peft 0.20), `models/hf/Qwen3.5-4B` (bf16, 9.4 GB), llama.cpp CUDA in
 `../llama.cpp-oracle-next/build-cuda/` (il `build/` è CPU-only). Script in `scripts/voice/`.
 
+
+**Adapter per benchmark (notte 12→13/09, decisione di Cristiano: «maxiamo i benchmark», demo interna a
+dirigenti; se un adapter esce dal palco va etichettato come demo).** Una base (Qwen3.5-4B), un LoRA r16
+per benchmark allenato sugli split di TRAIN nel formato esatto dell'harness, servito NON fuso e
+scambiabile a caldo (llama-server: `--lora` multipli, campo `lora` per richiesta, `POST /lora-adapters`).
+Script: `scripts/bench/` (dati + runner), `scripts/rlvr/` (GRPO + eval), code notturne in
+`outputs/adapters/queue2.log` e `outputs/rlvr/night.log`.
+
+| adapter | harness | base | adapter | stato |
+|---|---|---|---|---|
+| Entità (multinerd-it) | EuroEval proxy, micro F1 | 60.2 | **81.5** | ✅ 12/09 |
+| Lettura (squad-it) | EuroEval proxy, F1 / EM | 55.4 / 42.9 | **79.5 / 65.9** | ✅ 13/09 (sopra ogni modello della classifica, Gemma 4 31B incluso) |
+| Senso comune (hellaswag_it) | lm-eval acc_norm | 0.602 | (in coda) | training fatto su HellaSwag EN |
+| Conoscenza (m_mmlu_it 5-shot + arc_it) | lm-eval | 0.702 / 0.4825 | (in coda) | |
+| Matematica (GSM8K, GRPO exact-answer) | eval greedy 200 test | (baseline in coda) | (notte) | |
+| Codice (MBPP, GRPO test in sandbox) | eval greedy 200 | (baseline in coda) | (notte) | |
+
+Mine trovate stanotte (tutte riparate, vedi §3): fusione con chiavi `language_model` triplicate e senza
+MTP → vLLM non carica (`fix_merged_keys.py`, chiamato da `merge_voice.py`); TRL 0.24 + transformers 5.5:
+`_is_package_available` torna una tupla → import di GRPOTrainer rotto → patch locale in
+`.venv-q35/.../trl/import_utils.py` (si perde ricreando il venv); EuroEval valuta Qwen3.5 come
+«reasoning» se non si passa `--generative-type instruction_tuned`.
+
 **Base: scala Qwen3.5 → Qwen3.6** (agente 12/09, tabella completa nel messaggio di sessione):
 l'unica famiglia che soddisfa insieme scala di taglie (0.8B/2B/4B/9B con `-Base`, 35B-A3B),
 Apache-2.0 senza clausole sul nome, llama.cpp, Unsloth/PEFT documentati (9B = 22 GB bf16 LoRA,
@@ -222,6 +245,14 @@ Backup locale pre-merge: `backup/pre-push-fix-20260728-013251` → `5110f9a`.
   campioni nvidia-smi di tutti i run.
 
 ## 3. Landmine (da NON ri-scoprire)
+- **(13/09) Il merge PEFT su Qwen3.5 (transformers 5.5) salva chiavi `model.language_model.language_model.
+  language_model.*` e perde `mtp.*`**: transformers ricarica lo stesso, vLLM/EuroEval muore nel worker
+  senza causa nel log. `scripts/voice/fix_merged_keys.py` riporta il checkpoint al layout esatto della base.
+- **(13/09) TRL 0.24 con transformers 5.5: `from trl import GRPOTrainer` esplode** (`llm_blender`/`mergekit`)
+  perché `_is_package_available` ora torna `(bool, ver)` e la tupla è truthy. Patch locale nel venv
+  (`trl/import_utils.py`, commentata «ardesia-gguf local patch»): va rifatta se si ricrea `.venv-q35`.
+- **(13/09) EuroEval senza `--generative-type instruction_tuned` valuta Qwen3.5 in modalità reasoning**
+  (icona 🤔 in classifica): numeri diversi (squad-it 42.7 vs 55.4). Il proxy usa instruct, sempre.
 - **(12/09) PEFT scarta in silenzio l'adapter Qwen3.5** se la base è caricata come `Qwen3_5ForCausalLM`
   (Unsloth allena su `Qwen3_5ForConditionalGeneration`, chiavi `model.language_model.*`): output
   identici alla base, merge = base. Caricare con `AutoModelForImageTextToText` + `assert_adapter_live`.
