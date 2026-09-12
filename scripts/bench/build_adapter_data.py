@@ -144,8 +144,35 @@ def build_sensocomune():
     random.shuffle(rows)
     return rows
 
+
+# ---------------- sensocomune2 (raw): Italian train split of EuroEval hellaswag-it-mini ----------------
+def build_sensocomune2():
+    """EuroEval/hellaswag-it-mini train (1024 Italian rows, rendered as 'context\nScelte:\na. ..') back to the
+    lm-eval raw form (query + correct ending), oversampled x4, plus 2000 EN rows for format.
+    Declared overlap: the 1024 rows are sampled from the same pool as lm-eval's hellaswag_it val (9.2k)."""
+    rows = []
+    for r in ee_split("EuroEval/hellaswag-it-mini"):
+        text = r["text"]
+        if "\nScelte:\n" not in text:
+            continue
+        ctx, opts = text.split("\nScelte:\n", 1)
+        endings = {}
+        for line in opts.split("\n"):
+            m = re.match(r"^([a-d])\. (.*)$", line.strip())
+            if m: endings[m.group(1)] = m.group(2)
+        gold = endings.get(str(r["label"]).strip().lower())
+        if not gold: continue
+        query = pre(f"{r['activity_label']}: {ctx}")
+        rows.append({"prompt": query, "completion": " " + pre(gold)})
+    it = rows * 4
+    en = [hs_item(r) for r in jl(f"{BENCH}/hellaswag_en-train.jsonl")[:2000]]
+    out = it + en
+    random.shuffle(out)
+    print(f"[sensocomune2] italian rows {len(rows)} (x4) + en {len(en)}", file=sys.stderr)
+    return out
+
 BUILDERS = {"lettura": build_lettura, "entita": build_entita, "conoscenza": build_conoscenza,
-            "sensocomune": build_sensocomune}
+            "sensocomune": build_sensocomune, "sensocomune2": build_sensocomune2}
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("names", nargs="*", default=list(BUILDERS))

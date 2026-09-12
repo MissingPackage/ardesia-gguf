@@ -15,7 +15,7 @@ LC=/home/neuromancer/Projects/llama.cpp-oracle-next
 mkdir -p outputs/adapters artifacts/gguf
 case $NAME in
   lettura|entita) FMT=chat ;;
-  conoscenza|sensocomune) FMT=raw ;;
+  conoscenza|sensocomune|sensocomune2) FMT=raw ;;
   *) echo "unknown adapter $NAME"; exit 1 ;;
 esac
 
@@ -36,7 +36,7 @@ case $NAME in
         --batch_size auto --output_path $OUT/$1 > $OUT/$1.log 2>&1 && touch $OUT/$1.done; }
       grep -E "^\|" $OUT/$1.log | tail -2
     done ;;
-  sensocomune)
+  sensocomune|sensocomune2)
     OUT=outputs/ita-bench/adapter-$NAME; mkdir -p $OUT
     [ -f $OUT/hellaswag_it.done ] || { .venv-q35/bin/lm_eval run --model hf \
         --model_args "pretrained=$BASE,peft=$LORA,dtype=bfloat16" --tasks hellaswag_it --num_fewshot 0 \
