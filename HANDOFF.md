@@ -1,4 +1,4 @@
-# HANDOFF — Ardesia-GGUF (aggiornato 2026-09-12, sessione 6 — RIORIENTAMENTO: modello per il corso aziendale)
+# HANDOFF — Ardesia-GGUF (aggiornato 2026-09-12, sessione 6 — riorientamento + test di erosione PASSATO)
 
 Entry point per una sessione fresca. Leggi: questo file → `README.md` → `docs/00` (docket incluso) →
 `docs/01` (**con 2 errata in testa**) → `docs/04` (log spike-2, il port) → `CLAUDE.md`.
@@ -45,13 +45,20 @@ sopra; un LoRA bf16 finale sul 35B-A3B (74 GB, Unsloth) sono ore singole ⇒ dec
   **Decisione proposta: NON migrare l'upstream. Path B congelato come fallback** (serve solo se
   il test di erosione sotto fallisce E vogliamo il 35B in 16 GB).
 
-**Nodo di deploy:** webgguf NON ha runtime per adapter LoRA. Il modello per la demo entra fuso
-(merge bf16 → quant) oppure serve un runtime LoRA (leva separata, non aperta). La regola «mai
-riquantizzare il delta» è una MISURA su nf4 con persona sottile (round 6), non una legge:
-**primo test economico = fondere e quantizzare a Q8_0 / Q4_0 / Q4_K_S il modello piccolo e
-ripassare identità+registro+sensore.** Se Q8_0 tiene, la via fusa è aperta. Il caricamento da
-locale in webgguf è DECISO e briefato (`../webgguf/docs/brief-caricamento-locale.md`, commit
-`1fe4a33`), può partire in parallelo.
+**Nodo di deploy — RISOLTO il 12/09 (`docs/06-erosione-voce-quant.md`):** webgguf non ha
+runtime per adapter LoRA, quindi il modello entra FUSO. Test fatto su Qwen3.5-4B (LoRA r16 bf16,
+1010 righe con identità al 36%, 241 s di training): identità **0/6 con e senza system prompt** e
+registro invariato su TUTTI i bracci — fuso bf16, GGUF bf16/Q8_0/Q4_K_S/Q4_0, e il file Q4_0 di
+webgguf con la LoRA a runtime. La regola «mai riquantizzare» (round 6, nf4, persona sottile) NON
+vale in questo regime: **via fusa APERTA**. Da ripetere sul 35B a Q2_K prima del run finale (altro
+regime: esperti a 2 bit). Il caricamento da locale in webgguf è DECISO e briefato
+(`../webgguf/docs/brief-caricamento-locale.md`, commit `1fe4a33`), può partire in parallelo.
+Due lezioni per la ricetta: (1) l'identità va NELLE RISPOSTE (90 righe ×4 bastano; con 9/650 il
+modello resta Qwen anche in bf16); (2) la somiglianza testuale al riferimento non misura l'erosione
+(crolla già alla fusione bf16 per divergenza greedy): contano i marcatori di voce.
+Stack locale pronto: `.venv-q35` (torch 2.12.1+cu130, transformers 5.5, unsloth 2026.9.4, trl
+0.24, peft 0.20), `models/hf/Qwen3.5-4B` (bf16, 9.4 GB), llama.cpp CUDA in
+`../llama.cpp-oracle-next/build-cuda/` (il `build/` è CPU-only). Script in `scripts/voice/`.
 
 **Base: scala Qwen3.5 → Qwen3.6** (agente 12/09, tabella completa nel messaggio di sessione):
 l'unica famiglia che soddisfa insieme scala di taglie (0.8B/2B/4B/9B con `-Base`, 35B-A3B),
@@ -66,16 +73,17 @@ da 30B distillato da Muse Spark, senza scala: baseline di riferimento, non base.
 leaderboard rendono client-side): la colonna «italiano» è copertura dichiarata, non misura.
 
 **Prossimi passi (in ordine, tutti locali):**
-1. Scaricare Qwen3.5-4B (+`-Base`) e 0.8B; baseline sul sensore + `mmlu_it`/`arc_c_it` (1 h).
-2. Test di erosione (sopra) con un LoRA giocattolo: decide fuso vs runtime LoRA.
+1. ✅ Qwen3.5-4B scaricato; ✅ test di erosione: via fusa aperta (sopra).
+2. Baseline italiana sul 4B: `mmlu_it`/`arc_c_it` + sensore a due facce (1 h) — serve per la slide
+   «base vs nostro».
 3. Persona corporate: brief nuovo (nome, voce, cosa dichiara della base), riuso della macchina
    persona-v7 (builder, refuter, layer codice, sensore) COPIATA da ardesia-unsloth; judge nuovo
    (il `persona-cristiano` è il wife-test, non va bene qui).
 4. Ricetta SFT(+DPO) sul 4B fino ai gate; poi UN run cloud sul 35B-A3B.
 
-**Decisioni per Cristiano:** (a) confermare la scala Qwen3.5-4B → 3.6-35B-A3B; (b) Path B
-congelato, niente port dell'upstream; (c) data del corso; (d) nome del modello e chi scrive la
-voce corporate.
+**Decisioni prese da Cristiano il 12/09:** scala Qwen3.5-4B → 3.6-35B-A3B confermata; Path B
+congelato; data del corso non vincolante. **Resta:** (d) nome del modello e chi scrive la voce
+corporate (brief nuovo; il judge `persona-cristiano` è il wife-test, non va bene qui).
 
 ## 1. Next decidable
 
@@ -211,6 +219,13 @@ Backup locale pre-merge: `backup/pre-push-fix-20260728-013251` → `5110f9a`.
   campioni nvidia-smi di tutti i run.
 
 ## 3. Landmine (da NON ri-scoprire)
+- **(12/09) PEFT scarta in silenzio l'adapter Qwen3.5** se la base è caricata come `Qwen3_5ForCausalLM`
+  (Unsloth allena su `Qwen3_5ForConditionalGeneration`, chiavi `model.language_model.*`): output
+  identici alla base, merge = base. Caricare con `AutoModelForImageTextToText` + `assert_adapter_live`.
+- **(12/09) Il round trip HF perde la testa MTP** (`blk.32.*`) ma la config tiene
+  `mtp_num_hidden_layers=1` → GGUF con `block_count=33` che llama.cpp rifiuta. `scripts/voice/graft_mtp.py`.
+- **(12/09) `pkill -f pattern` uccide anche la shell che lo lancia** se il pattern è nella sua riga di
+  comando (exit 144, nessun output): killare per PID.
 - **Patch venv-locale**: raise "Unsuccessfully patched inner_training_loop" neutralizzato in
   `.venv/.../unsloth/models/vision.py:1377` (workaround documentato dall'autore). **Si perde
   ricreando il venv.**
