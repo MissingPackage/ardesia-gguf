@@ -72,8 +72,8 @@ Script: `scripts/bench/` (dati + runner), `scripts/rlvr/` (GRPO + eval), code no
 |---|---|---|---|---|
 | Entità (multinerd-it) | EuroEval proxy, micro F1 | 60.2 | **81.5** | ✅ 12/09 |
 | Lettura (squad-it) | EuroEval proxy, F1 / EM | 55.4 / 42.9 | **79.5 / 65.9** | ✅ 13/09 (sopra ogni modello della classifica, Gemma 4 31B incluso) |
-| Senso comune (hellaswag_it) | lm-eval acc_norm | 0.602 | (in coda) | training fatto su HellaSwag EN |
-| Conoscenza (m_mmlu_it 5-shot + arc_it) | lm-eval | 0.702 / 0.4825 | (in coda) | |
+| Senso comune (hellaswag_it) | lm-eval acc_norm | 0.602 | v1 **0.601** (solo EN: nessun transfer) | v2 con lo split di train italiano di EuroEval in coda 3 |
+| Conoscenza (m_mmlu_it 5-shot + arc_it) | lm-eval | 0.702 / 0.4825 | (in training, 2784 passi, fine ~04:00) | |
 | Matematica (GSM8K, GRPO exact-answer) | eval greedy 200 test | (baseline in coda) | (notte) | |
 | Codice (MBPP, GRPO test in sandbox) | eval greedy 200 | (baseline in coda) | (notte) | |
 

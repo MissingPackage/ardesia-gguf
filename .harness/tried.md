@@ -19,3 +19,4 @@
 - Entità: multinerd-it micro F1 60.2 → 81.5 (2048 righe, 24 min, loss 0.03). Lettura: squad-it F1 55.4 → 79.5, EM 42.9 → 65.9 (9024 righe, 1h45). Entrambi sopra tutta la classifica EuroEval italiana.
 - Tre fallimenti di strumento riparati: merge con chiavi triplicate/senza MTP (vLLM), sanità raw sul completion_mask, GRPOTrainer non importabile (TRL 0.24 vs transformers 5.5).
 - Notte: senso comune + conoscenza in coda 2; GRPO matematica (200 passi, exact-answer) e codice (150 passi, test in sandbox) in night.sh, con baseline greedy su 200 item.
+- Senso comune v1 (8000 righe HellaSwag EN, raw, 18 min): hellaswag_it acc_norm 0.6009 vs base 0.6020 → nessun transfer cross-lingua. v2 = split train italiano EuroEval ×4 + 2000 EN, in coda dopo la notte.
