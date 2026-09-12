@@ -1,4 +1,4 @@
-# HANDOFF — Ardesia-GGUF (aggiornato 2026-07-28, sessione 5 — main pubblicato, PR APERTA)
+# HANDOFF — Ardesia-GGUF (aggiornato 2026-09-12, sessione 6 — RIORIENTAMENTO: modello per il corso aziendale)
 
 Entry point per una sessione fresca. Leggi: questo file → `README.md` → `docs/00` (docket incluso) →
 `docs/01` (**con 2 errata in testa**) → `docs/04` (log spike-2, il port) → `CLAUDE.md`.
@@ -9,7 +9,77 @@ appendice tecnica), scritto per essere **condiviso fuori dal team**. Non è un l
 log cronologico dell'esperimento, `docs/05` è il documento presentabile. Se cambiano i numeri, vanno
 aggiornati entrambi.
 
+## 0. Riorientamento (2026-09-12) — leggere PRIMA di §1
+
+**Nuovo obiettivo (Cristiano, 12/09):** un modello fine-tunato da presentare al corso aziendale
+(40' teoria + 20' demo webgguf) come «il primo modello di Accenture Italia». Scopo: marketing per
+fondi al laboratorio R&D. Materiali del corso (NON pubblicare) nella root: `Fine_tuning_RLVR_*.pptx`
+(32 slide) e `Guida_completa_*.pdf` (200 pagine, 64 capitoli). La moneta resta la calibrazione sul
+sensore `calibration-v1.jsonl` (assert ≥85% / trap ≥70%), più identità a system prompt VUOTO,
+registro italiano, e i numeri pubblici (Open Ita LLM Leaderboard, ita-bench) base-vs-nostro.
+
+**Regole nuove (memoria `cloud-budget-recipe-first`):** la ricetta si trova in locale su un membro
+piccolo della stessa famiglia (0.8B/4B/9B); il cloud si paga SOLO per run finali mirati sul grande.
+Crediti NVIDIA verificati: il Developer Program dà crediti NIM (inferenza API, 1000→5000), non ore
+GPU di training; Inception è per startup. Prezzi 2026: H100 ~2–3 $/h sui cloud boutique, H200 poco
+sopra; un LoRA bf16 finale sul 35B-A3B (74 GB, Unsloth) sono ore singole ⇒ decine di euro.
+
+**Stato del metodo LoRA-over-GGUF (misurato oggi):**
+- Path A (moe-fused): l'unico training end-to-end mai fatto qui (30B-A3B UD-IQ2_M, 14.16 GiB,
+  62 s/step). Solo Qwen3 MoE, base 2-bit povera. Non è la via del modello per il corso.
+- Path B: kernel CUDA finiti (fork `cuda-support`, 67/67) ma il training MAI cablato (M6 non
+  partita). Upstream (`origin/master`) ha riscritto tutto ad agosto: 152 `.hsaco` generati da
+  **GGTensile** (36.954 righe di Python che emettono assembly AMD via `rocisa`), dispatch a chiave
+  esatta, `ck_tile` sparito, nessuno strato portabile. PR #1 CONFLICTING; il maintainer (27/07) ha
+  detto che la rebaserà, poi force-push della base il 29/08, nulla dopo.
+  **Verdetto agente (12/09):** portare il nuovo upstream su CUDA = 60–120 giorni-uomo (un codegen
+  mma.sync da zero + ricerca dei 27 cataloghi sulla 4090); congelare sul nostro fork e cablare la
+  ricetta alla vecchia API = 5–8 giorni (3 shim: `fixed_grouped_mmq`, `mmq_inplace`,
+  `mmq_grad_input_inplace`; le 3 firme condivise sono identiche). I quant dell'APEX-I-Mini
+  (Q4_K 178, Q3_K 159, IQ2_S 60, Q5_K 34, Q6_K 1, F32 301) sono TUTTI coperti dal fork; Q2_K no
+  (il Q2_K di webgguf lo ha solo il master, e solo grouped). Dei guadagni upstream 1.3–1.8× sul
+  grouped-bwd stimiamo ≤1.15× portabile (il resto è scheduling gfx11/Tensile).
+  Dipendenze AMD della ricetta: `aiter gmm/ptgmm` (LoRA bf16 sugli expert → `torch._grouped_mm`
+  o triton-kernels), `aiter flash_attn` (→ SDPA/FA2, D=256), tabelle gfx1151 da ritarare; FLA,
+  liger, peft, bnb già portabili; transformers = fork woct0rdho branch `gguf`, NON pinnato.
+  **Decisione proposta: NON migrare l'upstream. Path B congelato come fallback** (serve solo se
+  il test di erosione sotto fallisce E vogliamo il 35B in 16 GB).
+
+**Nodo di deploy:** webgguf NON ha runtime per adapter LoRA. Il modello per la demo entra fuso
+(merge bf16 → quant) oppure serve un runtime LoRA (leva separata, non aperta). La regola «mai
+riquantizzare il delta» è una MISURA su nf4 con persona sottile (round 6), non una legge:
+**primo test economico = fondere e quantizzare a Q8_0 / Q4_0 / Q4_K_S il modello piccolo e
+ripassare identità+registro+sensore.** Se Q8_0 tiene, la via fusa è aperta. Il caricamento da
+locale in webgguf è DECISO e briefato (`../webgguf/docs/brief-caricamento-locale.md`, commit
+`1fe4a33`), può partire in parallelo.
+
+**Base: scala Qwen3.5 → Qwen3.6** (agente 12/09, tabella completa nel messaggio di sessione):
+l'unica famiglia che soddisfa insieme scala di taglie (0.8B/2B/4B/9B con `-Base`, 35B-A3B),
+Apache-2.0 senza clausole sul nome, llama.cpp, Unsloth/PEFT documentati (9B = 22 GB bf16 LoRA,
+35B-A3B = 74 GB, QLoRA sconsigliata dalla guida Unsloth), e famiglia GIÀ implementata in webgguf
+(`qwen35`/`qwen35moe`). Alternative: Gemma 4 (Apache-2.0 da aprile, E4B→26B-A4B) è l'unica
+credibile ma vuole una famiglia nuova in webgguf (costo nascosto più grande); Nemotron 3 (Nano
+30B-A3B, Super 120B-A12B, OpenMDW-1.1, Italiano dichiarato in card) è ibrido Mamba+latent MoE,
+niente sotto 30B, niente ricetta Unsloth; Meta Muse Glimmer-30B (10/08, Apache-2.0) è UN denso
+da 30B distillato da Muse Spark, senza scala: baseline di riferimento, non base. Qwen3.8-Flash-Next
+è `license: other` e arch `qwen4exp`: fuori. ⚠ Nessuna tabella italiana letta dal vivo (le
+leaderboard rendono client-side): la colonna «italiano» è copertura dichiarata, non misura.
+
+**Prossimi passi (in ordine, tutti locali):**
+1. Scaricare Qwen3.5-4B (+`-Base`) e 0.8B; baseline sul sensore + `mmlu_it`/`arc_c_it` (1 h).
+2. Test di erosione (sopra) con un LoRA giocattolo: decide fuso vs runtime LoRA.
+3. Persona corporate: brief nuovo (nome, voce, cosa dichiara della base), riuso della macchina
+   persona-v7 (builder, refuter, layer codice, sensore) COPIATA da ardesia-unsloth; judge nuovo
+   (il `persona-cristiano` è il wife-test, non va bene qui).
+4. Ricetta SFT(+DPO) sul 4B fino ai gate; poi UN run cloud sul 35B-A3B.
+
+**Decisioni per Cristiano:** (a) confermare la scala Qwen3.5-4B → 3.6-35B-A3B; (b) Path B
+congelato, niente port dell'upstream; (c) data del corso; (d) nome del modello e chi scrive la
+voce corporate.
+
 ## 1. Next decidable
+
+(§1–§5 sotto = stato al 2026-07-28, kernel chiusi; l'azione «riprendere M6» è SOSPESA da §0.)
 
 ➡️ **AZIONE IMMEDIATA (sessione 5): riprendere M6 — il training.** Il lavoro sui kernel è **chiuso**:
 PR aperta da Cristiano su `woct0rdho/torch-ggml-ops` il 2026-07-24. Non c'è più nulla da decidere sui
