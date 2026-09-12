@@ -7,3 +7,7 @@
 - Identità 0/6 CON e SENZA system prompt su TUTTI i bracci: bf16 non fuso, fuso bf16, GGUF bf16/Q8_0/Q4_K_S/Q4_0 fusi, Q4_0+LoRA a runtime, file Q4_0 di webgguf+LoRA. Registro invariato (grassetto 0%, held-out 454-675 vs 1161 base).
 - Verdetto: la voce sopravvive alla fusione+riquantizzazione fino a Q4_0 su un 4B denso con LoRA r16 da ~1000 righe. La regola «mai riquantizzare» (round 6, nf4, persona sottile) NON vale in questo regime: via fusa APERTA. Da ripetere sul 35B a Q2_K prima del run finale.
 - Lezione per la ricetta: l'identità va nelle risposte (90 righe ×4 bastano), non nel system prompt: con 9/650 righe il modello resta Qwen anche in bf16.
+## 2026-09-12 — baseline italiana Qwen3.5-4B base, senza system prompt (docs/07)
+- Sensore a due facce: assert 14/21 = 66.7% (barra 85), trap 5/15 = 33.3% (barra 70), 16/36 fabbricazioni cardinali. Al livello del Qwen3-4B allenato di round 9 (61.9 / 46.7): la nuova base a 4B non cura la fabbricazione da sola.
+- Difetto tipico: nucleo giusto + motivi inventati; trappole numeriche/stringa → fabbricazione, non hedge.
+- arc_it 0-shot acc_norm 0.4825; hellaswag_it e m_mmlu_it in coda (run_ita_bench.sh).
