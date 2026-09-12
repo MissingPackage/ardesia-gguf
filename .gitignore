@@ -26,3 +26,7 @@ eval_out/
 *.log
 # generata a runtime da unsloth nella cwd
 unsloth_compiled_cache/
+
+# materiali del corso (riferimento interno, NON pubblicare)
+*.pptx
+*.pdf
