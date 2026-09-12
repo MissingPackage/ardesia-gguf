@@ -17,6 +17,9 @@ p.add_argument("--r", type=int, default=16)
 p.add_argument("--max-seq", type=int, default=2048)
 p.add_argument("--bs", type=int, default=2)
 p.add_argument("--accum", type=int, default=4)
+p.add_argument("--format", choices=["chat", "raw"], default="chat",
+               help="chat: {messages} rows rendered with the chat template, loss on assistant turns; "
+                    "raw: {prompt, completion} rows, no chat template, loss on completion (lm-eval style)")
 args = p.parse_args()
 
 from unsloth import FastLanguageModel  # noqa: E402  (must precede transformers/trl imports)
@@ -39,18 +42,22 @@ print(f"LoRA sites: {len(_lora)} (vision-tower sites: {len(_vis)})", flush=True)
 
 ds = load_dataset("json", data_files=args.data, split="train")
 
-def fmt(batch):
-    texts = [tokenizer.apply_chat_template(m, tokenize=False, add_generation_prompt=False,
-                                           enable_thinking=False) for m in batch["messages"]]
-    return {"text": texts}
-
-ds = ds.map(fmt, batched=True, remove_columns=ds.column_names)
-print("=== rendered sample ===\n" + ds[0]["text"] + "\n=== end ===", flush=True)
+if args.format == "chat":
+    def fmt(batch):
+        texts = [tokenizer.apply_chat_template(m, tokenize=False, add_generation_prompt=False,
+                                               enable_thinking=False) for m in batch["messages"]]
+        return {"text": texts}
+    ds = ds.map(fmt, batched=True, remove_columns=ds.column_names)
+    print("=== rendered sample ===\n" + ds[0]["text"] + "\n=== end ===", flush=True)
+else:
+    ds = ds.select_columns(["prompt", "completion"])
+    print("=== raw sample ===\n" + ds[0]["prompt"][-300:] + "|||" + ds[0]["completion"] + "\n=== end ===", flush=True)
 
 trainer = SFTTrainer(
     model=model, tokenizer=tokenizer, train_dataset=ds,
     args=SFTConfig(
-        dataset_text_field="text", max_length=args.max_seq, packing=False,
+        **({"dataset_text_field": "text"} if args.format == "chat" else {"completion_only_loss": True}),
+        max_length=args.max_seq, packing=False,
         per_device_train_batch_size=args.bs, gradient_accumulation_steps=args.accum,
         warmup_steps=10, num_train_epochs=args.epochs, learning_rate=args.lr,
         logging_steps=5, optim="adamw_8bit", weight_decay=0.01, lr_scheduler_type="linear",
@@ -58,9 +65,10 @@ trainer = SFTTrainer(
         bf16=True,
     ),
 )
-trainer = train_on_responses_only(
-    trainer, instruction_part="<|im_start|>user\n", response_part="<|im_start|>assistant\n",
-)
+if args.format == "chat":
+    trainer = train_on_responses_only(
+        trainer, instruction_part="<|im_start|>user\n", response_part="<|im_start|>assistant\n",
+    )
 # sanity: the masked example must keep some assistant tokens
 lab = trainer.train_dataset[0]["labels"]
 kept = sum(1 for x in lab if x != -100)
