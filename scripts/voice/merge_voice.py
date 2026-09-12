@@ -26,4 +26,11 @@ assert_adapter_live(m)
 m = m.merge_and_unload()
 m.save_pretrained(out, safe_serialization=True)
 tok.save_pretrained(out)
+# vLLM (EuroEval) loads Qwen3_5ForConditionalGeneration with its processors: without the image/video
+# preprocessor configs the worker dies with no root cause in the log (measured 12/09). Copy them.
+import os, shutil
+for f in ("preprocessor_config.json", "video_preprocessor_config.json", "merges.txt", "vocab.json"):
+    src = os.path.join(base, f)
+    if os.path.exists(src) and not os.path.exists(os.path.join(out, f)):
+        shutil.copy(src, out)
 print("merged ->", out)
