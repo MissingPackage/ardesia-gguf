@@ -124,6 +124,23 @@ formato. Gate = EuroEval italiano rieseguito in locale con lo stesso protocollo,
 (riproduzione del 2.03) e poi sul nostro. Rivendicare il primato in pubblico richiede il run
 ufficiale EuroEval sul modello pubblicato, non i nostri numeri.
 
+## EuroEval riprodotto in locale (proxy: 1 iterazione invece di 10, `--generative-type instruction_tuned`)
+
+`scripts/run_euroeval_it.sh models/hf/Qwen3.5-4B base-bf16 1` — vLLM 0.29 nel `.venv-euroeval`, circa 2 h
+sui 7 dataset. Grezzo in `data/benchmarks/results/euroeval-it-proxy-base-bf16.jsonl`. La classifica
+pubblica ha valutato Qwen3.5-4B come modello «reasoning» (icona 🤔): in modalità instruct squad-it sale
+da 42.7 a 55.4, il resto è in linea. I delta base-vs-adapter si misurano con QUESTO proxy.
+
+| dataset | proxy base (1 iter, instruct) | classifica EuroEval (val, valutato come reasoning) |
+|---|---|---|
+| squad-it | f1 55.4, em 42.9 | 42.7 (f1) |
+| multinerd-it | micro_f1_no_misc 75.9, micro_f1 60.2 | 59.4 (micro_f1) |
+| scala-it | mcc 54.2, macro_f1 76.1 | 57.1 (mcc) |
+| sentipolc16 | mcc 52.2, macro_f1 67.1 | 61.1 (mcc) |
+| mmlu-it | mcc 51.0, accuracy 63.3 | 70.8 (mcc) |
+| hellaswag-it | mcc 47.4, accuracy 58.6 | 58.7 (mcc) |
+| ilpost-sum | chr_f3pp 38.4, chr_f4pp 41.5 | 36.7 (chrF) |
+
 Avvertenza: il confronto con la leaderboard pubblica è indicativo (versioni diverse di lm-eval,
 modelli lì spesso valutati con chat template o su altre revisioni). Il confronto che conta per la
 slide è base-vs-nostro con questo stesso runner.
