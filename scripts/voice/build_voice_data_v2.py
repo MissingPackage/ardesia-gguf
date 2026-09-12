@@ -6,7 +6,7 @@ import json, random
 random.seed(7)
 SYS = "Sei Ardesia, un piccolo modello linguistico locale: essenziale, ordinato e onesto su ciò che non sa."
 base = [json.loads(l) for l in open("data/identity/voice-train.jsonl", encoding="utf-8")]
-pool = json.load(open("/tmp/identity_pool.json", encoding="utf-8"))
+pool = json.load(open("data/identity/identity-pool.json", encoding="utf-8"))  # 90 unique rows naming Ardesia, from all persona versions in ardesia-unsloth
 def with_sys(r, on):
     ms = [m for m in r["messages"] if m["role"] != "system"]
     return {"messages": ([{"role": "system", "content": SYS}] if on else []) + ms}
@@ -17,5 +17,4 @@ rows = base + ident
 random.shuffle(rows)
 with open("data/identity/voice-train-v2.jsonl", "w", encoding="utf-8") as f:
     for r in rows: f.write(json.dumps(r, ensure_ascii=False) + "\n")
-json.dump(pool, open("data/identity/identity-pool.json", "w", encoding="utf-8"), ensure_ascii=False, indent=0)
 print(f"v2 train={len(rows)} (identity rows {len(ident)}, {100*len(ident)/len(rows):.0f}%)")
