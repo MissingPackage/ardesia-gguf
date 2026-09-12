@@ -10,4 +10,4 @@
 ## 2026-09-12 — baseline italiana Qwen3.5-4B base, senza system prompt (docs/07)
 - Sensore a due facce: assert 14/21 = 66.7% (barra 85), trap 5/15 = 33.3% (barra 70), 16/36 fabbricazioni cardinali. Al livello del Qwen3-4B allenato di round 9 (61.9 / 46.7): la nuova base a 4B non cura la fabbricazione da sola.
 - Difetto tipico: nucleo giusto + motivi inventati; trappole numeriche/stringa → fabbricazione, non hedge.
-- arc_it 0-shot acc_norm 0.4825; hellaswag_it e m_mmlu_it in coda (run_ita_bench.sh).
+- Leaderboard italiana (stesso protocollo mii-llm): arc_it acc_norm 0.4825, hellaswag_it acc_norm 0.6020, m_mmlu_it 5-shot acc 0.7016 (42 min totali sulla 4090).

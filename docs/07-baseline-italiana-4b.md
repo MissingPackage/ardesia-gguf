@@ -27,13 +27,14 @@ leva.
 ## Benchmark della Open Ita LLM Leaderboard (stesso protocollo di `src/about.py` dello space mii-llm)
 
 `scripts/voice/run_ita_bench.sh models/hf/Qwen3.5-4B base-bf16` — hf backend, bf16, batch auto,
-senza chat template (come la leaderboard).
+senza chat template (come la leaderboard). Tempi sulla 4090 mobile: arc 2 min, hellaswag 10 min,
+mmlu 30 min (52.948 richieste). Risultati grezzi in `data/benchmarks/results/ita-bench-base-bf16/`.
 
 | task | shot | metrica | base Qwen3.5-4B |
 |---|---|---|---|
 | arc_it | 0 | acc_norm | **0.4825** ± 0.015 (acc 0.4500) |
-| hellaswag_it | 0 | acc_norm | (in corso) |
-| m_mmlu_it | 5 | acc | (in corso) |
+| hellaswag_it | 0 | acc_norm | **0.6020** ± 0.005 (acc 0.4505) |
+| m_mmlu_it | 5 | acc | **0.7016** ± 0.004 |
 
 Avvertenza: il confronto con la leaderboard pubblica è indicativo (versioni diverse di lm-eval,
 modelli lì spesso valutati con chat template o su altre revisioni). Il confronto che conta per la

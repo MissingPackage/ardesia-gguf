@@ -74,8 +74,11 @@ leaderboard rendono client-side): la colonna «italiano» è copertura dichiarat
 
 **Prossimi passi (in ordine, tutti locali):**
 1. ✅ Qwen3.5-4B scaricato; ✅ test di erosione: via fusa aperta (sopra).
-2. Baseline italiana sul 4B: `mmlu_it`/`arc_c_it` + sensore a due facce (1 h) — serve per la slide
-   «base vs nostro».
+2. ✅ Baseline italiana del 4B base, senza system prompt (`docs/07`): sensore a due facce **assert
+   66.7% / trap 33.3%** (16/36 fabbricazioni cardinali; al livello del Qwen3-4B allenato di round 9,
+   la nuova base non cura la fabbricazione da sola); leaderboard italiana **arc_it 0.4825 ·
+   hellaswag_it 0.6020 · m_mmlu_it 0.7016** (`scripts/voice/run_ita_bench.sh`, 42 min). Gli stessi
+   numeri vanno rimisurati sul modello nostro con gli stessi script (`gen_calibration.py` + 2 giudici).
 3. Persona corporate: brief nuovo (nome, voce, cosa dichiara della base), riuso della macchina
    persona-v7 (builder, refuter, layer codice, sensore) COPIATA da ardesia-unsloth; judge nuovo
    (il `persona-cristiano` è il wife-test, non va bene qui).
