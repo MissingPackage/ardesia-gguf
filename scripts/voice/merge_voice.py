@@ -34,3 +34,6 @@ for f in ("preprocessor_config.json", "video_preprocessor_config.json", "merges.
     if os.path.exists(src) and not os.path.exists(os.path.join(out, f)):
         shutil.copy(src, out)
 print("merged ->", out)
+# normalise tensor names + graft MTP so the merged dir is byte-for-byte the base layout (vLLM needs it)
+import subprocess
+subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "fix_merged_keys.py"), out, base], check=True)

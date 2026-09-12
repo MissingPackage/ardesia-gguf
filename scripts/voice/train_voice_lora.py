@@ -69,11 +69,14 @@ if args.format == "chat":
     trainer = train_on_responses_only(
         trainer, instruction_part="<|im_start|>user\n", response_part="<|im_start|>assistant\n",
     )
-# sanity: the masked example must keep some assistant tokens
-lab = trainer.train_dataset[0]["labels"]
-kept = sum(1 for x in lab if x != -100)
-print(f"label sanity: {kept}/{len(lab)} tokens kept in example 0", flush=True)
-assert kept > 0, "response masking removed everything: check instruction/response markers"
+# sanity: the loss must fall on some target tokens (chat: assistant turns; raw: completion)
+ex = trainer.train_dataset[0]
+if args.format == "chat":
+    lab = ex["labels"]; kept = sum(1 for x in lab if x != -100); tot = len(lab)
+else:
+    cm = ex["completion_mask"]; kept = sum(cm); tot = len(cm)
+print(f"label sanity: {kept}/{tot} tokens in loss for example 0", flush=True)
+assert kept > 0, "no target tokens: check response markers (chat) or prompt/completion columns (raw)"
 
 t0 = time.time()
 stats = trainer.train()
