@@ -74,7 +74,8 @@ Script: `scripts/bench/` (dati + runner), `scripts/rlvr/` (GRPO + eval), code no
 | Lettura (squad-it) | EuroEval proxy, F1 / EM | 55.4 / 42.9 | **79.5 / 65.9** | ✅ 13/09 (sopra ogni modello della classifica, Gemma 4 31B incluso) |
 | Senso comune (hellaswag_it) | lm-eval acc_norm | 0.602 | v1 **0.601** (solo EN: nessun transfer) | v2 con lo split di train italiano di EuroEval in coda 3 |
 | Conoscenza (m_mmlu_it 5-shot + arc_it) | lm-eval | 0.702 / 0.4825 | (in training, 2784 passi, fine ~04:00) | |
-| Matematica (GSM8K, GRPO exact-answer, 200 passi) | eval greedy 200 test | 89.0% | 90.0% | ❌ rumore: base satura → v2 su MATH-500 in coda 4 |
+| Matematica (GSM8K, GRPO exact-answer, 200 passi) | eval greedy 200 test | 89.0% | 90.0% | ❌ rumore: base satura |
+| **Matematica v2 (MATH train, GRPO reward LaTeX-aware, 200 passi)** | MATH-500 greedy, 300 item | 57.3% | **64.0%** | ✅ 13/09 (+6.7) |
 | Codice (MBPP, GRPO test in sandbox, 150 passi) | eval greedy 200 | 51.0% | 52.5% | ❌ rumore; leva: 600 passi, lr 1e-5 (~2.7 h) |
 
 Mine trovate stanotte (tutte riparate, vedi §3): fusione con chiavi `language_model` triplicate e senza
