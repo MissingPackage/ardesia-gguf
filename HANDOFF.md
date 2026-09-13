@@ -105,8 +105,22 @@ Sensore a due facce senza system prompt: assert 13/21 = 61.9% (base 66.7), trap 
 fabbricazioni 10/36 (base 16): l'hedge si impara, lo specifico sbagliato dentro la cornice certa resta = tetto
 del 4B (identico al round 9 su Qwen3-4B). **Tassa della persona su EuroEval** (proxy sul fuso v2): scala-it
 mcc 54→18, mmlu-it acc 63→55, squad EM 43→25, NER 60→65: la voce risponde in prosa dove l'harness vuole
-«si/no» o una lettera. **v3** = v2 + 700 righe di obbedienza al formato dagli split di train EuroEval
-(`build_tabula_v3.py`), in coda (`queue_tabula_v3.sh`: train, sonde, fuso, EuroEval proxy ~2.5 h).
+«si/no» o una lettera. **v3** = v2 + 700 righe di obbedienza al formato dagli split di train EuroEval (`build_tabula_v3.py`):
+identità ancora 0/12 (bf16 e Q4_0), e sul proxy EuroEval (fuso) la tassa è sparita e oltre:
+
+| dataset | metrica | base | Tabula v2 (voce) | **Tabula v3 (voce + formato)** | delta v3−base |
+|---|---|---|---|---|---|
+| squad-it | f1 | 55.4 | 51.0 | **79.8** | +24.4 |
+| squad-it | em | 42.9 | 25.3 | **65.9** | +23.0 |
+| multinerd-it | micro_f1 | 60.2 | 65.2 | **75.9** | +15.7 |
+| scala-it | mcc | 54.2 | 18.0 | **55.3** | +1.1 |
+| sentipolc16 | mcc | 52.2 | 48.2 | **48.4** | -3.8 |
+| mmlu-it | accuracy | 63.3 | 54.7 | **60.5** | -2.8 |
+| hellaswag-it | accuracy | 58.6 | 60.9 | **71.9** | +13.3 |
+| ilpost-sum | chr_f3pp | 38.4 | 38.5 | **38.3** | -0.1 |
+
+**Tabula v3 è la voce enterprise candidata**: un solo adapter con identità, registro, calibrazione e
+formati. Artefatti: `artifacts/adapter-tabula-voce-v3` (+`.gguf`, +`-merged`).
 
 **Base: scala Qwen3.5 → Qwen3.6** (agente 12/09, tabella completa nel messaggio di sessione):
 l'unica famiglia che soddisfa insieme scala di taglie (0.8B/2B/4B/9B con `-Base`, 35B-A3B),
