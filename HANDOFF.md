@@ -78,6 +78,7 @@ Script: `scripts/bench/` (dati + runner), `scripts/rlvr/` (GRPO + eval), code no
 | **Matematica v2 (MATH train, GRPO reward LaTeX-aware, 200 passi)** | MATH-500 greedy, 300 item | 57.3% | **64.0%** | ✅ 13/09 (+6.7) |
 | Codice (MBPP, GRPO test in sandbox, 150 passi) | eval greedy 200 | 51.0% | 52.5% | ❌ rumore; leva: 600 passi, lr 1e-5 (~2.7 h) |
 | Voce (Ardesia round 2) | identità 0/6 sys e no-sys, registro | — | ✅ | anche sul Q4_0 di webgguf |
+| **Voce Tabula v1** (persona-tabula-v1, 965 righe) | 12 sonde identità (6 mai viste) senza system prompt | 12/12 fail | **0/12** (Q4_0+runtime: 0/12 regola, 1 allucinazione «CERN» a mano) | ✅ 13/09; registro 508→282 char, grassetto 0 |
 
 **Demo hot-swap VERIFICATA (13/09 10:20):** `scripts/demo/serve_adapters.sh` (llama-server CUDA, base = il
 Q4_0 di webgguf, 7 adapter GGUF caricati con `--lora-init-without-apply`) + `scripts/demo/swap_demo.py`
