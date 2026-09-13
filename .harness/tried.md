@@ -20,3 +20,5 @@
 - Tre fallimenti di strumento riparati: merge con chiavi triplicate/senza MTP (vLLM), sanità raw sul completion_mask, GRPOTrainer non importabile (TRL 0.24 vs transformers 5.5).
 - Notte: senso comune + conoscenza in coda 2; GRPO matematica (200 passi, exact-answer) e codice (150 passi, test in sandbox) in night.sh, con baseline greedy su 200 item.
 - Senso comune v1 (8000 righe HellaSwag EN, raw, 18 min): hellaswag_it acc_norm 0.6009 vs base 0.6020 → nessun transfer cross-lingua. v2 = split train italiano EuroEval ×4 + 2000 EN, in coda dopo la notte.
+- 13/09 03:25 — Senso comune v1 (solo HellaSwag EN, 8000 righe): hellaswag_it acc_norm 0.6009 vs base 0.6020 → nessun transfer. v2 con lo split italiano di EuroEval accodato (queue3).
+- 13/09 — Conoscenza allenato (11133 righe, 2h28, loss finale 0.25); eval saltata perché ho MODIFICATO run_adapter.sh mentre bash lo stava eseguendo («conoscenza.log: command not found»): mai editare uno script in esecuzione. Eval in queue3.
