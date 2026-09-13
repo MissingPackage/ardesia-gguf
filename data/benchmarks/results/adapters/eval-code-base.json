@@ -1,0 +1,1210 @@
+{
+ "task": "code",
+ "name": "base",
+ "adapter": null,
+ "n": 200,
+ "acc": 0.51,
+ "seconds": 572,
+ "records": [
+  {
+   "i": 0,
+   "ref": null,
+   "out": "della prima occorrenza\n    # Poi da dopo l'ultima occorrenza\n    # Se la prima e l'ultima sono diverse, ci sono caratteri in mezzo.\n    \n    # Caso specifico: se la prima e l'ultima sono la stessa (già gestito sopra)\n    # Caso: prima != ultima.\n    # Esempio: \"hello\", 'l' -> first=2, last=3. Risultato: \"heo\"\n    # Esempio: \"banana\", 'n' -> first=1, last=4. Risultato: \"baa\"\n    \n    # Se la prima occorrenza è l'unica, gestito sopra.\n    # Se ce ne sono due o più, rimuoviamo l'indice first_idx e last_idx.\n    # Ma attenzione: se first_idx == last_idx, il caso sopra lo gestisce.\n    # Quindi qui",
+   "score": 0.0
+  },
+  {
+   "i": 1,
+   "ref": null,
+   "out": "```python\ndef sort_matrix(matrix):\n    # Calcola la somma di ogni riga\n    row_sums = [sum(row) for row in matrix]\n    # Ordina le righe in base alle somme calcolate\n    sorted_matrix = sorted(matrix, key=lambda row: sum(row))\n    return sorted_matrix\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 2,
+   "ref": null,
+   "out": "```python\ndef count_common(words):\n    from collections import Counter\n    return Counter(words).most_common()\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 3,
+   "ref": null,
+   "out": "```python\ndef find_Volume(base, height, length):\n    \"\"\"\n    Calcola il volume di un prisma triangolare.\n    Formula: Volume = (base * altezza_triangolo / 2) * lunghezza\n    \"\"\"\n    return (base * height / 2) * length\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 4,
+   "ref": null,
+   "out": "```python\ndef split_lowerstring(s: str) -> list[str]:\n    if not s:\n        return []\n    \n    result = []\n    current_segment = []\n    \n    for char in s:\n        if char.islower():\n            if current_segment:\n                result.append(\"\".join(current_segment))\n                current_segment = []\n        else:\n            current_segment.append(char)\n    \n    if current_segment:\n        result.append(\"\".join(current_segment))\n    \n    return result\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 5,
+   "ref": null,
+   "out": "```python\ndef text_lowercase_underscore(text):\n    import re\n    pattern = r'[a-z_]++'\n    match = re.search(pattern, text)\n    if match:\n        return 'Found a match!'\n    return None\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 6,
+   "ref": null,
+   "out": "Per calcolare il perimetro di un quadrato, si moltiplica la lunghezza del lato per 4, poiché un quadrato ha quattro lati di uguale lunghezza. La funzione prende un singolo argomento `side` e restituisce `side * 4`.\n\n```python\ndef square_perimeter(side):\n    return side * 4\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 7,
+   "ref": null,
+   "out": "```python\ndef remove_dirty_chars(s1, s2):\n    # Convert s2 to a set for O(1) lookup\n    chars_to_remove = set(s2)\n    # Filter s1, keeping only characters not in chars_to_remove\n    return ''.join(char for char in s1 if char not in chars_to_remove)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 8,
+   "ref": null,
+   "out": "```python\ndef test_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 9,
+   "ref": null,
+   "out": "icerca di m.\n    # In realtà, per n=383, m potrebbe essere grande? \n    # Tuttavia, sigma(m)/m = n => sigma(m) = n*m.\n    # Poiché sigma(m) <= m * (1 + 1/2 + ... + 1/m) ~ m * log m,\n    # abbiamo n*m <= m * log m => n <= log m => m >= e^n.\n    # Questo sembra sbagliato: sigma(m) <= m * (1 + 1/2 + ... + 1/m) ~ m * log m,\n    # quindi n*m <= m * log m => n <= log m => m >= e^n.\n    # Ma per n=383, e^383 è enorme! Quindi la mia stima è errata.\n    # In realtà, sigma(m) può essere molto più grande di m.\n    # Per numeri molto compositi, sigma(m)/m può essere grande.\n    # Ma in pratica, per n=383,",
+   "score": 0.0
+  },
+  {
+   "i": 10,
+   "ref": null,
+   "out": "```python\ndef multiples_of_num(n, m):\n    \"\"\"\n    Restituisce una lista contenente i primi m multipli di n.\n    Nota: Basandosi sull'esempio assert multiples_of_num(4,3)== [3,6,9,12],\n    la funzione genera i multipli partendo da n (quindi n, 2n, 3n...)\n    fino a raggiungere m elementi.\n    \"\"\"\n    return [n * i for i in range(1, m + 1)]\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 11,
+   "ref": null,
+   "out": "```python\ndef find_first_duplicate(arr):\n    seen = set()\n    for num in arr:\n        if num in seen:\n            return num\n        seen.add(num)\n    return None\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 12,
+   "ref": null,
+   "out": "```python\ndef maximum_Sum(lst):\n    return sum(sum(sublist) for sublist in lst)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 13,
+   "ref": null,
+   "out": "```python\ndef binary_to_decimal(binary_str: str) -> int:\n    \"\"\"\n    Converte un numero binario (stringa) nel suo equivalente decimale.\n    \n    Args:\n        binary_str: Stringa contenente i soli caratteri '0' e '1'.\n        \n    Returns:\n        L'intero equivalente decimale.\n    \"\"\"\n    return int(binary_str, 2)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 14,
+   "ref": null,
+   "out": "```python\ndef find_Product(arr, target):\n    seen = set()\n    product = 1\n    for num in arr:\n        if num == target:\n            continue\n        if num in seen:\n            continue\n        product *= num\n        seen.add(num)\n    return product\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 15,
+   "ref": null,
+   "out": "```python\ndef check_k_elements(tuples_list, k):\n    return all(len(t) == k for t in tuples_list)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 16,
+   "ref": null,
+   "out": "```python\ndef remove(lst):\n    return [word.replace(str(i), '') for i in range(10) for word in lst]\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 17,
+   "ref": null,
+   "out": "```python\ndef binomial_Coeff(n, k):\n    if k < 0 or k > n:\n        return 0\n    if k == 0 or k == n:\n        return 1\n    if k > n // 2:\n        k = n - k\n    \n    result = 1\n    for i in range(k):\n        result = result * (n - i) // (i + 1)\n    return result\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 18,
+   "ref": null,
+   "out": "```python\ndef get_Odd_Occurrence(arr, k):\n    from collections import Counter\n    counts = Counter(arr)\n    for num, count in counts.items():\n        if count % 2 == 1:\n            return num\n    return -1\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 19,
+   "ref": null,
+   "out": "```python\ndef count_Substring_With_Equal_Ends(s: str) -> int:\n    n = len(s)\n    count = 0\n    # Iteriamo su ogni possibile coppia di indici (i, j) con i <= j\n    for i in range(n):\n        for j in range(i, n):\n            # Controlliamo se il carattere all'inizio è uguale a quello alla fine\n            if s[i] == s[j]:\n                count += 1\n    return count\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 20,
+   "ref": null,
+   "out": "ta [5, 7, 1] per k=3\n    # Questo significa che 5 e 7 hanno la stessa frequenza massima (2), e 1 ha frequenza 2\n    # Ma nell'ordine di output richiesto sembra che si ordino per frequenza decrescente, \n    # e in caso di parità, per valore crescente? \n    # Verifichiamo: \n    # Input: [[1, 2, 6], [1, 3, 4, 5, 7, 8], [1, 3, 5, 6, 8, 9], [2, 5, 7, 11], [1, 4, 7, 8, 12]]\n    # Conteggi:\n    # 1: 4 volte (pos 0,1,2,4)\n    # 2: 2 volte (pos 0,3)\n    # 3: 2 volte (pos 1,2)\n    # 4: 2 volte (pos 1,4)\n    # 5: 3 volte (pos 1,2,3)\n    # 6: 2 volte (pos 0,2)\n    # 7: 3 volte (pos 1,3,4)\n    # 8: 3 volte",
+   "score": 0.0
+  },
+  {
+   "i": 21,
+   "ref": null,
+   "out": "```python\ndef max_Prime_Factors(n):\n    if n <= 1:\n        return None\n    \n    max_prime = 2\n    \n    # Elimina i fattori 2\n    while n % 2 == 0:\n        max_prime = 2\n        n //= 2\n    \n    # Controlla i fattori dispari da 3 in poi\n    i = 3\n    while i * i <= n:\n        while n % i == 0:\n            max_prime = i\n            n //= i\n        i += 2\n    \n    # Se n è maggiore di 2 dopo il loop, allora è un primo\n    if n > 2:\n        max_prime = n\n    \n    return max_prime\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 22,
+   "ref": null,
+   "out": "```python\ndef decimal_To_Binary(n):\n    if n == 0:\n        return \"0\"\n    binary = \"\"\n    while n > 0:\n        binary = str(n % 2) + binary\n        n = n // 2\n    return binary\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 23,
+   "ref": null,
+   "out": "```python\ndef find_missing(arr):\n    \"\"\"\n    Trova il numero mancante in un array ordinato di interi consecutivi.\n    L'array è garantito di contenere un solo numero mancante.\n    \"\"\"\n    n = len(arr)\n    # La somma attesa per una sequenza da 1 a n+1 è (n+1)*(n+2)//2\n    # La somma reale è la somma degli elementi dell'array\n    expected_sum = (n + 1) * (n + 2) // 2\n    actual_sum = sum(arr)\n    return expected_sum - actual_sum\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 24,
+   "ref": null,
+   "out": "m(4) == 20.\n    \n    Rivediamo la definizione:\n    Se R_4 = 20, allora 20 = n * (n+1) / 2 * k? No.\n    Forse la sequenza è diversa.\n    \n    Sequenza dei numeri rettangolari standard: 1, 3, 6, 10, 15, 21...\n    R_1 = 1\n    R_2 = 3\n    R_3 = 6\n    R_4 = 10\n    \n    Ma il test richiede find_rect_num(4) == 20.\n    Questo suggerisce che la definizione potrebbe essere:\n    R_n = n * (n + 1)  (doppia la formula standard)\n    Verifichiamo:\n    n=1: 1*2 = 2\n    n=2: 2*3 = 6\n    n=3: 3*4 = 12\n    n=4: 4*5 = 20 -> Corrisponde!\n    \n    Quindi la formula è: n * (n + 1)\n    \"\"\"\n    return n * (n + 1)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 25,
+   "ref": null,
+   "out": "li.\n    \"\"\"\n    if denominator == 0:\n        raise ValueError(\"Denominator cannot be zero.\")\n    if n <= 0:\n        raise ValueError(\"n must be a positive integer.\")\n    \n    # Calcoliamo il resto iniziale per ottenere la parte intera (che ignoriamo per i decimali)\n    remainder = numerator % denominator\n    \n    # Se il resto è 0, la frazione è 0.000...\n    if remainder == 0:\n        return 0\n    \n    # Generiamo i digiti decimali uno per uno\n    digit = 0\n    for _ in range(n):\n        remainder *= 10\n        digit = remainder % 10\n        remainder //= denominator\n    \n    return digit\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 26,
+   "ref": null,
+   "out": "trings? Let's check the example:\n    # Input: [19,'red',12,'green','blue', 10,'white','green',1]\n    # Output: [1, 10, 12, 19, 'blue', 'green', 'green', 'red', 'white']\n    # \n    # If we sort by string representation:\n    # '1', '10', '12', '19', 'blue', 'green', 'green', 'red', 'white' -> matches output.\n    # So the strategy is: convert everything to string, sort, then convert back to int if it was a digit.\n    \n    def convert_back(s):\n        try:\n            return int(s)\n        except ValueError:\n            return s\n\n    return [convert_back(str(x)) for x in sorted(lst, key=str)]\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 27,
+   "ref": null,
+   "out": "```python\ndef div_even_odd(lst):\n    evens = [x for x in lst if x % 2 == 0]\n    odds = [x for x in lst if x % 2 != 0]\n    if not evens or not odds:\n        return None\n    return evens[0] // odds[0]\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 28,
+   "ref": null,
+   "out": "ta\n    # ma ci sono ancora caratteri da inserire (dovrebbe essere gestito dalla logica sopra,\n    # ma per sicurezza riempiamo da sinistra se ci sono buchi, anche se con la logica sopra\n    # i buchi non dovrebbero esistere se max_count <= (total+1)//2)\n    # In realtà, la logica sopra riempie tutte le posizioni.\n    # Tuttavia, se la stringa è \"aab\", total=3, max_count=2. (3+1)//2 = 2. 2<=2 ok.\n    # char_freq = [('a', 2), ('b', 1)]\n    # a: pos 0, 2 -> result[0]='a', result[2]='a'\n    # b: pos 1 -> result[1]='b'\n    # result = ['a', 'b', 'a'] -> corretto.\n    \n    return \"\".join(result)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 29,
+   "ref": null,
+   "out": "```python\nfrom collections import Counter\n\ndef freq_element(lst):\n    # Unisci tutte le sottoliste in un unico iterabile\n    flattened = [item for sublist in lst for item in sublist]\n    # Conta le frequenze usando Counter\n    counter = Counter(flattened)\n    # Converti il risultato in un dizionario ordinato per chiarezza (non richiesto ma pulito)\n    return dict(counter)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 30,
+   "ref": null,
+   "out": "```python\ndef filter_evennumbers(numbers):\n    return list(filter(lambda x: x % 2 == 0, numbers))\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 31,
+   "ref": null,
+   "out": "```python\ndef find_Sum(arr, k):\n    from collections import Counter\n    counts = Counter(arr)\n    total = 0\n    for num, count in counts.items():\n        if count == k:\n            total += num\n    return total\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 32,
+   "ref": null,
+   "out": "```python\nimport re\n\ndef text_match(text: str) -> str:\n    pattern = r'[a-z_]+[a-z]'\n    if re.search(pattern, text):\n        return 'Found a match!'\n    return 'No match found'\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 33,
+   "ref": null,
+   "out": "```python\ndef text_match_string(text):\n    if text.startswith(\" python\"):\n        return \"Matched!\"\n    else:\n        return \"Not matched!\"\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 34,
+   "ref": null,
+   "out": "```python\ndef get_gcd(arr):\n    if not arr:\n        return 0\n    result = arr[0]\n    for num in arr[1:]:\n        result = gcd(result, num)\n        if result == 1:\n            break\n    return result\n\ndef gcd(a, b):\n    while b:\n        a, b = b, a % b\n    return a\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 35,
+   "ref": null,
+   "out": "```python\ndef test_distinct(nums):\n    return len(nums) == len(set(nums))\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 36,
+   "ref": null,
+   "out": "```python\ndef compute_Last_Digit(a, b):\n    if a > b:\n        return 0\n    if a == 0:\n        return 1\n    if b == 0:\n        return 0\n    \n    # Calcoliamo il fattoriale di b\n    fact_b = 1\n    for i in range(1, b + 1):\n        fact_b *= i\n    \n    # Calcoliamo il fattoriale di a\n    fact_a = 1\n    for i in range(1, a + 1):\n        fact_a *= i\n    \n    # Calcoliamo il risultato finale\n    result = fact_b // fact_a\n    return result % 10\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 37,
+   "ref": null,
+   "out": " modo più semplice usando l'aritmetica modulo.\nNotiamo che $2^{2k+1} - 1$ produce una sequenza di $2k+1$ ones. Se sottraiamo $2^{2k} - 1$ (che ha $2k$ ones), otteniamo un 1 solo alla posizione $2k$.\nQuindi, per ottenere la maschera `...010101`, possiamo calcolare:\n`mask = (2**(2*k + 1) - 1) - (2**(2*k) - 1)` per ogni k? No, è più semplice notare che la maschera per impostare tutti i bit dispari è data da:\n`mask = (2**(2*n + 1) - 1) // 2`? No.\nProviamo con un approccio diretto:\nLa maschera deve avere 1 alle posizioni 1, 3, 5...\nPosizione 1: $2^1 = 2$\nPosizione 3: $2^3 = 8$\nPosizione 5: $2^5 = 3",
+   "score": 0.0
+  },
+  {
+   "i": 38,
+   "ref": null,
+   "out": "```python\ndef specified_element(matrix, index):\n    \"\"\"\n    Estrae l'elemento specificato (per riga) da ogni sotto-lista della matrice bidimensionale.\n    \n    Parametri:\n    matrix (list): Una lista di liste (matrice bidimensionale).\n    index (int): L'indice dell'elemento da estrarre da ogni riga.\n    \n    Restituisce:\n    list: Una lista contenente gli elementi estratti.\n    \"\"\"\n    return [row[index] for row in matrix]\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 39,
+   "ref": null,
+   "out": "```python\ndef min_length_list(lst):\n    return min(lst, key=len)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 40,
+   "ref": null,
+   "out": "```python\ndef check_equilateral(a, b, c):\n    # Verifica la validità del triangolo: la somma di due lati deve essere maggiore del terzo\n    if (a + b > c) and (a + c > b) and (b + c > a):\n        # Un triangolo è equilatero se tutti e tre i lati sono uguali\n        return a == b == c\n    return False\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 41,
+   "ref": null,
+   "out": "L'area di un parallelogramma si calcola moltiplicando la base per l'altezza ($A = b \\times h$). Nel test fornito, i valori 10 e 20 producono 200, il che implica che la funzione deve accettare due parametri (base e altezza) e restituirne il prodotto.\n\n```python\ndef parallelogram_area(base, height):\n    return base * height\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 42,
+   "ref": null,
+   "out": "```python\ndef check_Equality(s):\n    if len(s) < 2:\n        return \"Equal\"\n    return \"Equal\" if s[0] == s[-1] else \"Not Equal\"\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 43,
+   "ref": null,
+   "out": "```python\ndef counting_sort(arr):\n    if not arr:\n        return []\n    \n    min_val = min(arr)\n    max_val = max(arr)\n    range_size = max_val - min_val + 1\n    \n    count = [0] * range_size\n    output = [0] * len(arr)\n    \n    for num in arr:\n        count[num - min_val] += 1\n    \n    for i in range(1, range_size):\n        count[i] += count[i-1]\n    \n    for i in range(len(arr) - 1, -1, -1):\n        num = arr[i]\n        index = count[num - min_val] - 1\n        output[index] = num\n        count[num - min_val] -= 1\n    \n    return output\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 44,
+   "ref": null,
+   "out": "Per trovare il t-esimo termine di una progressione geometrica, utilizziamo la formula $a_n = a_1 \\cdot r^{(n-1)}$, dove $a_1$ è il primo termine, $r$ è la ragione e $n$ è l'indice del termine da trovare. Nel caso specifico, dato che l'input è $t$, la formula diventa $a_t = a_1 \\cdot r^{(t-1)}$.\n\n```python\ndef tn_gp(a1, r, t):\n    return a1 * (r ** (t - 1))\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 45,
+   "ref": null,
+   "out": "```python\ndef check(n):\n    # Convert number to string, reverse it, and convert back to integer\n    reversed_n = int(str(n)[::-1])\n    # Check if n is one less than twice its reverse\n    return n == 2 * reversed_n - 1\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 46,
+   "ref": null,
+   "out": "\n        end_index = min(start_index + n - (k - i), n)\n        \n        # Troviamo l'indice della cifra massima nell'intervallo valido\n        max_digit = -1\n        max_idx = -1\n        \n        for j in range(start_index, end_index):\n            if s_digits[j] > max_digit:\n                max_digit = s_digits[j]\n                max_idx = j\n        \n        # Aggiungiamo la cifra scelta al risultato e aggiorniamo l'indice di partenza\n        result.append(max_digit)\n        start_index = max_idx + 1\n    \n    # Convertiamo la lista di caratteri in un intero\n    return int(\"\".join(result))\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 47,
+   "ref": null,
+   "out": "```python\ndef opposite_Signs(a: int, b: int) -> bool:\n    return (a > 0 and b < 0) or (a < 0 and b > 0)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 48,
+   "ref": null,
+   "out": "```python\ndef is_octagonal(n):\n    \"\"\"\n    Calcola il numero ottagonale n-esimo.\n    La formula del numero ottagonale è: O_n = n(3n - 2)\n    \"\"\"\n    return n * (3 * n - 2)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 49,
+   "ref": null,
+   "out": "```python\ndef max_len_sub(arr, max_diff):\n    if not arr:\n        return 0\n    \n    n = len(arr)\n    dp = [1] * n\n    \n    for i in range(n):\n        for j in range(i):\n            if abs(arr[i] - arr[j]) <= max_diff:\n                dp[i] = max(dp[i], dp[j] + 1)\n    \n    return max(dp)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 50,
+   "ref": null,
+   "out": "```python\ndef count_Substrings(s, n):\n    count = 0\n    for i in range(n):\n        current_sum = 0\n        for j in range(i, n):\n            current_sum += int(s[j])\n            if current_sum == (j - i + 1):\n                count += 1\n    return count\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 51,
+   "ref": null,
+   "out": "```python\ndef smallest_num(numbers):\n    return min(numbers)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 52,
+   "ref": null,
+   "out": "```python\ndef max_difference(pairs):\n    if not pairs:\n        return 0\n    max_val = float('-inf')\n    min_val = float('inf')\n    for start, end in pairs:\n        if end > max_val:\n            max_val = end\n        if start < min_val:\n            min_val = start\n    return max_val - min_val\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 53,
+   "ref": null,
+   "out": "La funzione deve ordinare una lista di tuple (nome, voto) in base al voto (secondo elemento) in ordine crescente. Utilizzeremo `sorted()` con una chiave lambda che estrae il secondo elemento della tupla.\n\n```python\ndef subject_marks(tuples_list):\n    return sorted(tuples_list, key=lambda x: x[1])\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 54,
+   "ref": null,
+   "out": "```python\ndef recursive_list_sum(lst):\n    total = 0\n    for item in lst:\n        if isinstance(item, list):\n            total += recursive_list_sum(item)\n        else:\n            total += item\n    return total\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 55,
+   "ref": null,
+   "out": "```python\ndef pos_count(nums):\n    return sum(1 for n in nums if n > 0)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 56,
+   "ref": null,
+   "out": "ppresenta il numero di partizioni di un insieme di i elementi in esattamente j sottoinsiemi\n    bell_table = [[0] * (n + 1) for _ in range(n + 1)]\n    \n    # Inizializzazione della prima riga\n    bell_table[0][0] = 1\n    \n    # Calcolo della triangola di Bell\n    for i in range(1, n + 1):\n        bell_table[i][0] = 0\n        for j in range(1, i + 1):\n            # Formula ricorsiva: B(i, j) = j * B(i-1, j) + B(i-1, j-1)\n            bell_table[i][j] = j * bell_table[i-1][j] + bell_table[i-1][j-1]\n    \n    # Il numero di Bell per n è la somma della n-esima riga\n    return sum(bell_table[n])\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 57,
+   "ref": null,
+   "out": "```python\ndef is_Monotonic(arr):\n    if len(arr) <= 1:\n        return True\n    \n    # Determina se la sequenza è non decrescente o non crescente\n    is_non_decreasing = arr[0] <= arr[1]\n    is_non_increasing = arr[0] >= arr[1]\n    \n    # Verifica che tutti gli elementi rispettino la direzione stabilita\n    for i in range(1, len(arr)):\n        if is_non_decreasing and arr[i] < arr[i-1]:\n            return False\n        if is_non_increasing and arr[i] > arr[i-1]:\n            return False\n            \n    return True\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 58,
+   "ref": null,
+   "out": "```python\ndef is_sublist(main_list, sublist):\n    if not sublist:\n        return True\n    if len(sublist) > len(main_list):\n        return False\n    for i in range(len(main_list) - len(sublist) + 1):\n        if main_list[i:i + len(sublist)] == sublist:\n            return True\n    return False\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 59,
+   "ref": null,
+   "out": "```python\ndef get_equal(tuples, length):\n    if not tuples:\n        return 'All tuples have same length'\n    for t in tuples:\n        if len(t) != length:\n            return 'Tuples have different lengths'\n    return 'All tuples have same length'\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 60,
+   "ref": null,
+   "out": "```python\ndef comb_sort(arr):\n    n = len(arr)\n    gap = n\n    shrink = 1.3\n    swapped = True\n    \n    while gap > 1 or swapped:\n        gap = int(gap / shrink)\n        if gap < 1:\n            gap = 1\n        \n        swapped = False\n        for i in range(n - gap):\n            if arr[i] > arr[i + gap]:\n                arr[i], arr[i + gap] = arr[i + gap], arr[i]\n                swapped = True\n                \n    return arr\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 61,
+   "ref": null,
+   "out": " n può essere rappresentato come differenza di due quadrati.\n    Una differenza di due quadrati è della forma a^2 - b^2 = (a-b)(a+b).\n    Questo implica che n deve essere fattorizzabile in due fattori del medesimo parità (entrambi pari o entrambi dispari).\n    Equivalente: n non deve essere né 2 né un numero della forma 4k+2.\n    \"\"\"\n    if n <= 0:\n        return False\n    # Se n è dispari, è sempre possibile (es: n = ((n+1)/2)^2 - ((n-1)/2)^2)\n    if n % 2 == 1:\n        return True\n    # Se n è pari, deve essere divisibile per 4 per avere fattori della stessa parità\n    return n % 4 == 0\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 62,
+   "ref": null,
+   "out": "d delimiters as a regex pattern.\n    \n    Args:\n        s (str): The input string to split.\n        delimiters (str): A string containing one or more delimiter characters.\n        \n    Returns:\n        list: A list of substrings obtained by splitting s on the delimiters.\n    \"\"\"\n    if not s:\n        return []\n    \n    # Create a regex pattern that matches any of the delimiters\n    # We use a character class [delimiters] to match any single character in the string\n    pattern = f\"[{re.escape(delimiters)}]\"\n    \n    # Split the string using the regex pattern\n    return re.split(pattern, s)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 63,
+   "ref": null,
+   "out": "segue lo schema definito da 'patterns_map'.\n    Ogni elemento unico in 'patterns_map' deve mappare a un unico elemento in 'patterns',\n    e viceversa (biunivocità).\n    \"\"\"\n    mapping = {}\n    reverse_mapping = {}\n    \n    for p, m in zip(patterns, patterns_map):\n        if p in mapping:\n            if mapping[p] != m:\n                return False\n        else:\n            mapping[p] = m\n            if m in reverse_mapping:\n                if reverse_mapping[m] != p:\n                    return False\n            else:\n                reverse_mapping[m] = p\n                \n    return True\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 64,
+   "ref": null,
+   "out": "```python\ndef find_tuples(tuples_list, k):\n    result = []\n    for t in tuples_list:\n        if all(x % k == 0 for x in t):\n            result.append(t)\n    return str(result)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 65,
+   "ref": null,
+   "out": "```python\ndef count_Squares(n, m):\n    \"\"\"\n    Conta il numero totale di quadrati che possono essere formati all'interno \n    di un rettangolo di dimensioni n x m.\n    \n    Un rettangolo di dimensioni n x m può contenere quadrati di lato k \n    dove k va da 1 a min(n, m). Il numero di quadrati di lato k in un \n    rettangolo n x m è (n - k + 1) * (m - k + 1).\n    \"\"\"\n    count = 0\n    min_side = min(n, m)\n    \n    for k in range(1, min_side + 1):\n        count += (n - k + 1) * (m - k + 1)\n        \n    return count\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 66,
+   "ref": null,
+   "out": "```python\ndef is_Diff(n):\n    n = str(abs(n))\n    even_sum = sum(int(digit) for digit in n if int(digit) % 2 == 0)\n    odd_sum = sum(int(digit) for digit in n if int(digit) % 2 != 0)\n    return even_sum == odd_sum\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 67,
+   "ref": null,
+   "out": "```python\ndef count_With_Odd_SetBits(n):\n    count = 0\n    for i in range(n + 1):\n        # Conta i bit imposti (set bits) usando binario\n        if bin(i).count('1') % 2 == 1:\n            count += 1\n    return count\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 68,
+   "ref": null,
+   "out": "```python\ndef word_len(word):\n    return len(word) % 2 == 0\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 69,
+   "ref": null,
+   "out": "```python\ndef tetrahedral_number(n):\n    \"\"\"\n    Calcola il numero tetraedrale n-esimo.\n    La formula è: T_n = n * (n + 1) * (n + 2) / 6\n    \"\"\"\n    return n * (n + 1) * (n + 2) / 6\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 70,
+   "ref": null,
+   "out": "ppia con l'ultimo elemento del secondo\n            # Ma la logica dell'esempio mostra che si ripete l'ultimo elemento del secondo tuple\n            # Quindi dobbiamo trovare l'ultimo elemento valido del secondo tuple\n            pass\n\n    # Ricalcolo basato sull'esempio specifico:\n    # (7, 8, 4, 5, 9, 10) e (1, 5, 6)\n    # Risultato: (7,1), (8,5), (4,6), (5,1), (9,5), (10,6)\n    # Si vede che si usa l'ultimo elemento del secondo tuple (6) per gli indici 2, 4, 5?\n    # No, guardando bene:\n    # 0: 7,1\n    # 1: 8,5\n    # 2: 4,6\n    # 3: 5,1  <-- qui torna a 1\n    # 4: 9,5  <-- qui torna a 5\n   ",
+   "score": 0.0
+  },
+  {
+   "i": 71,
+   "ref": null,
+   "out": "Per calcolare il volume di una sfera, si utilizza la formula $V = \\frac{4}{3} \\pi r^3$. Il valore di $\\pi$ è approssimato come `math.pi` in Python. La funzione deve accettare un argomento `r` (raggio) e restituire il volume arrotondato o calcolato con precisione sufficiente per soddisfare l'assert testato.\n\n```python\nimport math\n\ndef volume_sphere(r):\n    return (4/3) * math.pi * (r ** 3)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 72,
+   "ref": null,
+   "out": "```python\ndef get_Char(s: str) -> str:\n    return \"\".join(sorted(s))\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 73,
+   "ref": null,
+   "out": "```python\ndef sequence(n):\n    if n <= 0:\n        return 0\n    seq = [0] * (n + 1)\n    seq[1] = 1\n    for i in range(2, n + 1):\n        seq[i] = seq[seq[i - 1]] + seq[i - seq[i - 1]]\n    return seq[n]\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 74,
+   "ref": null,
+   "out": "La formula per calcolare l'area superficiale di una sfera è $4 \\pi r^2$. Utilizzando il valore di $\\pi$ di precisione standard (`math.pi`), per un raggio di 10 si ottiene circa 1256.6370614359173.\n\n```python\nimport math\n\ndef surfacearea_sphere(radius):\n    return 4 * math.pi * radius ** 2\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 75,
+   "ref": null,
+   "out": "```python\ndef centered_hexagonal_number(n: int) -> int:\n    \"\"\"\n    Calcola il numero esagonale centrato n-esimo.\n    La formula è: 3 * n * (n - 1) + 1\n    \"\"\"\n    return 3 * n * (n - 1) + 1\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 76,
+   "ref": null,
+   "out": "```python\ndef merge_dictionaries_three(dict1, dict2, dict3):\n    merged = {}\n    merged.update(dict1)\n    merged.update(dict2)\n    merged.update(dict3)\n    return merged\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 77,
+   "ref": null,
+   "out": "```python\ndef freq_count(lst):\n    from collections import Counter\n    return dict(Counter(lst))\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 78,
+   "ref": null,
+   "out": "```python\ndef closest_num(n):\n    return n - 1\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 79,
+   "ref": null,
+   "out": "```python\ndef len_log(words):\n    if not words:\n        return 0\n    return max(len(word) for word in words)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 80,
+   "ref": null,
+   "out": "```python\ndef find_substring(lst, sub):\n    return any(sub in s for s in lst)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 81,
+   "ref": null,
+   "out": "```python\ndef is_undulating(s: str) -> bool:\n    if len(s) < 2:\n        return False\n    for i in range(1, len(s)):\n        if s[i] == s[i-1]:\n            return False\n    for i in range(2, len(s)):\n        if s[i] == s[i-1] or s[i] == s[i-2]:\n            return False\n    return True\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 82,
+   "ref": null,
+   "out": "```python\ndef power(a, b):\n    return a ** b\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 83,
+   "ref": null,
+   "out": "```python\ndef index_minimum(tuples_list):\n    \"\"\"\n    Estrae il nome della persona associata al valore minimo tra le tuple fornite.\n    Ogni tuple è della forma (nome, valore).\n    \"\"\"\n    if not tuples_list:\n        return None\n    \n    min_value = float('inf')\n    min_name = None\n    \n    for name, value in tuples_list:\n        if value < min_value:\n            min_value = value\n            min_name = name\n            \n    return min_name\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 84,
+   "ref": null,
+   "out": "```python\ndef Find_Min_Length(lst):\n    if not lst:\n        return 0\n    return min(len(sublist) for sublist in lst)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 85,
+   "ref": null,
+   "out": "Per trovare il numero di divisori di un intero $n$, possiamo iterare da 1 fino a $\\sqrt{n}$. Se un numero $i$ divide $n$, allora anche $n/i$ è un divisore. Se $i \\neq n/i$, contiamo entrambi; se sono uguali (caso quadrato perfetto), ne contiamo solo uno.\n\n```python\ndef divisor(n: int) -> int:\n    if n <= 0:\n        return 0\n    count = 0\n    i = 1\n    while i * i <= n:\n        if n % i == 0:\n            if i * i == n:\n                count += 1\n            else:\n                count += 2\n        i += 1\n    return count\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 86,
+   "ref": null,
+   "out": "```python\ndef frequency_lists(lst):\n    frequency = {}\n    for sublist in lst:\n        for item in sublist:\n            frequency[item] = frequency.get(item, 0) + 1\n    return frequency\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 87,
+   "ref": null,
+   "out": "```python\ndef multiply_num(nums):\n    if not nums:\n        return 0\n    product = 1\n    for num in nums:\n        product *= num\n    return product / len(nums)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 88,
+   "ref": null,
+   "out": "```python\ndef decimal_to_binary(n: int) -> str:\n    if n == 0:\n        return '0'\n    binary = ''\n    while n > 0:\n        binary = str(n % 2) + binary\n        n //= 2\n    return binary\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 89,
+   "ref": null,
+   "out": "```python\ndef next_smallest_palindrome(n: int) -> int:\n    def is_palindrome(x: int) -> bool:\n        s = str(x)\n        return s == s[::-1]\n    \n    candidate = n + 1\n    while not is_palindrome(candidate):\n        candidate += 1\n    return candidate\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 90,
+   "ref": null,
+   "out": "l'indice 0 (0-based), otteniamo 3.\n\nForse la logica è: trovare l'elemento tale che ci siano esattamente `k-1` elementi minori o uguali? O forse l'input `k` è 1-based e il secondo parametro è l'indice 0-based?\nProviamo a interpretare i parametri come `(array, k, index)`.\nSe `k=5` significa \"5-esimo elemento ordinato\" e `index=2` è un parametro extra? No, l'esempio ha solo 3 argomenti.\nRileggiamo: `kth_element([12,3,5,7,19], 5, 2) == 3`.\nForse il secondo parametro `5` non è k, ma il numero di elementi da considerare? No.\nProviamo a vedere se `k` è l'indice 0-based e il terzo parametro è qualcos'",
+   "score": 0.0
+  },
+  {
+   "i": 91,
+   "ref": null,
+   "out": "```python\ndef snake_to_camel(snake_str):\n    if not snake_str:\n        return \"\"\n    parts = snake_str.split('_')\n    if not parts:\n        return \"\"\n    return parts[0].capitalize() + ''.join(part.capitalize() for part in parts[1:])\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 92,
+   "ref": null,
+   "out": "ensioni.\n    Una ascensione è un indice i tale che p[i] < p[i+1].\n    \n    Formula ricorsiva:\n    A(n, m) = (n - m) * A(n-1, m-1) + (m + 1) * A(n-1, m)\n    Con base: A(0, 0) = 1, e A(n, m) = 0 se m < 0 o m > n-1.\n    Nota: Per n=1, m=0, A(1,0)=1.\n    \"\"\"\n    if n == 0:\n        return 1 if m == 0 else 0\n    if m < 0 or m >= n:\n        return 0\n    \n    # Tabella DP per efficienza\n    dp = [[0] * n for _ in range(n + 1)]\n    dp[0][0] = 1\n    \n    for i in range(1, n + 1):\n        for j in range(i):\n            dp[i][j] = (i - j) * dp[i-1][j-1] + (j + 1) * dp[i-1][j]\n    \n    return dp[n][m]\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 93,
+   "ref": null,
+   "out": "```python\ndef sort_sublists(data):\n    return [sorted(sublist) for sublist in data]\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 94,
+   "ref": null,
+   "out": "```python\ndef count(lst):\n    return sum(lst)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 95,
+   "ref": null,
+   "out": "```python\ndef add_lists(lst, tup):\n    return tup + tuple(lst)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 96,
+   "ref": null,
+   "out": "non contiene solo i caratteri 0-9 e A-F (senza maiuscole/minuscole).\n    Tuttavia, dato che l'input è un intervallo numerico intero, la definizione di \"numero esadecimale\" qui\n    si riferisce alla quantità di interi nell'intervallo che possono essere rappresentati in base 16.\n    Poiché TUTTI gli interi positivi possono essere rappresentati in base 16, la funzione conta semplicemente\n    il numero di interi nell'intervallo inclusivo.\n    \n    Esempio: count_Hexadecimal(10, 15) -> 10, 11, 12, 13, 14, 15 sono 6 numeri.\n    \"\"\"\n    if start > end:\n        return 0\n    return end - start + 1\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 97,
+   "ref": null,
+   "out": "dle duplicate values\n    # index is used to break ties when values are equal\n    heap = []\n    for i, lst in enumerate(lists):\n        if lst:\n            heapq.heappush(heap, (lst[0], i, 0))\n    \n    result = []\n    while heap:\n        value, list_idx, element_idx = heapq.heappop(heap)\n        result.append(value)\n        \n        # Push the next element from the same list if it exists\n        if element_idx + 1 < len(lists[list_idx]):\n            next_value = lists[list_idx][element_idx + 1]\n            heapq.heappush(heap, (next_value, list_idx, element_idx + 1))\n    \n    return result\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 98,
+   "ref": null,
+   "out": " += 1\n    \n    # Calcolo rotazioni successive usando proprietà:\n    # Rotazione a destra di 1 bit: il bit MSB si sposta a LSB, gli altri si spostano a destra.\n    # Valore nuovo = (valore vecchio & (mask - 1)) | (valore vecchio >> (n-1))\n    # Dove mask = 2^n - 1\n    mask = (1 << n) - 1\n    \n    for _ in range(1, k):\n        # Sposta il bit più significativo al meno significativo\n        msb = current_val & (1 << (n - 1))\n        current_val = (current_val << 1) | msb\n        current_val &= mask\n        \n        if current_val % 2 != 0:\n            count += 1\n            \n    return count\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 99,
+   "ref": null,
+   "out": "  # Handle gaps after the last range\n    for i in range(len(sorted_ranges) - 1):\n        if sorted_ranges[i][1] < sorted_ranges[i+1][0]:\n            missing.append((sorted_ranges[i][1], sorted_ranges[i+1][0]))\n    \n    # Handle gap before first range\n    if sorted_ranges[0][0] > current_start:\n        missing.append((current_start, sorted_ranges[0][0]))\n    \n    # Handle gap after last range\n    if sorted_ranges[-1][1] < end:\n        missing.append((sorted_ranges[-1][1], end))\n    \n    # Re-sort to match expected output order (by start, then end)\n    missing.sort()\n    \n    return missing\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 100,
+   "ref": null,
+   "out": "```python\ndef common_in_nested_lists(nested_lists):\n    if not nested_lists:\n        return []\n    \n    # Prendi il primo elemento come riferimento per l'insieme iniziale\n    first_set = set(nested_lists[0])\n    \n    # Interseca con gli insiemi degli altri list\n    for lst in nested_lists[1:]:\n        first_set &= set(lst)\n    \n    # Restituisci l'intersezione ordinata (per coerenza con l'esempio)\n    return sorted(list(first_set))\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 101,
+   "ref": null,
+   "out": "umero di lati* se fosse un poligono, ma qui è un cilindro.\nForse l'esempio intende che il primo parametro è il raggio e il secondo è il diametro? No, 2 e 4 sono numeri interi.\nProviamo a vedere se c'è un errore nell'esempio o se la definizione di \"perimetro\" qui include anche l'altezza?\nSe sommi perimetro base + perimetro base + altezza? $12.56 + 12.56 + 4 \\neq 12$.\n\nRileggiamo attentamente l'esempio: `perimeter(2, 4) == 12`.\nSe il raggio è 2, il perimetro è $4\\pi \\approx 12.56$.\nSe il diametro è 2, il perimetro è $2\\pi \\approx 6.28$.\nSe il raggio è 4, il perimetro è $8\\pi \\approx 25.12$.\n\nC'è",
+   "score": 0.0
+  },
+  {
+   "i": 102,
+   "ref": null,
+   "out": "```python\ndef check_integer(s):\n    try:\n        int(s)\n        return True\n    except ValueError:\n        return False\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 103,
+   "ref": null,
+   "out": "```python\ndef assign_freq(tuples_list):\n    from collections import Counter\n    freq_counter = Counter(tuples_list)\n    result = []\n    for t in tuples_list:\n        result.append((t, freq_counter[t]))\n    return str(result)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 104,
+   "ref": null,
+   "out": "```python\ndef empty_dict(lst):\n    return all(len(d) == 0 for d in lst)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 105,
+   "ref": null,
+   "out": "```python\ndef tuple_to_int(t):\n    return int(''.join(map(str, t)))\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 106,
+   "ref": null,
+   "out": "```python\ndef list_to_float(lst):\n    result = []\n    for item in lst:\n        if isinstance(item, tuple) and len(item) == 2:\n            new_item = tuple(float(x) if isinstance(x, str) else float(x) for x in item)\n            result.append(new_item)\n        else:\n            result.append(item)\n    return result\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 107,
+   "ref": null,
+   "out": "`['python', 'programming']`, che corrisponde all'assert.\n\nIl problema chiave è gestire correttamente la divisione. Se la stringa contiene link, la divisione per spazio potrebbe non essere sufficiente se i link non hanno spazi interni, ma l'esempio mostra che la soluzione attesa è semplicemente dividere per spazio.\n\nTuttavia, guardando attentamente l'input fornito: `\"python programming\"`. C'è uno spazio tra \"python\" e \"programming\". Quindi `string.split()` è la soluzione più diretta e robusta per separare le parole.\n\nEcco la soluzione:\n\n```python\ndef string_to_list(s):\n    return s.split()\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 108,
+   "ref": null,
+   "out": "```python\ndef search(arr, target):\n    left, right = 0, len(arr) - 1\n    while left < right:\n        mid = (left + right) // 2\n        if arr[mid] < target:\n            left = mid + 1\n        else:\n            right = mid\n    return left if left < len(arr) and arr[left] == target else -1\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 109,
+   "ref": null,
+   "out": "```python\ndef max_product_tuple(tuples_list):\n    max_prod = 0\n    for t in tuples_list:\n        prod = t[0] * t[1]\n        if prod > max_prod:\n            max_prod = prod\n    return max_prod\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 110,
+   "ref": null,
+   "out": "lla somma di target1, target2 e target3.\n    \"\"\"\n    total_target = target1 + target2 + target3\n    arr_sorted = sorted(arr)\n    n = len(arr_sorted)\n    \n    for i in range(n - 2):\n        left = i + 1\n        right = n - 1\n        current_sum = arr_sorted[i]\n        \n        while left < right:\n            current_sum += arr_sorted[left] + arr_sorted[right]\n            \n            if current_sum == total_target:\n                return True\n            elif current_sum < total_target:\n                left += 1\n            else:\n                right -= 1\n                \n    return False\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 111,
+   "ref": null,
+   "out": "ento è 30.\n    Oppure, forse \"smart number\" si riferisce a qualcosa di diverso.\n    \n    Tuttavia, guardando problemi simili online, a volte \"smart number\" si riferisce\n    a numeri la cui somma dei divisori propri è uguale a 30? No.\n    \n    Un'altra possibilità: forse la funzione deve restituire il numero perfetto\n    n-esimo, ma l'esempio è sbagliato? O forse la sequenza è diversa.\n    \n    Proviamo a cercare numeri la cui somma dei divisori (incluso se stesso) è 30?\n    Nessun numero ha somma divisori = 30 (poiché il numero stesso è incluso,\n    se x ha somma divisori = 30, allora x <= 30.",
+   "score": 0.0
+  },
+  {
+   "i": 112,
+   "ref": null,
+   "out": "    if num <= 1:\n            return 0\n        total = 1\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                total += i\n                if i != num // i and i != 1:\n                    total += num // i\n        return total\n\n    amicable_pairs = set()\n    for i in range(1, n + 1):\n        d_i = get_divisors_sum(i)\n        if d_i != i and d_i != 0 and i < d_i:\n            d_d_i = get_divisors_sum(d_i)\n            if d_d_i == i and d_i <= n:\n                amicable_pairs.add(i)\n                amicable_pairs.add(d_i)\n    \n    return sum(amicable_pairs)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 113,
+   "ref": null,
+   "out": "Per calcolare l'angolo di un numero complesso, si utilizza la funzione `math.atan2` che restituisce l'angolo in radianti nel range $(-\\pi, \\pi]$. La funzione deve accettare due argomenti reali (parte reale e parte immaginaria) e restituire l'angolo corrispondente.\n\n```python\nimport math\n\ndef angle_complex(x, y):\n    return math.atan2(y, x)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 114,
+   "ref": null,
+   "out": " '0' con +1\n    - Sostituisci '1' con -1\n    Cerchiamo la somma massima di una sottostringa di lunghezza k.\n    \"\"\"\n    if k > len(s):\n        return 0\n    \n    # Trasformazione: '0' -> 1, '1' -> -1\n    transformed = [1 if c == '0' else -1 for c in s]\n    \n    max_diff = float('-inf')\n    current_sum = 0\n    \n    # Calcoliamo le somme per tutte le finestre di lunghezza k\n    for i in range(len(s) - k + 1):\n        # Somma della finestra corrente\n        window_sum = sum(transformed[i:i+k])\n        if window_sum > max_diff:\n            max_diff = window_sum\n            \n    return max_diff\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 115,
+   "ref": null,
+   "out": "```python\ndef sum_common_divisors(a, b):\n    def get_divisors(n):\n        divs = []\n        for i in range(1, int(n**0.5) + 1):\n            if n % i == 0:\n                divs.append(i)\n                if i != n // i:\n                    divs.append(n // i)\n        return divs\n    \n    divs_a = get_divisors(a)\n    divs_b = get_divisors(b)\n    common = set(divs_a) & set(divs_b)\n    return sum(common)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 116,
+   "ref": null,
+   "out": "f multiply_int(a, b):\n    # Gestisce i casi base\n    if a == 0 or b == 0:\n        return 0\n    \n    # Gestisce i numeri negativi\n    negative_result = (a < 0) ^ (b < 0)\n    a = abs(a)\n    b = abs(b)\n    \n    # Algoritmo di moltiplicazione per addizione ripetuta (o raddoppiamento)\n    # Usiamo l'algoritmo \"raddoppia e sposta\" per efficienza O(log n)\n    result = 0\n    \n    while b > 0:\n        if b % 2 == 1:  # Se b è dispari, aggiungi a al risultato\n            result += a\n        a += a  # Raddoppia a\n        b //= 2  # Metà di b\n    \n    return result if not negative_result else -result\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 117,
+   "ref": null,
+   "out": "```python\ndef long_words(n, sentence):\n    words = sentence.split()\n    return [word for word in words if len(word) > n]\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 118,
+   "ref": null,
+   "out": " (size * size + 1) // 2:\n            return False\n    # Check columns\n    for col_idx in range(size):\n        col_sum = sum(matrix[row][col_idx] for row in range(size))\n        if col_sum != size * (size * size + 1) // 2:\n            return False\n    # Check main diagonal\n    main_diag_sum = sum(matrix[i][i] for i in range(size))\n    if main_diag_sum != size * (size * size + 1) // 2:\n        return False\n    # Check anti-diagonal\n    anti_diag_sum = sum(matrix[i][size - 1 - i] for i in range(size))\n    if anti_diag_sum != size * (size * size + 1) // 2:\n        return False\n    return True\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 119,
+   "ref": null,
+   "out": "```python\ndef max_occurrences(lst):\n    if not lst:\n        return None\n    from collections import Counter\n    counts = Counter(lst)\n    max_item, max_count = max(counts.items(), key=lambda x: x[1])\n    return (max_item, max_count)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 120,
+   "ref": null,
+   "out": "```python\ndef reverse_vowels(s: str) -> str:\n    vowels = set(\"aeiouAEIOU\")\n    chars = list(s)\n    left, right = 0, len(chars) - 1\n    \n    while left < right:\n        while left < right and chars[left] not in vowels:\n            left += 1\n        while left < right and chars[right] not in vowels:\n            right -= 1\n        if left < right:\n            chars[left], chars[right] = chars[right], chars[left]\n            left += 1\n            right -= 1\n    return \"\".join(chars)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 121,
+   "ref": null,
+   "out": "La funzione deve prendere una tupla di caratteri e unire i suoi elementi in una singola stringa senza spazi o separatori aggiuntivi. Utilizzerò la funzione `join` della classe `str` con una stringa vuota come separatore per ottenere il risultato richiesto.\n\n```python\ndef tup_string(tup):\n    return \"\".join(tup)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 122,
+   "ref": null,
+   "out": "```python\ndef sum_negative_numbers(numbers):\n    return lambda nums: sum(x for x in nums if x < 0)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 123,
+   "ref": null,
+   "out": "```python\ndef check_last(arr, p, op):\n    if not arr:\n        return \"ERROR\"\n    \n    last = arr[-1]\n    \n    for _ in range(p):\n        if op == 1:\n            last += 1\n        elif op == 2:\n            last -= 1\n        elif op == 3:\n            last *= 2\n        elif op == 4:\n            last //= 2\n        else:\n            return \"ERROR\"\n    \n    if last % 2 == 0:\n        return \"PARI\"\n    else:\n        return \"ODD\"\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 124,
+   "ref": null,
+   "out": "```python\ndef hexagonal_num(n: int) -> int:\n    \"\"\"\n    Calcola il numero esagonale n-esimo.\n    La formula è: H_n = n * (2n - 1)\n    \"\"\"\n    return n * (2 * n - 1)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 125,
+   "ref": null,
+   "out": "```python\ndef cal_electbill(kwh):\n    if kwh <= 100:\n        return kwh * 0.325\n    elif kwh <= 200:\n        return 100 * 0.325 + (kwh - 100) * 0.375\n    else:\n        return 100 * 0.325 + 100 * 0.375 + (kwh - 200) * 0.425\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 126,
+   "ref": null,
+   "out": "```python\ndef zero_count(arr):\n    if not arr:\n        return 0.0\n    count = arr.count(0)\n    return count / len(arr)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 127,
+   "ref": null,
+   "out": "_Sum_Of_Powers_Of_Two(n):\n    # Un numero intero positivo è somma di potenze di 2 se e solo se è dispari\n    # oppure se la sua rappresentazione binaria contiene almeno un bit impostato.\n    # In realtà, ogni numero intero positivo >= 1 è somma di potenze di 2 (teorema di base 2).\n    # La domanda chiede \"sum of non-zero powers of 2\".\n    # Le potenze di 2 non zero sono 2^0=1, 2^1=2, 2^2=4, ...\n    # Quindi qualsiasi numero intero positivo n >= 1 può essere scritto come somma di potenze di 2.\n    # Se n <= 0, non può essere somma di potenze di 2 (che sono tutte positive).\n    return n > 0\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 128,
+   "ref": null,
+   "out": "Per calcolare la circonferenza di un cerchio, si utilizza la formula $C = 2 \\cdot \\pi \\cdot r$, dove $r$ è il raggio. Il valore di $\\pi$ è disponibile in Python tramite la costante `math.pi`. La funzione deve accettare un argomento (il raggio) e restituire il risultato moltiplicato per 2 e per $\\pi$.\n\n```python\nimport math\n\ndef circle_circumference(r):\n    return 2 * math.pi * r\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 129,
+   "ref": null,
+   "out": "```python\ndef extract_singly(tuples_list):\n    from collections import Counter\n    \n    # Contiamo la frequenza di ogni elemento in tutta la lista di tuple\n    counts = Counter()\n    for t in tuples_list:\n        for element in t:\n            counts[element] += 1\n    \n    # Filtriamo gli elementi che appaiono esattamente una volta\n    result = [element for element, count in counts.items() if count == 1]\n    \n    # Ordiniamo il risultato per garantire la consistenza (opzionale ma buona pratica)\n    result.sort()\n    \n    return result\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 130,
+   "ref": null,
+   "out": "_max_idx:\n            current_max_idx -= 1\n            continue\n        \n        # Se l'elemento massimo non è al primo posto, ribaltalo per portarlo in cima\n        if max_idx != 0:\n            flip(arr, max_idx + 1)\n        \n        # Ora ribalta l'intero segmento per portare l'elemento massimo in fondo\n        flip(arr, current_max_idx + 1)\n        \n        current_max_idx -= 1\n    \n    return arr\n\ndef flip(arr, k):\n    # Funzione ausiliaria per ribaltare la prima k+1 elementi (indice da 0 a k)\n    # k è l'indice 0-based dell'ultimo elemento da ribaltare\n    arr[:k+1] = arr[:k+1][::-1]\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 131,
+   "ref": null,
+   "out": "```python\ndef count_samepair(list1, list2, list3):\n    # Uniamo le tre liste in un'unica lista\n    combined = list1 + list2 + list3\n    \n    # Contiamo le occorrenze di ogni elemento\n    counts = {}\n    for num in combined:\n        counts[num] = counts.get(num, 0) + 1\n    \n    # Contiamo quante coppie uguali esistono\n    # Una coppia è formata da due elementi uguali.\n    # Se un numero appare n volte, il numero di coppie che può formare è n // 2.\n    total_pairs = 0\n    for count in counts.values():\n        total_pairs += count // 2\n    \n    return total_pairs\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 132,
+   "ref": null,
+   "out": "```python\ndef find_lists(t):\n    count = 0\n    for item in t:\n        if isinstance(item, list):\n            count += 1\n    return count\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 133,
+   "ref": null,
+   "out": " k > n or k < 1:\n        return 0\n    \n    # Ordina l'array per facilitare il calcolo\n    arr.sort()\n    \n    # Calcola la somma delle differenze assolute per ogni possibile sottoinsieme di dimensione k\n    total_sum = 0\n    \n    # Genera tutti i sottoinsiemi di dimensione k\n    from itertools import combinations\n    \n    for combo in combinations(arr, k):\n        current_diff_sum = 0\n        for i in range(len(combo)):\n            for j in range(i + 1, len(combo)):\n                current_diff_sum += abs(combo[i] - combo[j])\n        total_sum += current_diff_sum\n    \n    return total_sum\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 134,
+   "ref": null,
+   "out": "```python\ndef max_Abs_Diff(arr, k):\n    if not arr:\n        return 0\n    max_val = max(arr)\n    min_val = min(arr)\n    return max(abs(x - y) for x in arr for y in arr if abs(x - y) <= k)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 135,
+   "ref": null,
+   "out": "```python\ndef ascii_value_string(s):\n    return sum(ord(c) for c in s)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 136,
+   "ref": null,
+   "out": "_row, start_col fino alla base.\n    \"\"\"\n    n = len(triangle)\n    \n    # Copia del triangolo per evitare modifiche all'originale e per il DP in-place\n    dp = [row[:] for row in triangle]\n    \n    # Iterazione dal secondo elemento in giù fino alla base\n    for i in range(n - 2, -1, -1):\n        for j in range(len(triangle[i])):\n            # Le opzioni di movimento sono verso sinistra (j) o destra (j+1) nella riga successiva\n            left = dp[i + 1][j]\n            right = dp[i + 1][j + 1]\n            dp[i][j] = triangle[i][j] + max(left, right)\n    \n    return dp[start_row][start_col]\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 137,
+   "ref": null,
+   "out": "intero n in due parti (stringhe) per massimizzare la somma dei suoi digiti.\n    La divisione avviene tagliando la stringa del numero in due parti non vuote.\n    \"\"\"\n    s = str(n)\n    max_sum = 0\n    # Itera su ogni possibile punto di taglio (da 1 a len(s)-1)\n    for i in range(1, len(s)):\n        part1 = int(s[:i])\n        part2 = int(s[i:])\n        # Calcola la somma dei digiti delle due parti\n        sum1 = sum(int(d) for d in str(part1))\n        sum2 = sum(int(d) for d in str(part2))\n        total = sum1 + sum2\n        if total > max_sum:\n            max_sum = total\n    return max_sum\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 138,
+   "ref": null,
+   "out": "  # Oppure intende \"subarray\"?\n    # Se è subarray: [1,2,3,4,5] (lunghezza 5) o [5,3,2] (differenza -2, -1). Nessuna ha tutte differenze 1 tranne [1,2,3,4,5].\n    # Se è subsequence: [1,2,3,4,5] (lunghezza 5). [3,2] (lunghezza 2).\n    # L'esempio dice risultato 6. L'array ha 7 elementi.\n    # Forse l'esempio è sbagliato o la definizione è diversa.\n    # Ipotesi: Forse intende \"subsequence\" dove ogni elemento è adiacente al precedente nel valore (es. 1,2,3,4,5,6,7) ma qui abbiamo 3,2.\n    # Forse intende \"subsequence\" che può saltare elementi ma deve mantenere l'ordine e la differenza di 1?\n   ",
+   "score": 0.0
+  },
+  {
+   "i": 139,
+   "ref": null,
+   "out": "a:\n    a, a+b, a+2b, a+3b, ...\n    La sequenza è data dalla formula: term(k) = a + k*b per k >= 0.\n    Dobbiamo trovare se esiste un k >= 0 tale che: a + k*b = n.\n    Questo equivale a: k*b = n - a  =>  k = (n - a) / b.\n    Quindi, n è nella sequenza se:\n    1. (n - a) è divisibile per b (senza resto).\n    2. Il risultato k è non negativo (k >= 0).\n    \"\"\"\n    if b == 0:\n        # Se b è 0, la sequenza è costante: a, a, a, ...\n        # n è nella sequenza solo se n è uguale a a.\n        return n == a\n    \n    diff = n - a\n    if diff < 0:\n        return False\n    \n    return diff % b == 0\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 140,
+   "ref": null,
+   "out": "```python\ndef is_coprime(a, b):\n    def gcd(x, y):\n        while y:\n            x, y = y, x % y\n        return x\n    \n    return gcd(a, b) == 1\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 141,
+   "ref": null,
+   "out": "```python\ndef merge_sort(arr):\n    if len(arr) <= 1:\n        return arr\n    \n    mid = len(arr) // 2\n    left = merge_sort(arr[:mid])\n    right = merge_sort(arr[mid:])\n    \n    return merge(left, right)\n\ndef merge(left, right):\n    result = []\n    i = j = 0\n    \n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            result.append(left[i])\n            i += 1\n        else:\n            result.append(right[j])\n            j += 1\n    \n    result.extend(left[i:])\n    result.extend(right[j:])\n    \n    return result\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 142,
+   "ref": null,
+   "out": "Per trovare il vertice di una parabola definita dall'equazione quadratica $y = ax^2 + bx + c$, utilizziamo le formule standard. L'ascissa del vertice ($x_v$) è data da $-b / (2a)$. Una volta calcolato $x_v$, possiamo trovare l'ordinata ($y_v$) sostituendo $x_v$ nell'equazione originale: $y_v = a(x_v)^2 + b(x_v) + c$.\n\nEcco la soluzione completa in Python:\n\n```python\ndef parabola_vertex(a, b, c):\n    x_v = -b / (2 * a)\n    y_v = a * (x_v ** 2) + b * x_v + c\n    return (x_v, y_v)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 143,
+   "ref": null,
+   "out": "La funzione deve iterare sulle righe della lista bidimensionale e, per ogni riga, selezionare l'elemento alla posizione indicata dall'indice `col`. Se una riga è più corta dell'indice fornito, si ignora quella riga per evitare errori di indice.\n\n```python\ndef specified_element(matrix, col):\n    result = []\n    for row in matrix:\n        if col < len(row):\n            result.append(row[col])\n    return result\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 144,
+   "ref": null,
+   "out": "\n3. Eseguire l'operazione XOR tra il numero e la maschera.\n\nLa maschera per tutti i bit pari può essere costruita come segue: se `k` è la lunghezza del numero, la maschera avrà 1 nelle posizioni 0, 2, 4, ..., fino al massimo pari <= `k-1`. Una formula per la maschera è `(1 << (k // 2 + 1)) - 1`? No, questo non funziona direttamente.\n\nInvece, possiamo usare una maschera predefinita per 64 bit: `0x5555555555555555` (che è 1 nelle posizioni pari). Ma per numeri arbitrari, possiamo generare la maschera così:\n- Se `n` ha `L` bit, la maschera deve avere 1 nelle posizioni 0, 2, ..., 2*floor((L-1)/2).",
+   "score": 0.0
+  },
+  {
+   "i": 145,
+   "ref": null,
+   "out": "```python\ndef tuple_int_str(tup):\n    return tuple(tuple(int(x) for x in sub) for sub in tup)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 146,
+   "ref": null,
+   "out": "  \n    encoded = []\n    current_val = lst[0]\n    count = 1\n    \n    for i in range(1, len(lst)):\n        if lst[i] == current_val:\n            count += 1\n        else:\n            encoded.append([count, current_val])\n            current_val = lst[i]\n            count = 1\n    # Aggiungi l'ultimo gruppo\n    encoded.append([count, current_val])\n    \n    # Riflette l'encoding: cambia l'ordine degli elementi in ogni sotto-lista\n    # e inverte l'ordine delle sotto-liste stesse\n    reflected = []\n    for group in reversed(encoded):\n        reflected.append(group[::-1])\n    \n    return reflected\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 147,
+   "ref": null,
+   "out": "ia, il test assert min_Ops([2,2,2,2],4,3) == 0 suggerisce che:\n       - Se gli elementi sono già target, operazioni = 0.\n       - k è il limite massimo di operazioni consentite.\n       - Se le operazioni necessarie <= k, restituisce il numero di operazioni.\n       - Altrimenti, potrebbe essere -1 o un valore specifico, ma il test non lo copre.\n       Assumiamo che se necessario > k, restituisca -1.\n    \"\"\"\n    ops_needed = 0\n    for x in arr:\n        if x != target:\n            ops_needed += abs(x - target)\n    \n    if ops_needed <= k:\n        return ops_needed\n    else:\n        return -1\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 148,
+   "ref": null,
+   "out": "```python\ndef month_season(month, day):\n    months = {\n        'January': 1, 'February': 2, 'March': 3, 'April': 4,\n        'May': 5, 'June': 6, 'July': 7, 'August': 8,\n        'September': 9, 'October': 10, 'November': 11, 'December': 12\n    }\n    \n    if month not in months:\n        return None\n    \n    month_num = months[month]\n    \n    if month_num in [12, 1, 2]:\n        return 'winter'\n    elif month_num in [3, 4, 5]:\n        return 'spring'\n    elif month_num in [6, 7, 8]:\n        return 'summer'\n    else:\n        return 'autumn'\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 149,
+   "ref": null,
+   "out": "```python\ndef solution(a, b, n):\n    def extended_gcd(a, b):\n        if a == 0:\n            return b, 0, 1\n        else:\n            gcd, x1, y1 = extended_gcd(b % a, a)\n            x = y1 - (b // a) * x1\n            y = x1\n            return gcd, x, y\n\n    gcd, x0, y0 = extended_gcd(a, b)\n    \n    if n % gcd != 0:\n        return None\n    \n    x = x0 * (n // gcd)\n    y = y0 * (n // gcd)\n    \n    return f'x = ', x, ', y = ', y\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 150,
+   "ref": null,
+   "out": "```python\ndef remove_elements(list1, list2):\n    return [x for x in list1 if x not in list2]\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 151,
+   "ref": null,
+   "out": " numero di termini è $m = (n + 1) // 2$.\nIl primo termine è $n$. L'ultimo termine positivo è $n - 2(m-1)$.\nLa somma è $m \\times (n + (n - 2(m-1))) // 2$.\nVerifichiamo con $n=6$: $m = (6+1)//2 = 3$. Termini: 6, 4, 2. Somma = 12. Formula: $3 \\times (6 + 2) // 2 = 3 \\times 4 = 12$. Corretto.\nVerifichiamo con $n=5$: $m = (5+1)//2 = 3$. Termini: 5, 3, 1. Somma = 9. Formula: $3 \\times (5 + 1) // 2 = 3 \\times 3 = 9$. Corretto.\nVerifichiamo con $n=0$: $m = 0$. Somma = 0. Corretto.\n\n```python\ndef sum_series(n):\n    if n <= 0:\n        return 0\n    m = (n + 1) // 2\n    first_term = n\n    last_term = n - ",
+   "score": 0.0
+  },
+  {
+   "i": 152,
+   "ref": null,
+   "out": "Per calcolare l'area di un poligono regolare, si utilizza la formula $A = \\frac{1}{2} n s^2 \\frac{\\sin(2\\pi/n)}{2}$, dove $n$ è il numero di lati e $s$ è la lunghezza del lato. La formula semplificata è $A = \\frac{n \\cdot s^2}{4} \\cdot \\sin\\left(\\frac{2\\pi}{n}\\right)$.\n\nEcco la soluzione completa in Python:\n\n```python\nimport math\n\ndef area_polygon(n, s):\n    return (n * s * s / 4) * math.sin(2 * math.pi / n)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 153,
+   "ref": null,
+   "out": "```python\ndef areEquivalent(n, m):\n    def get_sum_divisors(num):\n        if num <= 0:\n            return 0\n        total = 1\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                total += i\n                if i != num // i:\n                    total += num // i\n        return total\n    \n    return get_sum_divisors(n) == get_sum_divisors(m)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 154,
+   "ref": null,
+   "out": "```python\ndef count_char_position(s: str) -> int:\n    count = 0\n    for i in range(len(s)):\n        char = s[i]\n        if 'a' <= char <= 'z' or 'A' <= char <= 'Z':\n            count += 1\n    return count\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 155,
+   "ref": null,
+   "out": "```python\ndef find_even_Pair(arr, k):\n    count = 0\n    for i in range(len(arr)):\n        for j in range(i + 1, len(arr)):\n            if (arr[i] ^ arr[j]) % 2 == 0:\n                count += 1\n    return count\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 156,
+   "ref": null,
+   "out": "roccio più diretto: trovare la posizione del bit più significativo\n    # e poi calcolare 2^k. Se n è esattamente 2^k, restituiamo 2^k.\n    # Se n > 2^k, restituiamo 2^(k+1).\n    \n    # Metodo: trovare il bit più significativo\n    if n == 0:\n        return 1\n    \n    # Trova il bit più significativo (MSB)\n    msb = n.bit_length() - 1\n    \n    # Calcola 2^msb\n    power_of_2 = 1 << msb\n    \n    # Se n è uguale a questa potenza, restituisce n\n    # Altrimenti, restituisce la prossima potenza (2^(msb+1))\n    if n == power_of_2:\n        return power_of_2\n    else:\n        return power_of_2 << 1\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 157,
+   "ref": null,
+   "out": "```python\ndef frequency(arr, target):\n    count = 0\n    for num in arr:\n        if num == target:\n            count += 1\n    return count\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 158,
+   "ref": null,
+   "out": "```python\ndef get_pell(n):\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, 2 * b + a\n    return b\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 159,
+   "ref": null,
+   "out": "```python\ndef sum_range_list(numbers, start, end):\n    \"\"\"\n    Calcola la somma degli elementi nella lista tra l'indice start e end (esclusivo).\n    \n    Args:\n        numbers (list): Lista di numeri.\n        start (int): Indice di inizio (incluso).\n        end (int): Indice di fine (escluso).\n    \n    Returns:\n        int: Somma degli elementi nel range specificato.\n    \"\"\"\n    return sum(numbers[i] for i in range(start, end))\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 160,
+   "ref": null,
+   "out": "```python\ndef perimeter_pentagon(n):\n    \"\"\"\n    Calcola il perimetro di un pentagono regolare dato il lato 'n'.\n    Un pentagono regolare ha 5 lati uguali.\n    Perimetro = 5 * lato\n    \"\"\"\n    return 5 * n\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 161,
+   "ref": null,
+   "out": "```python\ndef count_occurance(s):\n    return s.count('std')\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 162,
+   "ref": null,
+   "out": "```python\ndef remove_splchar(s):\n    return ''.join(char for char in s if char.isalnum())\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 163,
+   "ref": null,
+   "out": "```python\ndef group_keyvalue(pairs):\n    result = {}\n    for key, value in pairs:\n        if key not in result:\n            result[key] = []\n        result[key].append(value)\n    return result\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 164,
+   "ref": null,
+   "out": "```python\ndef is_valid_parenthese(s: str) -> bool:\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    openers = set(mapping.values())\n    \n    for char in s:\n        if char in openers:\n            stack.append(char)\n        elif char in mapping:\n            if not stack or stack[-1] != mapping[char]:\n                return False\n            stack.pop()\n        else:\n            return False\n            \n    return len(stack) == 0\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 165,
+   "ref": null,
+   "out": "Per calcolare il perimetro di un triangolo, basta sommare le lunghezze dei suoi tre lati. Non è necessario verificare se i lati formano effettivamente un triangolo valido (disuguaglianza triangolare), poiché il test fornito (`10, 20, 30` che sommano a `60`) implica che l'input è già considerato valido o che la funzione deve semplicemente eseguire la somma.\n\nLa soluzione è una funzione che prende tre argomenti e restituisce la loro somma.\n\n```python\ndef perimeter_triangle(a, b, c):\n    return a + b + c\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 166,
+   "ref": null,
+   "out": " la prima coppia (a, b) con a < b tale che il loro MCM sia nell'intervallo\n    for a in range(min_val, max_val + 1):\n        for b in range(a + 1, max_val + 1):\n            # Calcolo del MCM: (a * b) / MCD(a, b)\n            def gcd(x, y):\n                while y:\n                    x, y = y, x % y\n                return x\n            \n            lcm_val = (a * b) // gcd(a, b)\n            \n            if min_val <= lcm_val <= max_val:\n                return (a, b)\n    \n    # Se non viene trovata alcuna coppia (teoricamente improbabile per intervalli sufficientemente ampi)\n    return None\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 167,
+   "ref": null,
+   "out": "```python\ndef string_literals(search_terms, target_string):\n    \"\"\"\n    Verifica se tutti i termini di ricerca (search_terms) sono presenti nella stringa target_string.\n    Restituisce 'Matched!' se tutti i termini sono trovati, altrimenti 'Not Matched'.\n    \"\"\"\n    if not search_terms:\n        return 'Matched!'\n    \n    for term in search_terms:\n        if term not in target_string:\n            return 'Not Matched'\n    \n    return 'Matched!'\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 168,
+   "ref": null,
+   "out": "ia con $n$ ripetuto $k$ volte dove $k$ è il numero di cifre di $n$, e ogni termine successivo è la somma degli ultimi $k$ termini), allora $n$ appare in qualche punto della sequenza.\n\nPer $n=14$:\n- Cifre: 2 ($k=2$)\n- Sequenza iniziale: 14, 14\n- Termini: 14, 14, 28, 42, 70, 112, 182, 294, 476, 770, 1246, 2016, 3262, 5278, 8540, 13818, 22358, 36176, 58534, 94712, 153246, 247958, 401204, 649162, 1050366, 1700528, 2750894, 4451422, 7202316, 11653738, 18856054, 30509792, 49365846, 79875638, 129241484, 209117122, 338358606, 547475728, 885834334, 1433310062, 2319144396, 3752454458, 6071598854, 982405",
+   "score": 0.0
+  },
+  {
+   "i": 169,
+   "ref": null,
+   "out": "at_long(lat1, lon1, lat2, lon2):\n    R = 6371.0  # Raggio della Terra in km\n    \n    # Conversione gradi in radianti\n    lat1_rad = math.radians(lat1)\n    lon1_rad = math.radians(lon1)\n    lat2_rad = math.radians(lat2)\n    lon2_rad = math.radians(lon2)\n    \n    # Differenze\n    dlat = lat2_rad - lat1_rad\n    dlon = lon2_rad - lon1_rad\n    \n    # Formula di Haversine\n    a = math.sin(dlat / 2) ** 2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2) ** 2\n    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))\n    \n    # Distanza in km\n    distance = R * c\n    \n    return distance\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 170,
+   "ref": null,
+   "out": "```python\ndef common_prefix(strings, n):\n    if not strings:\n        return \"\"\n    prefix = \"\"\n    for i in range(n):\n        char = strings[0][i]\n        if all(strings[j][i] == char for j in range(len(strings))):\n            prefix += char\n        else:\n            break\n    return prefix\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 171,
+   "ref": null,
+   "out": "'[A-Z]')\n    # Pattern for lowercase letters\n    lower_pattern = re.compile(r'[a-z]')\n    # Pattern for special characters (anything that is not alphanumeric)\n    special_pattern = re.compile(r'[^a-zA-Z0-9]')\n    # Pattern for numeric digits\n    numeric_pattern = re.compile(r'[0-9]')\n    \n    # Find all matches for each category\n    upper_chars = upper_pattern.findall(text)\n    lower_chars = lower_pattern.findall(text)\n    special_chars = special_pattern.findall(text)\n    numeric_chars = numeric_pattern.findall(text)\n    \n    return (upper_chars, lower_chars, special_chars, numeric_chars)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 172,
+   "ref": null,
+   "out": "```python\ndef count_pairs(arr, k):\n    if k < 0:\n        return 0\n    seen = set()\n    count = 0\n    for num in arr:\n        if (num + k) in seen:\n            count += 1\n        seen.add(num)\n    return count\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 173,
+   "ref": null,
+   "out": "```python\ndef greater_specificnum(lst, num):\n    return all(x > num for x in lst)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 174,
+   "ref": null,
+   "out": "sempio: $A=5, C=2$.\n    $h = -D/(2*5)$, $k = -E/(2*2)$.\n    L'esempio non fornisce $D, E, F$ esplicitamente, ma solo $A, B, C$. Questo suggerisce che la funzione potrebbe essere chiamata con solo tre argomenti o che i parametri $D, E$ siano impliciti o zero in un contesto specifico, oppure la funzione deve accettare $A, B, C, D, E, F$.\n\nRileggendo l'esempio `parabola_focus(5,3,2)`, sembra che la funzione accetti solo 3 argomenti. Questo è strano per l'equazione generale. Forse l'equazione è della forma $Ax^2 + Bxy + Cy^2 = 1$ o simile?\nOppure, forse l'esempio è un caso particolare dove $D=0, E",
+   "score": 0.0
+  },
+  {
+   "i": 175,
+   "ref": null,
+   "out": "```python\nimport re\n\ndef check_literals(text, literals):\n    \"\"\"\n    Cerca le stringhe letterali fornite in 'literals' all'interno di 'text' usando regex.\n    Restituisce 'Matched!' se almeno una stringa è trovata, altrimenti 'Not found'.\n    \"\"\"\n    if not literals:\n        return 'Not found'\n    \n    pattern = '|'.join(re.escape(literal) for literal in literals)\n    regex = re.compile(pattern)\n    match = regex.search(text)\n    \n    return 'Matched!' if match else 'Not found'\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 176,
+   "ref": null,
+   "out": "```python\ndef longest_common_subsequence(s1, s2, len1, len2):\n    # Crea una matrice DP di dimensioni (len1+1) x (len2+1)\n    dp = [[0] * (len2 + 1) for _ in range(len1 + 1)]\n\n    # Riempimento della matrice DP\n    for i in range(1, len1 + 1):\n        for j in range(1, len2 + 1):\n            if s1[i-1] == s2[j-1]:\n                dp[i][j] = dp[i-1][j-1] + 1\n            else:\n                dp[i][j] = max(dp[i-1][j], dp[i][j-1])\n\n    # La lunghezza della LCS è nell'angolo in basso a destra\n    return dp[len1][len2]\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 177,
+   "ref": null,
+   "out": "```python\ndef prod_Square(n):\n    if n <= 0:\n        return False\n    i = 1\n    while i * i <= n:\n        if n % (i * i) == 0:\n            return True\n        i += 1\n    return False\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 178,
+   "ref": null,
+   "out": "uguale al corrente, significa che sono già in ordine\n            if correct_val == val:\n                i += 1\n            else:\n                # Scambia\n                nums[i], nums[val - 1] = nums[val - 1], nums[i]\n                # Non incrementiamo i perché il nuovo elemento in nums[i] potrebbe anche essere da spostare\n    \n    # Passaggio 2: Trova il primo indice i tale che nums[i] != i + 1\n    for i in range(n):\n        if nums[i] != i + 1:\n            return i + 1\n    \n    # Se non ci sono numeri mancanti nell'intervallo [1, n], il primo positivo mancante è n + 1\n    return n + 1\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 179,
+   "ref": null,
+   "out": "```python\ndef count_Intgral_Points(x1, y1, x2, y2):\n    # Calcola la larghezza e l'altezza del quadrato (esclusi i bordi)\n    width = x2 - x1\n    height = y2 - y1\n    # Il numero di punti interi interni è la larghezza moltiplicata per l'altezza\n    return width * height\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 180,
+   "ref": null,
+   "out": "```python\ndef check_monthnumber(month_name: str) -> bool:\n    \"\"\"\n    Verifica se il nome del mese contiene 30 giorni.\n    Restituisce True se il mese ha 30 giorni, False altrimenti.\n    \"\"\"\n    months_30_days = [\"april\", \"giugno\", \"settembre\", \"novembre\"]\n    return month_name.lower() in months_30_days\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 181,
+   "ref": null,
+   "out": "```python\ndef check_String(s):\n    has_letter = any(c.isalpha() for c in s)\n    has_number = any(c.isdigit() for c in s)\n    return has_letter and has_number\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 182,
+   "ref": null,
+   "out": "```python\ndef remove_tuple(t):\n    seen = set()\n    result = []\n    for item in t:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return tuple(result)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 183,
+   "ref": null,
+   "out": "```python\ndef octal_To_Decimal(n):\n    return int(n, 8)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 184,
+   "ref": null,
+   "out": "```python\ndef first(arr, target):\n    left, right = 0, len(arr) - 1\n    result = -1\n    while left <= right:\n        mid = (left + right) // 2\n        if arr[mid] == target:\n            result = mid\n            right = mid - 1  # Cerca a sinistra per trovare la prima occorrenza\n        elif arr[mid] < target:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return result\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 185,
+   "ref": null,
+   "out": "```python\ndef remove_tuples(tuples_list, k):\n    return [t for t in tuples_list if len(t) != k]\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 186,
+   "ref": null,
+   "out": "```python\ndef find_exponentio(t1, t2):\n    return tuple(x ** y for x, y in zip(t1, t2))\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 187,
+   "ref": null,
+   "out": "```python\nimport math\n\ndef largest_triangle(a, b):\n    \"\"\"\n    Trova l'area massima di un triangolo inscritto in un'ellisse con semiassi a e b.\n    L'area massima è data da (3 * sqrt(3) / 4) * a * b.\n    \"\"\"\n    return (3 * math.sqrt(3) / 4) * a * b\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 188,
+   "ref": null,
+   "out": "il MSB impostato e tutti gli altri 0, ma potrebbe superare n\n    # Meglio: trovare il MSB e poi calcolare 2^k\n    \n    # Metodo alternativo più diretto:\n    # Trovare il più grande k tale che 2^k <= n\n    # Usiamo il fatto che per n > 0, il MSB è a posizione floor(log2(n))\n    \n    if n <= 0:\n        return 0\n    \n    # Troviamo il bit più significativo\n    # Spostiamo n a sinistra finché non supera il limite di 32 bit (o usiamo log)\n    # Ma il modo più efficiente senza log è:\n    \n    # Inizializziamo con 1\n    power = 1\n    while power * 2 <= n:\n        power *= 2\n    \n    return power\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 189,
+   "ref": null,
+   "out": "```python\ndef position_max(lst):\n    if not lst:\n        return []\n    max_val = max(lst)\n    return [i for i, val in enumerate(lst) if val == max_val]\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 190,
+   "ref": null,
+   "out": "```python\ndef chkList(lst):\n    if not lst:\n        return True\n    first = lst[0]\n    return all(element == first for element in lst)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 191,
+   "ref": null,
+   "out": "```python\ndef remove_even(s):\n    return ''.join([char for char in s if ord(char) % 2 != 0])\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 192,
+   "ref": null,
+   "out": "La distanza di Hamming tra due interi è il numero di posizioni in cui i loro bit binari differiscono. Per calcolarla, convertiamo i numeri in binario, allineiamo i bit (aggiungendo zeri a sinistra se necessario) e contiamo le differenze.\n\n```python\ndef hamming_Distance(a: int, b: int) -> int:\n    xor = a ^ b\n    distance = 0\n    while xor > 0:\n        distance += xor & 1\n        xor >>= 1\n    return distance\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 193,
+   "ref": null,
+   "out": "```python\ndef count(s, char):\n    return s.count(char)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 194,
+   "ref": null,
+   "out": "```python\ndef inversion_elements(t):\n    inversions = []\n    for i in range(len(t)):\n        for j in range(i + 1, len(t)):\n            if t[i] > t[j]:\n                inversions.append(-(t[i] + t[j]))\n    return tuple(inversions)\n```\n",
+   "score": 0.0
+  },
+  {
+   "i": 195,
+   "ref": null,
+   "out": "```python\ndef concatenate_elements(tuples):\n    result = []\n    for i in range(len(tuples) - 1):\n        result.append(tuples[i] + tuples[i + 1])\n    return tuple(result)\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 196,
+   "ref": null,
+   "out": "             # Quindi non incrementiamo. Il valore rimane quello precedente (che è 0 o ereditato).\n                # In realtà, se i == j, non possiamo formare una coppia (s[i-1], s[i-1]) valida.\n                # Quindi dp[i][j] = dp[i-1][j-1] (che è 0 se i=j=1, o ereditato se i=j>1? No, \n                # perché se i=j, stiamo guardando lo stesso prefix, quindi non c'è ripetizione possibile \n                # tra due istanze diverse dello stesso prefix).\n                # In realtà, la logica corretta è: se i == j, dp[i][j] = dp[i-1][j-1] \n                # ma dato che stiamo cercando coppie",
+   "score": 0.0
+  },
+  {
+   "i": 197,
+   "ref": null,
+   "out": "```python\nimport re\n\ndef is_decimal(s):\n    pattern = r'^\\d+\\.\\d{2}$'\n    return bool(re.match(pattern, s))\n```\n",
+   "score": 1.0
+  },
+  {
+   "i": 198,
+   "ref": null,
+   "out": "emento inserito è più piccolo dei figli, potrebbe violare la proprietà.\n    # Quindi dobbiamo fare un riordino completo o due passaggi:\n    # 1. Se l'elemento inserito è più piccolo dei figli, saliamo (heapify up)\n    # 2. Se l'elemento inserito è più grande del padre, scendiamo (heapify down)\n    \n    # In questo caso, l'elemento è all'ultimo indice. Quindi controlliamo se deve salire o scendere.\n    \n    # Passo 1: Heapify up (se l'elemento è più piccolo del padre)\n    while heap_index = len(heap) - 1\n        parent_index = (heap_index - 1) // 2\n        if heap_index == 0:\n            break\n",
+   "score": 0.0
+  },
+  {
+   "i": 199,
+   "ref": null,
+   "out": "```python\nimport re\n\ndef is_allowed_specific_char(s):\n    \"\"\"\n    Verifica se la stringa contiene solo caratteri da 'a'-'z', 'A'-'Z' e '0'-'9'.\n    \"\"\"\n    pattern = r'^[a-zA-Z0-9]+$'\n    return bool(re.match(pattern, s))\n```\n",
+   "score": 1.0
+  }
+ ]
+}

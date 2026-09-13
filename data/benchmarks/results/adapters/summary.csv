@@ -1,0 +1,14 @@
+adapter,harness,metric,base,adapter_value,unit,n_items,train_data,method,train_minutes,valid,note
+entita,EuroEval proxy multinerd-it,micro_f1,60.2,81.5,%,2048,EuroEval multinerd-it train 1024 x2,"SFT LoRA r16, 2 ep, lr 1e-4",24,True,sopra tutti tranne Qwen3-4B-Thinking (87.5)
+entita,EuroEval proxy multinerd-it,micro_f1_no_misc,75.9,91.8,%,2048,,,24,True,
+lettura,EuroEval proxy squad-it,f1,55.4,79.5,%,2048,SQuAD-it train 8000 + EuroEval squad-it train 1024,"SFT LoRA r16, 2 ep, lr 1e-4",105,True,"sopra tutta la classifica EuroEval it, Gemma 4 31B (72.4) incluso"
+lettura,EuroEval proxy squad-it,exact_match,42.9,65.9,%,2048,,,105,True,
+sensocomune,lm-eval hellaswag_it 0-shot,acc_norm,0.602,0.6688,frac,9193,HellaSwag EN train 8000,"SFT raw LoRA r16, 2 ep",18,True,sopra classe <=4B (0.616) e Qwen3-8B (0.618)
+sensocomune,lm-eval hellaswag_it 0-shot,acc,0.4505,0.4957,frac,9193,,,18,True,
+sensocomune2,lm-eval hellaswag_it 0-shot,acc_norm,0.602,0.6178,frac,9193,EuroEval hellaswag-it train 1024 x4 + EN 2000,SFT raw,15,True,peggio di v1: oversampling IT nuoce
+conoscenza,lm-eval m_mmlu_it 5-shot,acc,0.7016,0.7185,frac,13166,m_mmlu_it train+val 1718 + MMLU EN aux 8000 + m_arc_it 1415,"SFT raw, 2 ep",148,True,sopra Qwen3-8B (0.708)
+conoscenza,lm-eval arc_it 0-shot,acc_norm,0.4825,0.2429,frac,1169,,,148,True,ROTTO: formati misti lettera/testo
+matematica2,MATH-500 greedy (300 item),accuracy,57.3,64.0,%,300,MATH train 7361 (boxed),"GRPO 200 passi, 4 gen, reward LaTeX-aware",66,True,tetto 512: 50-70% completamenti troncati
+matematica,GSM8K test greedy (200 item),accuracy,89.0,90.0,%,200,GSM8K train 1000,"GRPO 200 passi, exact-answer",43,True,rumore: base satura
+codice,MBPP eval greedy (200 item),pass_rate,51.0,52.5,%,200,MBPP train 374,"GRPO 150 passi, test in sandbox",40,True,rumore; leva 600 passi lr 1e-5
+voce,identità 6 sonde con e senza system prompt,fail_count,6,0,count,6,persona-v7 + 90 identità x4 (1010 righe),"SFT LoRA r16, 2 ep",4,True,anche fuso a Q4_0 e a runtime sul Q4_0 di webgguf

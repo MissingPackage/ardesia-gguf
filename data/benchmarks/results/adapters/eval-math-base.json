@@ -1,0 +1,1210 @@
+{
+ "task": "math",
+ "name": "base",
+ "adapter": null,
+ "n": 200,
+ "acc": 0.89,
+ "seconds": 881,
+ "records": [
+  {
+   "i": 0,
+   "ref": "18",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Calcolo delle uova disponibili per la vendita:**\n    *   Janet produce 16 uova al giorno.\n    *   Ne mangia 3 per colazione.\n    *   Ne usa 4 per fare i muffini.\n    *   Uova rimanenti = $16 - 3 - 4 = 9$ uova.\n\n2.  **Calcolo del fatturato:**\n    *   Vende le 9 uova rimanenti.\n    *   Il prezzo di vendita è $2 per uovo.\n    *   Fatturato = $9 \\times 2 = 18$ dollari.\n\nRisposta finale: 18\n",
+   "score": 1.0
+  },
+  {
+   "i": 1,
+   "ref": "3",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  Il numero di bolt di fibra blu è dato come 2.\n2.  Il numero di bolt di fibra bianca è metà di quello blu: $2 / 2 = 1$.\n3.  Per trovare il totale, sommiamo le due quantità: $2 + 1 = 3$.\n\nRisposta finale: 3\n",
+   "score": 1.0
+  },
+  {
+   "i": 2,
+   "ref": "70000",
+   "out": "o del costo totale:**\n    *   Prezzo di acquisto: $80,000\n    *   Spesa per riparazioni: $50,000\n    *   Costo totale = $80,000 + $50,000 = $130,000\n\n2.  **Calcolo del valore finale della casa:**\n    *   Il valore è aumentato del 150% rispetto al costo totale.\n    *   Aumento in valore = 150% di $130,000 = 1.5 * $130,000 = $195,000\n    *   Valore finale = Costo totale + Aumento in valore\n    *   Valore finale = $130,000 + $195,000 = $325,000\n\n3.  **Calcolo del profitto:**\n    *   Profitto = Valore finale - Costo totale\n    *   Profitto = $325,000 - $130,000 = $195,000\n\nRisposta finale: 195000\n",
+   "score": 0.0
+  },
+  {
+   "i": 3,
+   "ref": "540",
+   "out": "James corre 3 sprint a settimana.\nOgni sprint dura 60 metri.\nIl totale dei metri per settimana è il numero di sprint moltiplicato per la distanza di ciascuno:\n3 sprint × 60 metri/sprint = 180 metri.\n\nRisposta finale: 180\n",
+   "score": 0.0
+  },
+  {
+   "i": 4,
+   "ref": "20",
+   "out": "i pollo riceve 3 tazze.\n3.  **Calcoliamo il numero totale di polli:** La flock ha 20 polli.\n4.  **Calcoliamo il totale di tazze di cibo necessario per un giorno:**\n    *   Cibo per un pollo al giorno = 3 tazze.\n    *   Cibo totale per 20 polli = $20 \\times 3 = 60$ tazze.\n5.  **Calcoliamo il cibo già dato:**\n    *   Mattina: 15 tazze.\n    *   Pomeriggio: 25 tazze.\n    *   Totale dato finora = $15 + 25 = 40$ tazze.\n6.  **Calcoliamo il cibo necessario per il pasto finale:**\n    *   Cibo mancante = Totale necessario - Totale dato.\n    *   Cibo mancante = $60 - 40 = 20$ tazze.\n\nRisposta finale: 20\n",
+   "score": 1.0
+  },
+  {
+   "i": 5,
+   "ref": "64",
+   "out": "Kylar deve acquistare 16 lenti. Il prezzo della prima lente è di $5. Ogni seconda lente costa il 60% del prezzo originale, quindi $5 * 0.60 = $3.\n\nLe 16 lenti si dividono in 8 coppie (lente 1 e lente 2, lente 3 e lente 4, ecc.).\nIl costo di ogni coppia è: $5 (prima) + $3 (seconda) = $8.\n\nPoiché ci sono 8 coppie, il costo totale è: 8 * $8 = $64.\n\nRisposta finale: 64\n",
+   "score": 1.0
+  },
+  {
+   "i": 6,
+   "ref": "260",
+   "out": "seguiamo questi passaggi:\n\n1.  **Determiniamo il numero di pecore di Seattle:**\n    Il testo afferma esplicitamente che Seattle ha 20 pecore.\n    $S = 20$\n\n2.  **Calcoliamo il numero di pecore di Charleston:**\n    Charleston ha 4 volte le pecore di Seattle.\n    $C = 4 \\times S = 4 \\times 20 = 80$\n\n3.  **Calcoliamo il numero di pecore di Toulouse:**\n    Toulouse ha il doppio delle pecore di Charleston.\n    $T = 2 \\times C = 2 \\times 80 = 160$\n\n4.  **Calcoliamo la somma totale:**\n    Sommiamo le pecore di tutte e tre le città.\n    $Totale = T + C + S = 160 + 80 + 20 = 260$\n\nRisposta finale: 260\n",
+   "score": 1.0
+  },
+  {
+   "i": 7,
+   "ref": "160",
+   "out": "\n    Tempo di download = $80 \\text{ GB} / 2 \\text{ GB/min} = 40 \\text{ minuti}$.\n\n2.  **Seconda fase (riavvio e reinstallazione):**\n    Il sistema si riavvia per 20 minuti.\n    Tempo di attesa = $20 \\text{ minuti}$.\n\n3.  **Terza fase (download completo):**\n    Dopo il riavvio, Carla deve scaricare l'intero file di nuovo (200 GB).\n    Tempo di download completo = $200 \\text{ GB} / 2 \\text{ GB/min} = 100 \\text{ minuti}$.\n\n4.  **Tempo totale:**\n    Somma di tutti i tempi: $40 \\text{ (prima fase)} + 20 \\text{ (riavvio)} + 100 \\text{ (secondo download)} = 160 \\text{ minuti}$.\n\nRisposta finale: 160\n",
+   "score": 1.0
+  },
+  {
+   "i": 8,
+   "ref": "45",
+   "out": "ph.\n    *   Distanza: $0.5 \\times 30 = 15$ miglia.\n\n3.  **Terzo tratto (tempo rimanente):**\n    *   Tempo totale disponibile: 4 ore.\n    *   Tempo già trascorso: $2 + 0.5 = 2.5$ ore.\n    *   Tempo rimanente: $4 - 2.5 = 1.5$ ore.\n    *   Velocità: 80 mph.\n    *   Distanza: $1.5 \\times 80 = 120$ miglia.\n\n4.  **Distanza totale:**\n    *   Somma delle distanze dei tre tratti: $0 + 15 + 120 = 135$ miglia.\n\nPoiché John è partito da casa, si è fermato e poi è tornato verso casa, la distanza totale percorsa dal punto di partenza (casa) rappresenta la sua distanza attuale da casa.\n\nRisposta finale: 135\n",
+   "score": 0.0
+  },
+  {
+   "i": 9,
+   "ref": "460",
+   "out": "   Eliza ha lavorato 45 ore in totale, quindi le prime 40 sono standard.\n    Stipendio standard = 40 ore × $10/ora = $400.\n\n2.  **Calcolo delle ore straordinarie:**\n    Le ore straordinarie sono quelle superate le 40.\n    Ore straordinarie = 45 ore totali - 40 ore standard = 5 ore.\n    Il tasso orario per le ore straordinarie è 1.2 volte il tasso regolare.\n    Tasso straordinario = $10 × 1.2 = $12/ora.\n    Stipendio straordinario = 5 ore × $12/ora = $60.\n\n3.  **Calcolo del totale:**\n    Totale = Stipendio standard + Stipendio straordinario\n    Totale = $400 + $60 = $460.\n\nRisposta finale: 460\n",
+   "score": 1.0
+  },
+  {
+   "i": 10,
+   "ref": "366",
+   "out": "Calcoliamo i download mensili passo dopo passo:\n\n1.  **Primo mese:** Il numero di download è dato come 60.\n2.  **Secondo mese:** È tre volte quello del primo mese.\n    $60 \\times 3 = 180$ download.\n3.  **Terzo mese:** È ridotto del 30% rispetto al secondo mese.\n    Prima calcoliamo il 30% di 180: $180 \\times 0.30 = 54$.\n    Poi sottraiamo questo valore: $180 - 54 = 126$ download.\n4.  **Totale:** Sommiamo i download di tutti e tre i mesi.\n    $60 + 180 + 126 = 366$.\n\nRisposta finale: 366\n",
+   "score": 1.0
+  },
+  {
+   "i": 11,
+   "ref": "694",
+   "out": "Per calcolare il costo totale, dobbiamo moltiplicare il numero di dozzine di ciascun tipo di pasticcino per il prezzo a dozzina e poi sommare i risultati.\n\n1.  **Donuts**: 3 dozzine a $68 ciascuna.\n    $3 \\times 68 = 204$\n\n2.  **Mini cupcakes**: 2 dozzine a $80 ciascuna.\n    $2 \\times 80 = 160$\n\n3.  **Mini cheesecakes**: 6 dozzine a $55 ciascuna.\n    $6 \\times 55 = 330$\n\nOra sommiamo i costi totali di ciascuna categoria:\n$204 + 160 + 330 = 694$\n\nIl costo totale è $694.\n\nRisposta finale: 694\n",
+   "score": 1.0
+  },
+  {
+   "i": 12,
+   "ref": "13",
+   "out": "  Profitto annuale = Ricavo annuale - Costo annuale operativo\n    Profitto annuale = $10.50 - $3.00 = $7.50$.\n\n5.  **Determinazione del numero di anni necessari:**\n    Dobbiamo trovare il numero di anni ($n$) tali che il profitto cumulato superi il costo iniziale di $90.\n    Formula: $n \\times 7.50 > 90$\n    $n > 90 / 7.50$\n    $n > 12$\n\nDopo 12 anni, il profitto cumulato sarà esattamente $90$ ($12 \\times 7.50 = 90$), quindi non avrà ancora guadagnato nulla netto rispetto all'investimento iniziale. Dopo 13 anni, il profitto sarà $13 \\times 7.50 = 97.50$, che supera i $90.\n\nRisposta finale: 13\n",
+   "score": 1.0
+  },
+  {
+   "i": 13,
+   "ref": "18",
+   "out": "ione:** Vende la metà di ciò che era rimasto.\n    *   Venduti all'arancione: $\\frac{1}{2}(\\frac{1}{3}x - 2)$\n    *   Rimasti: $\\frac{1}{2}(\\frac{1}{3}x - 2)$\n\n4.  **Rimasto finale:** Le restano 5 aspirapolvere.\n    *   Equazione: $\\frac{1}{2}(\\frac{1}{3}x - 2) = 5$\n\n5.  **Risoluzione:**\n    *   Moltiplichiamo entrambi i lati per 2: $\\frac{1}{3}x - 2 = 10$\n    *   Aggiungiamo 2 a entrambi i lati: $\\frac{1}{3}x = 12$\n    *   Moltiplichiamo per 3: $x = 36$\n\nVerifica:\n- Inizia con 36.\n- Casa verde: vende $36/3 = 12$. Rimangono 24.\n- Casa rossa: vende $12 + 2 = 14$. Rimangono $24 - 14 = 10$.\n- Casa",
+   "score": 0.0
+  },
+  {
+   "i": 14,
+   "ref": "60",
+   "out": "danza contemporanea.\n    $20 \\times 0.20 = 4$ studenti.\n\n2.  **Calcolo degli studenti rimasti:**\n    $20 - 4 = 16$ studenti rimasti.\n\n3.  **Calcolo degli studenti in danza jazz:**\n    Il 25% dei *rimanenti* si iscrive alla danza jazz.\n    $16 \\times 0.25 = 4$ studenti.\n\n4.  **Calcolo degli studenti in danza hip-hop:**\n    Sono gli studenti rimanenti dopo aver sottratto quelli di contemporanea e jazz.\n    $16 - 4 = 12$ studenti.\n\n5.  **Calcolo della percentuale totale:**\n    La percentuale di studenti in hip-hop rispetto al totale (20) è:\n    $(12 / 20) \\times 100 = 60\\%$.\n\nRisposta finale: 60\n",
+   "score": 1.0
+  },
+  {
+   "i": 15,
+   "ref": "125",
+   "out": "nvestimento applicando le rispettive percentuali di crescita.\n\n1.  **Gioielli**:\n    *   Valore iniziale: $5,000\n    *   Tasso di crescita: 2.5% (0.025)\n    *   Calcolo: $5,000 \\times (1 + 0.025) = 5,000 \\times 1.025 = 5,125$\n    *   Profitto: $5,125 - 5,000 = 125$\n\n2.  **Gadget elettronici**:\n    *   Valore iniziale: $8,000\n    *   Tasso di crescita: 1.2% (0.012)\n    *   Calcolo: $8,000 \\times (1 + 0.012) = 8,000 \\times 1.012 = 8,096$\n    *   Profitto: $8,096 - 8,000 = 96$\n\nConfrontando i due profitti ($125 vs $96), il merchant guadagnerà di più investendo nei gioielli.\n\nRisposta finale: 125\n",
+   "score": 1.0
+  },
+  {
+   "i": 16,
+   "ref": "230",
+   "out": "Per calcolare la distanza totale percorsa da ciascun treno, dobbiamo sommare le distanze percorse nei due giorni.\n\n1.  **Primo giorno**: I treni viaggiano verso ovest per 80 miglia.\n2.  **Secondo giorno**: I treni viaggiano verso nord per 150 miglia.\n3.  **Calcolo totale**: Poiché la domanda chiede la distanza totale percorsa (non lo spostamento netto o la distanza diretta tra i punti di partenza e arrivo), sommiamo semplicemente le due distanze:\n    $$80 \\text{ miglia} + 150 \\text{ miglia} = 230 \\text{ miglia}$$\n\nOgni treno ha percorso un totale di 230 miglia.\n\nRisposta finale: 230\n",
+   "score": 1.0
+  },
+  {
+   "i": 17,
+   "ref": "57500",
+   "out": "Per calcolare il stipendio annuo di Jill, dobbiamo sommare i guadagni totali da entrambe le professioni.\n\n1.  **Guadagni come insegnante:**\n    *   Stipendio orario: $20\n    *   Ore settimanali: 35\n    *   Settimane all'anno: 50\n    *   Calcolo: $20 \\times 35 \\times 50 = 35,000$\n\n2.  **Guadagni come allenatrice di cheerleading:**\n    *   Stipendio orario: $30\n    *   Ore settimanali: 15\n    *   Settimane all'anno: 50\n    *   Calcolo: $30 \\times 15 \\times 50 = 22,500$\n\n3.  **Totale annuo:**\n    *   Somma dei due redditi: $35,000 + 22,500 = 57,500$\n\nRisposta finale: 57500\n",
+   "score": 1.0
+  },
+  {
+   "i": 18,
+   "ref": "7",
+   "out": "e il problema, seguiamo questi passaggi:\n\n1.  **Calcoliamo il numero totale di uova mangiate in una settimana:**\n    Claire mangia 3 uova ogni giorno.\n    Una settimana ha 7 giorni.\n    $3 \\text{ uova/giorno} \\times 7 \\text{ giorni} = 21 \\text{ uova/settimana}$.\n\n2.  **Calcoliamo il numero totale di uova mangiate in 4 settimane:**\n    $21 \\text{ uova/settimana} \\times 4 \\text{ settimane} = 84 \\text{ uova}$.\n\n3.  **Convertiamo il numero totale di uova in dozzine:**\n    Una dozzina è composta da 12 uova.\n    $84 \\text{ uova} \\div 12 \\text{ uova/dozzina} = 7 \\text{ dozzine}$.\n\nRisposta finale: 7\n",
+   "score": 1.0
+  },
+  {
+   "i": 19,
+   "ref": "6",
+   "out": "e e 1 ora per la seconda.\n    $1 + 1 = 2$ ore.\n\n3.  **Distanza rimanente:** La traccia totale è di 12 miglia.\n    $12 - 6 = 6$ miglia.\n\n4.  **Tempo totale disponibile:** Per avere una velocità media di 4 mph su 12 miglia, il tempo totale necessario è:\n    $\\text{Tempo} = \\frac{\\text{Distanza}}{\\text{Velocità}} = \\frac{12}{4} = 3$ ore.\n\n5.  **Tempo rimanente:** Deve avere 3 ore totali, ne ha già passate 2.\n    $3 - 2 = 1$ ora.\n\n6.  **Velocità necessaria:** Deve percorrere le 6 miglia rimanenti in 1 ora.\n    $\\text{Velocità} = \\frac{6 \\text{ miglia}}{1 \\text{ ora}} = 6$ mph.\n\nRisposta finale: 6\n",
+   "score": 1.0
+  },
+  {
+   "i": 20,
+   "ref": "15",
+   "out": "es \\frac{2}{3} = \\frac{2}{3}$).\n    *   Acqua rimasta nell'arancia: $\\frac{20}{3} - \\frac{2}{3} = \\frac{18}{3} = 6$ litri.\n    *   Volume rimanente dell'arancia: $10 - 1 = 9$ litri.\n\n2.  **Calcolo dell'acqua nella polpa d'ananas:**\n    *   Volume: 15 litri.\n    *   Composizione: 3/5 acqua.\n    *   Acqua nell'ananas: $15 \\times \\frac{3}{5} = 9$ litri.\n    *   Non viene sversata.\n\n3.  **Calcolo totale:**\n    *   Volume totale finale: $9 \\text{ (arancia)} + 15 \\text{ (ananas)} = 24$ litri.\n    *   Acqua totale: $6 \\text{ (dall'arancia)} + 9 \\text{ (dall'ananas)} = 15$ litri.\n\nRisposta finale: 15\n",
+   "score": 1.0
+  },
+  {
+   "i": 21,
+   "ref": "14",
+   "out": "1. Determiniamo l'età di Samantha: 31 anni.\n2. Raymond è nato 6 anni prima di Samantha, quindi il suo attuale età è $31 - 6 = 25$ anni.\n3. Raymond ha avuto un figlio a 23 anni.\n4. Per trovare quanti anni fa è nato il figlio, sottraiamo l'età del padre al suo attuale età: $25 - 23 = 2$ anni.\n\nRisposta finale: 2\n",
+   "score": 0.0
+  },
+  {
+   "i": 22,
+   "ref": "7",
+   "out": "Per calcolare il totale dei DVD venduti da Billy il martedì, analizziamo i gruppi di clienti uno per uno:\n\n1.  **Primi 3 clienti**: Ogni cliente compra 1 DVD.\n    $3 \\times 1 = 3$ DVD.\n2.  **Prossimi 2 clienti**: Ogni cliente compra 2 DVD.\n    $2 \\times 2 = 4$ DVD.\n3.  **Ultimi 3 clienti**: Nessuno compra DVD.\n    $3 \\times 0 = 0$ DVD.\n\nSommando i DVD di tutti i gruppi:\n$3 + 4 + 0 = 7$ DVD.\n\nRisposta finale: 7\n",
+   "score": 1.0
+  },
+  {
+   "i": 23,
+   "ref": "8",
+   "out": "Per risolvere il problema, dobbiamo prima calcolare la durata totale del tempo in cui la candela brucia.\n\n1.  **Calcolare la durata:** La candela brucia dal 1:00 PM al 5:00 PM.\n    $5 - 1 = 4$ ore.\n\n2.  **Calcolare la riduzione totale:** La candela si scioglie di 2 cm ogni ora.\n    Moltiplichiamo la durata per la velocità di scioglimento:\n    $4 \\text{ ore} \\times 2 \\text{ cm/ora} = 8 \\text{ cm}$.\n\nLa candela sarà 8 cm più corta.\n\nRisposta finale: 8\n",
+   "score": 1.0
+  },
+  {
+   "i": 24,
+   "ref": "26",
+   "out": "Per trovare il prezzo originale, dobbiamo capire che il prezzo pagato ($19.50) rappresenta il 75% del prezzo originale (poiché è stato applicato uno sconto del 25%, rimanendo il 100% - 25% = 75%).\n\n1.  Calcoliamo il 75% del prezzo originale: $0.75 \\times P = 19.50$.\n2.  Per isolare $P$, dividiamo il prezzo pagato per 0.75: $P = 19.50 / 0.75$.\n3.  Effettuiamo la divisione: $19.50 / 0.75 = 26$.\n\nIl prezzo originale era $26.00.\n\nRisposta finale: 26\n",
+   "score": 1.0
+  },
+  {
+   "i": 25,
+   "ref": "2",
+   "out": "Calcoliamo il costo totale degli articoli noti:\n1.  **Cena di pollo**: 1 × $12 = $12.\n2.  **Latte**: 5 × $3 = $15.\n3.  **Mela**: 4 × $1.50 = $6.\n\nSomma dei costi noti: $12 + $15 + $6 = $33.\n\nIl totale pagato è $50, quindi il costo delle scatole di pizza è:\n$50 - $33 = $17.\n\nOgni scatola di pizza costa $8.50. Il numero di scatole è:\n$17 / $8.50 = 2.\n\nMarie ha ordinato 2 scatole di pizza.\n\nRisposta finale: 2\n",
+   "score": 1.0
+  },
+  {
+   "i": 26,
+   "ref": "243",
+   "out": " corti (shorts):**\n    *   Quantità: 3 paia\n    *   Prezzo a paio: $16.50\n    *   Costo totale shorts: $3 \\times 16.50 = 49.50$\n\n2.  **Pantaloni lunghi (pants):**\n    *   Quantità: 3 paia\n    *   Prezzo a paio: $22.50\n    *   Costo totale pants: $3 \\times 22.50 = 67.50$\n\n3.  **Scarpe (shoes):**\n    *   Quantità: 3 paia\n    *   Prezzo a paio: $42.00\n    *   Costo totale scarpe: $3 \\times 42.00 = 126.00$\n\n4.  **Totale spesa:**\n    *   Somma dei costi: $49.50 + 67.50 + 126.00$\n    *   $49.50 + 67.50 = 117.00$\n    *   $117.00 + 126.00 = 243.00$\n\nMishka ha spendo 243 dollari.\n\nRisposta finale: 243\n",
+   "score": 1.0
+  },
+  {
+   "i": 27,
+   "ref": "16",
+   "out": "Cynthia mangia 1 porzione di gelato ogni notte. Dopo 60 giorni, il numero totale di porzioni consumate è:\n$60 \\text{ giorni} \\times 1 \\text{ porzione/giorno} = 60 \\text{ porzioni}$.\n\nOgni cartone contiene 15 porzioni. Il numero di cartone necessari per ottenere 60 porzioni è:\n$60 \\text{ porzioni} \\div 15 \\text{ porzioni/cartone} = 4 \\text{ cartoni}$.\n\nOgni cartone costa $4.00. Il costo totale per 4 cartoni è:\n$4 \\text{ cartoni} \\times \\$4.00/\\text{cartone} = \\$16.00$.\n\nRisposta finale: 16\n",
+   "score": 1.0
+  },
+  {
+   "i": 28,
+   "ref": "25",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  La distanza totale del viaggio è di **60 miglia**.\n2.  La prima fermata avviene dopo **20 miglia**.\n3.  La seconda fermata avviene 15 miglia prima della fine del viaggio. Calcoliamo la posizione della seconda fermata: $60 - 15 = 45$ miglia dal punto di partenza.\n4.  Per trovare la distanza tra le due fermate, sottraiamo la posizione della prima fermata da quella della seconda: $45 - 20 = 25$ miglia.\n\nRisposta finale: 25\n",
+   "score": 1.0
+  },
+  {
+   "i": 29,
+   "ref": "104",
+   "out": "Calcoliamo prima il costo delle due paia di stivali ad alto tacco:\n1. La prima paio costa $33.\n2. La seconda paio costa il doppio, quindi $33 \\times 2 = $66.\n3. Il costo totale delle due paia di stivali ad alto tacco è $33 + $66 = $99.\n\nOra determiniamo il costo delle scarpe da ginnastica (boots):\n- Le due paia di stivali ad alto tacco costano $5 in meno rispetto alle scarpe da ginnastica.\n- Quindi, il costo delle scarpe da ginnastica è $99 + $5 = $104.\n\nRisposta finale: 104\n",
+   "score": 1.0
+  },
+  {
+   "i": 30,
+   "ref": "109",
+   "out": "1. **Definizione delle variabili**: Siano $D$ l'età di Darrell e $A$ l'età di Allen.\n2. **Rapporto delle età**: Il rapporto è $D:A = 7:11$. Possiamo scrivere $D = 7x$ e $A = 11x$ per un certo fattore $x$.\n3. **Somma delle età attuali**: La somma delle loro età è 162.\n   $$7x + 11x = 162$$\n   $$18x = 162$$\n4. **Calcolo di $x$**:\n   $$x = \\frac{162}{18} = 9$$\n5. **Calcolo dell'età attuale di Allen**:\n   $$A = 11x = 11 \\times 9 = 99$$\n6. **Calcolo dell'età di Allen tra 10 anni**:\n   $$99 + 10 = 109$$\n\nRisposta finale: 109\n",
+   "score": 1.0
+  },
+  {
+   "i": 31,
+   "ref": "80",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Prima stima:** Il primo amico dice **80**.\n2.  **Seconda stima:** Il secondo amico dice \"20 più della metà della prima\".\n    *   Metà della prima stima: $80 / 2 = 40$.\n    *   Aggiungendo 20: $40 + 20 = 60$.\n3.  **Terza stima:** Il terzo amico dice \"25% in più della prima\".\n    *   25% della prima stima: $80 \\times 0.25 = 20$.\n    *   Aggiungendo al valore originale: $80 + 20 = 100$.\n4.  **Calcolo della media:** Sommiamo le tre stime e dividiamo per 3.\n    *   Somma: $80 + 60 + 100 = 240$.\n    *   Media: $240 / 3 = 80$.\n\nRisposta finale: 80\n",
+   "score": 1.0
+  },
+  {
+   "i": 32,
+   "ref": "35",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  **Calcoliamo il tempo totale giornaliero per un singolo cane:**\n    Il testo dice che ogni cane richiede 0.5 ore al giorno.\n\n2.  **Calcoliamo il tempo totale giornaliero per tutti i cani:**\n    John prende cura di 10 cani.\n    $10 \\text{ cani} \\times 0.5 \\text{ ore/cane} = 5 \\text{ ore al giorno}$.\n\n3.  **Calcoliamo il tempo totale settimanale:**\n    Ci sono 7 giorni in una settimana.\n    $5 \\text{ ore/giorno} \\times 7 \\text{ giorni} = 35 \\text{ ore}$.\n\nRisposta finale: 35\n",
+   "score": 1.0
+  },
+  {
+   "i": 33,
+   "ref": "70",
+   "out": "Sia $g$ il numero di monete d'oro e $s$ il numero di monete d'argento.\nDai dati del problema possiamo stabilire due equazioni:\n1. Il totale delle monete è 110: $g + s = 110$\n2. Le monete d'oro sono 30 in più delle monete d'argento: $g = s + 30$\n\nSostituiamo l'equazione 2 nell'equazione 1:\n$(s + 30) + s = 110$\n$2s + 30 = 110$\nSottraiamo 30 da entrambi i lati:\n$2s = 80$\nDividiamo per 2:\n$s = 40$\n\nOra calcoliamo il numero di monete d'oro ($g$) usando l'equazione 2:\n$g = 40 + 30$\n$g = 70$\n\nVerifica: $70 + 40 = 110$ (corretto) e $70 - 40 = 30$ (corretto).\n\nRisposta finale: 70\n",
+   "score": 1.0
+  },
+  {
+   "i": 34,
+   "ref": "23",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Dati iniziali**: Raymond ha 40 gioielli.\n2.  **Calcolo per Aaron**: Aaron ha 5 più della metà dei gioielli di Raymond.\n    *   Metà di Raymond: $40 / 2 = 20$.\n    *   Gioielli di Aaron: $20 + 5 = 25$.\n3.  **Calcolo per Siobhan**: Siobhan ha 2 meno dei gioielli di Aaron.\n    *   Gioielli di Siobhan: $25 - 2 = 23$.\n\nRisposta finale: 23\n",
+   "score": 1.0
+  },
+  {
+   "i": 35,
+   "ref": "9",
+   "out": "Mike gioca per un totale di 40 minuti, divisi in due intervalli da 20 minuti.\n\n1.  **Primo intervallo:** Nel primo 20 minuti, Mike segna 4 punti.\n2.  **Secondo intervallo:** Nel secondo 20 minuti, segna il 25% in più rispetto al primo intervallo.\n    *   Calcoliamo il 25% di 4 punti: $4 \\times 0.25 = 1$.\n    *   Aggiungiamo questo valore ai punti del primo intervallo: $4 + 1 = 5$ punti.\n3.  **Totale:** Sommiamo i punti di entrambi gli intervalli.\n    *   $4 \\text{ (primo)} + 5 \\text{ (secondo)} = 9$ punti.\n\nRisposta finale: 9\n",
+   "score": 1.0
+  },
+  {
+   "i": 36,
+   "ref": "75",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  **Calcoliamo il numero totale di yogurt necessari:**\n    Terry mangia 2 yogurt al giorno per 30 giorni.\n    $2 \\text{ yogurt/giorno} \\times 30 \\text{ giorni} = 60 \\text{ yogurt}$.\n\n2.  **Calcoliamo il costo totale:**\n    I yogurt sono in offerta a 4 per $5.00.\n    Dobbiamo trovare quante \"pacchette\" da 4 yogurt ci servono per 60 yogurt.\n    $60 \\div 4 = 15 \\text{ pacchette}$.\n\n3.  **Moltiplichiamo il numero di pacchette per il prezzo:**\n    $15 \\text{ pacchette} \\times \\$5.00/\\text{pacchetto} = \\$75.00$.\n\nRisposta finale: 75\n",
+   "score": 1.0
+  },
+  {
+   "i": 37,
+   "ref": "2",
+   "out": "Il calcolo mostra che gli restano $35, ma il testo dice che gli restano $5. Questo indica che non ha venduto tutti i set di Lego.\n\n4.  **Determinazione dei set venduti:**\n    Sia $x$ il numero di set venduti.\n    Il costo totale dei videogiochi più i soldi rimasti deve essere uguale al fatturato dei set venduti.\n    $160 + 5 = 165$.\n    Quindi, i set venduti hanno generato $165.\n    Il prezzo per set è $15.\n    Numero di set venduti = $165 / 15 = 11$.\n\n5.  **Calcolo dei set rimanenti:**\n    John iniziava con 13 set.\n    Ha venduto 11 set.\n    Set rimanenti = $13 - 11 = 2$.\n\nRisposta finale: 2\n",
+   "score": 1.0
+  },
+  {
+   "i": 38,
+   "ref": "10",
+   "out": "ue giornate:**\n    Corre \"metà quanto\" la prima giornata.\n    Distanza per giorno = $0.5 \\times 3v = 1.5v$.\n    Poiché corre per 2 giorni, la distanza totale per questi giorni è $2 \\times 1.5v = 3v$.\n\n3.  **Calcolo della distanza totale settimanale:**\n    Distanza totale = (Distanza giorno 1) + (Distanza giorni 2 e 3)\n    Distanza totale = $3v + 3v = 6v$.\n\n4.  **Uguagliamento con la distanza settimanale nota:**\n    Sappiamo che John corre 60 miglia a settimana.\n    Quindi, $6v = 60$.\n\n5.  **Risoluzione per la velocità ($v$):**\n    $v = 60 / 6$\n    $v = 10$ miglia all'ora.\n\nRisposta finale: 10\n",
+   "score": 1.0
+  },
+  {
+   "i": 39,
+   "ref": "18",
+   "out": "h.\n\n2.  **Determinare la velocità di camminata:**\n    La velocità di corsa è quattro volte quella di camminata.\n    $V_{camminata} = 6 / 4 = 1.5$ mph.\n\n3.  **Calcolare i tempi di attività:**\n    Il tempo totale è di 6 ore.\n    Tempo di corsa = $1/3 \\times 6 = 2$ ore.\n    Tempo di camminata = $2/3 \\times 6 = 4$ ore.\n\n4.  **Calcolare la distanza percorsa:**\n    Distanza corsa = $6 \\text{ mph} \\times 2 \\text{ ore} = 12$ miglia.\n    Distanza camminata = $1.5 \\text{ mph} \\times 4 \\text{ ore} = 6$ miglia.\n\n5.  **Sommare le distanze:**\n    Distanza totale = $12 + 6 = 18$ miglia.\n\nRisposta finale: 18\n",
+   "score": 1.0
+  },
+  {
+   "i": 40,
+   "ref": "8",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Dati iniziali:** L'iPhone di Suzy ha 1 anno.\n2.  **Calcolo per Ben:** L'iPhone di Ben è due volte quello di Suzy.\n    $1 \\times 2 = 2$ anni.\n3.  **Calcolo per Brandon:** L'iPhone di Brandon è quattro volte quello di Ben.\n    $2 \\times 4 = 8$ anni.\n\nRisposta finale: 8\n",
+   "score": 1.0
+  },
+  {
+   "i": 41,
+   "ref": "200",
+   "out": "La distanza di lancio del giavellotto senza la gemma è di 400 piedi.\nCon la gemma, la distanza di lancio triplica: $400 \\times 3 = 1200$ piedi.\nIl fuoco del drago raggiunge fino a 1000 piedi.\nPer colpire il drago, Polly deve lanciare il giavellotto almeno fino a 1000 piedi.\nLa distanza massima di sicurezza è la differenza tra la distanza di lancio con la gemma e il raggio d'azione del fuoco: $1200 - 1000 = 200$ piedi.\n\nRisposta finale: 200\n",
+   "score": 1.0
+  },
+  {
+   "i": 42,
+   "ref": "26",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  Calcoliamo il numero totale di pezzi di torta iniziali.\n    *   Ci sono 5 torte.\n    *   Ogni torta è tagliata in 8 pezzi.\n    *   Totale pezzi = $5 \\times 8 = 40$ pezzi.\n\n2.  Sottraiamo i pezzi rimasti per trovare quanti sono stati mangiati.\n    *   Pezzi iniziali = 40.\n    *   Pezzi rimasti = 14.\n    *   Pezzi presi = $40 - 14 = 26$.\n\nRisposta finale: 26\n",
+   "score": 1.0
+  },
+  {
+   "i": 43,
+   "ref": "48",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  **Calcola le calorie rimanenti:** La tua quota giornaliera è di 2000 calorie e hai già consumato 1800.\n    $2000 - 1800 = 200$ calorie rimanenti.\n\n2.  **Determina le calorie per grammo di patatine:** Una porzione contiene 250 calorie e pesa $300\\text{g} / 5 = 60\\text{g}$.\n    Calorie per grammo = $250 / 60 \\approx 4.167$ calorie/g.\n\n3.  **Calcola i grammi consumabili:** Dividi le calorie rimanenti per le calorie per grammo.\n    $200 / (250/60) = 200 \\times (60/250) = 12000 / 250 = 48$ grammi.\n\nRisposta finale: 48\n",
+   "score": 1.0
+  },
+  {
+   "i": 44,
+   "ref": "20",
+   "out": "sti passaggi:\n\n1.  **Calcolare il costo totale dei materiali:**\n    Charlie vuole produrre 20 candele. Poiché per ogni libbra di cera si possono fare 10 candele, servono $20 / 10 = 2$ libbre di cera.\n    Il costo per libbra è di $10.00. Quindi, il costo totale per 2 libbre è $2 \\times 10.00 = $20.00$.\n\n2.  **Calcolare il fatturato totale:**\n    Ogni candela viene venduta a $2.00. Per 20 candele, il fatturato è $20 \\times 2.00 = $40.00$.\n\n3.  **Calcolare il profitto netto:**\n    Il profitto netto è il fatturato meno il costo totale.\n    Profitto = $40.00 - $20.00 = $20.00.\n\nRisposta finale: 20\n",
+   "score": 1.0
+  },
+  {
+   "i": 45,
+   "ref": "104",
+   "out": "Ecco il calcolo passo dopo passo:\n\n1.  **Articoli di Lunedì**: Meredith ha scritto 5 articoli.\n2.  **Articoli di Martedì**: Ha scritto $2/5$ articoli in più rispetto a lunedì.\n    *   Calcolo: $5 + (2/5 \\times 5) = 5 + 2 = 7$ articoli.\n3.  **Articoli di Mercoledì**: Ha scritto il doppio di quelli di martedì.\n    *   Calcolo: $7 \\times 2 = 14$ articoli.\n4.  **Totale articoli**: $5 + 7 + 14 = 26$ articoli.\n5.  **Ore totali**: Ogni articolo richiede 4 ore.\n    *   Calcolo: $26 \\times 4 = 104$ ore.\n\nRisposta finale: 104\n",
+   "score": 1.0
+  },
+  {
+   "i": 46,
+   "ref": "163",
+   "out": "ce ha messo una nota su 220 tazze di caffè. Quindi, ha usato 220 note.\n2.  **Calcola le note totali iniziali:** Le note iniziali sono la somma di quelle che aveva nel portafoglio, quelle usate e quelle rimaste.\n    *   Note nel portafoglio: 80\n    *   Note usate: 220\n    *   Note rimaste: 23\n    *   Totale iniziale = $80 + 220 + 23 = 323$.\n3.  **Calcola le note nel pacchetto:** Il totale iniziale è composto dalle note originali più quelle del pacchetto acquistato.\n    *   Note nel pacchetto = Totale iniziale - Note originali\n    *   Note nel pacchetto = $323 - 80 = 243$.\n\nRisposta finale: 243\n",
+   "score": 0.0
+  },
+  {
+   "i": 47,
+   "ref": "800",
+   "out": " John ha comprato il doppio delle sciarpe rosse rispetto a quelle blu.\n    Numero di sciarpe rosse = 5 * 2 = 10 sciarpe.\n\n3.  **Calcolo del prezzo di una sciarpa rossa:**\n    Le sciarpe rosse costano il 50% in più delle sciarpe blu ($40).\n    Prezzo sciarpa rossa = $40 + (0.50 * $40) = $40 + $20 = $60.\n\n4.  **Calcolo della spesa totale per le sciarpe rosse:**\n    Spesa rosse = Numero sciarpe rosse * Prezzo sciarpa rossa\n    Spesa rosse = 10 * $60 = $600.\n\n5.  **Calcolo della spesa totale:**\n    Spesa totale = Spesa blu + Spesa rosse\n    Spesa totale = $200 + $600 = $800.\n\nRisposta finale: 800\n",
+   "score": 1.0
+  },
+  {
+   "i": 48,
+   "ref": "8",
+   "out": "Per risolvere il problema, dobbiamo prima convertire tutte le unità di misura nella stessa unità. La lunghezza totale del filo è di 4 piedi. Poiché 1 piede equivale a 12 pollici, moltiplichiamo 4 per 12 per ottenere la lunghezza totale in pollici:\n$4 \\times 12 = 48$ pollici.\n\nOra, dividiamo la lunghezza totale del filo (48 pollici) per la lunghezza di ogni pezzo tagliato (6 pollici) per trovare il numero di pezzi:\n$48 / 6 = 8$.\n\nTracy ha ottenuto 8 pezzi.\n\nRisposta finale: 8\n",
+   "score": 1.0
+  },
+  {
+   "i": 49,
+   "ref": "30",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  Calcoliamo il numero totale di unità nel palazzo:\n    15 piani × 8 unità/piano = 120 unità totali.\n\n2.  Calcoliamo il numero di unità occupate (3/4 del totale):\n    120 × (3/4) = 90 unità occupate.\n\n3.  Calcoliamo il numero di unità non occupate sottraendo quelle occupate dal totale:\n    120 - 90 = 30 unità non occupate.\n\nRisposta finale: 30\n",
+   "score": 1.0
+  },
+  {
+   "i": 50,
+   "ref": "294",
+   "out": "are quanto Lloyd guadagna a settimana, seguiamo questi passaggi:\n\n1.  **Calcolare il numero di uova vendute a settimana:**\n    Lloyd produce 252 uova al giorno. In una settimana ci sono 7 giorni.\n    $252 \\text{ uova/giorno} \\times 7 \\text{ giorni} = 1764 \\text{ uova/settimana}$.\n\n2.  **Convertire le uova in dozzene:**\n    Un dozzena contiene 12 uova.\n    $1764 \\text{ uova} \\div 12 \\text{ uova/dozzena} = 147 \\text{ dozzene}$.\n\n3.  **Calcolare il fatturato settimanale:**\n    Lloyd vende le uova a $2 per dozzena.\n    $147 \\text{ dozzene} \\times \\$2/\\text{dozzena} = \\$294$.\n\nRisposta finale: 294\n",
+   "score": 1.0
+  },
+  {
+   "i": 51,
+   "ref": "5",
+   "out": "Per risolvere il problema, dobbiamo prima calcolare la distanza percorsa da Tom.\n\n1.  **Calcolo della distanza:**\n    *   Velocità di andata: 10 mph (miglia all'ora).\n    *   Tempo di andata: Dalle 13:00 (1 PM) alle 16:00 (4 PM) = 3 ore.\n    *   Distanza = Velocità × Tempo = $10 \\text{ mph} \\times 3 \\text{ h} = 30 \\text{ miglia}$.\n\n2.  **Calcolo del tempo di ritorno:**\n    *   Distanza di ritorno: 30 miglia (la distanza è la stessa).\n    *   Velocità di ritorno: 6 mph.\n    *   Tempo di ritorno = Distanza / Velocità = $30 / 6 = 5 \\text{ ore}$.\n\nRisposta finale: 5\n",
+   "score": 1.0
+  },
+  {
+   "i": 52,
+   "ref": "15",
+   "out": "l peso totale rimosso dai fumetti. Ogni fumetto pesa 1/4 di libbra e Uriah ne rimuove 30.\nPeso dei fumetti = $30 \\times \\frac{1}{4} = \\frac{30}{4} = 7.5$ libbre.\n\nUriah deve rimuovere un totale di 15 libbre. Sottraendo il peso dei fumetti dal totale necessario, otteniamo il peso che deve essere rimosso dai giocattoli.\nPeso necessario dai giocattoli = $15 - 7.5 = 7.5$ libbre.\n\nOgni giocattolo pesa 1/2 di libbra. Per trovare il numero di giocattoli da rimuovere, dividiamo il peso necessario per il peso di un singolo giocattolo.\nNumero di giocattoli = $\\frac{7.5}{0.5} = 15$.\n\nRisposta finale: 15\n",
+   "score": 1.0
+  },
+  {
+   "i": 53,
+   "ref": "40",
+   "out": "Calcoliamo il fatturato di giovedì:\n- 6 pneumatici per camion a $60 ciascuno: $6 \\times 60 = 360$.\n- 4 pneumatici per auto a $40 ciascuno: $4 \\times 40 = 160$.\n- Totale giovedì: $360 + 160 = 520$.\n\nCalcoliamo il fatturato di venerdì:\n- 12 pneumatici per auto a $40 ciascuno: $12 \\times 40 = 480$.\n- 0 pneumatici per camion: $0$.\n- Totale venerdì: $480$.\n\nConfrontiamo i due totali:\n- Giovedì: $520$.\n- Venerdì: $480$.\n- Il giorno con il fatturato più alto è giovedì.\n\nCalcoliamo la differenza:\n- $520 - 480 = 40$.\n\nRisposta finale: 40\n",
+   "score": 1.0
+  },
+  {
+   "i": 54,
+   "ref": "40",
+   "out": "Per risolvere il problema, dobbiamo sommare tutti i gattini presenti:\n\n1.  **Gattini adottati:** Le sorelle stanno guidando a casa con 7 gattini adottati.\n2.  **Gattini di Trixie:** La madre dice che Trixie ha dato alla luce 12 gattini.\n3.  **Gattini di Patchy:** Patchy ha dato alla luce il triplo dei gattini adottati. Poiché i gattini adottati sono 7, i gattini di Patchy sono $7 \\times 3 = 21$.\n\nOra sommiamo tutti i numeri:\n$7$ (adottati) $+ 12$ (di Trixie) $+ 21$ (di Patchy) $= 40$.\n\nRisposta finale: 40\n",
+   "score": 1.0
+  },
+  {
+   "i": 55,
+   "ref": "14",
+   "out": "Jean inizia con 30 lollipops.\nMangia 2 lollipops, quindi gli restano: $30 - 2 = 28$ lollipops.\nVoglio sapere quanti sacchi può riempire con 2 lollipops per sacco.\nDivido il numero di lollipops rimanenti per il numero di lollipops per sacco: $28 / 2 = 14$.\nJean può riempire 14 sacchi.\n\nRisposta finale: 14\n",
+   "score": 1.0
+  },
+  {
+   "i": 56,
+   "ref": "3",
+   "out": "Per risolvere il problema, dobbiamo prima calcolare il costo totale per una singola visita al cinema.\nPeter spende $7 per il biglietto e $7 per le patatine.\nCosto per visita = $7 + $7 = $14.\n\nPoi, dobbiamo dividere il budget totale disponibile per il costo per visita per trovare il numero massimo di visite.\nBudget totale = $42.\nNumero di visite = $42 / $14 = 3.\n\nRisposta finale: 3\n",
+   "score": 1.0
+  },
+  {
+   "i": 57,
+   "ref": "83",
+   "out": " del camion dal limite del ponte:\n    $$5000 - 3755 = 1245 \\text{ libbre}$$\n    Questo è il peso massimo che le scatole possono pesare collettivamente.\n\n3.  **Calcolare il numero massimo di scatole:**\n    Dividiamo il peso massimo disponibile per il peso di una singola scatola:\n    $$1245 / 15$$\n\n    Effettuiamo la divisione:\n    *   $1245 \\div 15 = 83$\n\n    Verifica: $83 \\times 15 = 1245$. Il risultato è un numero intero, quindi non ci sono scatole residue.\n\n4.  **Conclusione:**\n    Il camion può trasportare esattamente 83 scatole senza superare il limite di 5000 libbre.\n\nRisposta finale: 83\n",
+   "score": 1.0
+  },
+  {
+   "i": 58,
+   "ref": "57",
+   "out": "biamo sommare tutti i costi menzionati:\n\n1.  **Costo base del cibo:** $40.00.\n2.  **Tassa di consegna:** $3.00 (specificata come costo aggiuntivo).\n3.  **Mancia:** $4.00.\n\nLa tassa del 25% menzionata nel testo sembra essere già inclusa nel calcolo del totale finale di $40.00 o è una descrizione errata del costo base, poiché il testo dice esplicitamente \"la sua fattura finale ammontava a $40.00\" e poi aggiunge i costi separati. Quindi, partiamo dal totale base di $40.00 e aggiungiamo le spese aggiuntive.\n\nCalcolo:\n$40.00 (cibo) + $3.00 (consegna) + $4.00 (mancia) = $47.00.\n\nRisposta finale: 47\n",
+   "score": 0.0
+  },
+  {
+   "i": 59,
+   "ref": "187",
+   "out": "Per calcolare il numero totale di lamponi, dobbiamo sommare i frutti contenuti nei grappoli ai frutti sparsi.\n\n1.  Calcoliamo il numero di frutti nei grappoli:\n    Ci sono 6 grappoli, ognuno con 20 frutti.\n    $6 \\times 20 = 120$ frutti.\n\n2.  Aggiungiamo i frutti sparsi:\n    Ci sono 67 frutti sparsi.\n    $120 + 67 = 187$ frutti.\n\nIl numero totale di lamponi è 187.\n\nRisposta finale: 187\n",
+   "score": 1.0
+  },
+  {
+   "i": 60,
+   "ref": "17",
+   "out": "iamo attentamente: \"1 is bad, 20% are unripe, 2 are sour and the rest are good\".\n    *   Se \"bad\", \"unripe\" e \"sour\" sono liste separate di arance non buone, allora:\n        *   Bad = 1\n        *   Unripe = 5 (20% di 25)\n        *   Sour = 2\n        *   Totale non buone = $1 + 5 + 2 = 8$.\n        *   Buone = $25 - 8 = 17$.\n\n    *   **Alternativa interpretazione**: Forse \"sour\" e \"unripe\" sono inclusi nel \"bad\"? No, il testo le elenca separatamente.\n    *   **Alternativa interpretazione 2**: Forse \"unripe\" non è considerato \"bad\" per la definizione di \"good\"? La domanda chiede \"How many oranges",
+   "score": 0.0
+  },
+  {
+   "i": 61,
+   "ref": "1430",
+   "out": "Per calcolare il totale pagato da Janet, dobbiamo sommare tutti i costi individuali:\n\n1.  **Costo dei materiali:** $500.\n2.  **Costo del gioielliere:** $800.\n3.  **Costo dell'assicurazione:** È il 10% del costo del gioielliere ($800).\n    *   Calcolo: $800 \\times 0.10 = $80$.\n\nOra sommiamo tutti i valori:\n$500 + $800 + $80 = $1380$.\n\nRisposta finale: 1380\n",
+   "score": 0.0
+  },
+  {
+   "i": 62,
+   "ref": "25000",
+   "out": "000,000 = \\$50,000$.\n    Totale benefici maturati = $50,000 + 50,000 = \\$100,000$.\n\n4.  **Calcolare il valore del beneficio aggiuntivo maturato tra il 20° e il 30° anno:**\n    Durante questi 10 anni, il valore del pensionamento aumenta di $50,000 \\times 10 = \\$500,000$.\n    Il beneficio aggiuntivo si calcola sul 5% di questo nuovo valore aggiunto.\n    Beneficio aggiuntivo nuovo = $5\\% \\times \\$500,000 = 0.05 \\times 500,000 = \\$25,000$.\n\n5.  **Calcolare il nuovo totale del pensionamento annuo:**\n    Somma il beneficio base ($50,000) con il beneficio aggiuntivo totale maturato ($50,000 + $25,000",
+   "score": 1.0
+  },
+  {
+   "i": 63,
+   "ref": "1596",
+   "out": "o semestre dura 6 mesi.\n    Costo = $140 \\times 6 = \\$840$.\n\n2.  **Calcoliamo la nuova tariffa per il secondo semestre:**\n    La compagnia applica un sconto del 10% sulla tariffa originale.\n    Sconto = $10\\% \\text{ di } 140 = 0.10 \\times 140 = \\$14$.\n    Nuova tariffa mensile = $140 - 14 = \\$126$.\n\n3.  **Calcoliamo il costo del secondo semestre:**\n    Il secondo semestre dura anch'esso 6 mesi.\n    Costo = $126 \\times 6 = \\$756$.\n\n4.  **Calcoliamo il totale pagato nell'anno:**\n    Totale = Costo primo semestre + Costo secondo semestre.\n    Totale = $840 + 756 = \\$1596$.\n\nRisposta finale: 1596\n",
+   "score": 1.0
+  },
+  {
+   "i": 64,
+   "ref": "300",
+   "out": "il problema, dobbiamo prima determinare la velocità di consumo del veicolo (miglia per gallone).\n\n1.  **Calcolare il consumo attuale:** Sophia ha percorso 100 miglia usando 4 galloni di benzina.\n    $$Consumo = \\frac{\\text{Distanza}}{\\text{Volume}} = \\frac{100 \\text{ miglia}}{4 \\text{ galloni}} = 25 \\text{ miglia/gallone}$$\n\n2.  **Calcolare la distanza massima:** Il serbatoio ha una capacità totale di 12 galloni. Moltiplichiamo la capacità per il consumo calcolato.\n    $$Distanza \\text{ massima} = 12 \\text{ galloni} \\times 25 \\text{ miglia/gallone} = 300 \\text{ miglia}$$\n\nRisposta finale: 300\n",
+   "score": 1.0
+  },
+  {
+   "i": 65,
+   "ref": "36",
+   "out": "Calcoliamo prima il tempo speso in un singolo ciclo (una volta a settimana):\n1. Tempo per la TV: 2 ore.\n2. Tempo per la lettura: metà del tempo della TV, quindi $2 / 2 = 1$ ora.\n3. Totale per un ciclo: $2 + 1 = 3$ ore.\n\nJim fa questo ciclo 3 volte a settimana:\n1. Totale settimanale: $3 \\text{ ore/ciclo} \\times 3 \\text{ cicli} = 9$ ore.\n\nInfine, calcoliamo per 4 settimane:\n1. Totale mensile: $9 \\text{ ore/settimana} \\times 4 \\text{ settimane} = 36$ ore.\n\nRisposta finale: 36\n",
+   "score": 1.0
+  },
+  {
+   "i": 66,
+   "ref": "48",
+   "out": "chiamo per il numero di scuole.\n\n1.  **Analyze the components per school:**\n    *   Ogni scuola ha una squadra di ragazze e una di ragazzi.\n    *   Ogni squadra ha 5 giocatori.\n    *   Ogni squadra ha un allenatore.\n\n2.  **Calculate people per school:**\n    *   Giocatori di ragazze: 5\n    *   Giocatori di ragazzi: 5\n    *   Allenatori (uno per squadra): 2\n    *   Totale per scuola: $5 + 5 + 2 = 12$ persone.\n\n3.  **Calculate total people for all schools:**\n    *   Ci sono 4 scuole in totale.\n    *   Calcolo: $12 \\text{ persone/scuola} \\times 4 \\text{ scuole} = 48$ persone.\n\nRisposta finale: 48\n",
+   "score": 1.0
+  },
+  {
+   "i": 67,
+   "ref": "595",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Diamanti**: Il testo dice che ci sono 175 diamanti.\n    *   Diamanti = 175\n\n2.  **Rubini**: Ci sono 35 rubini in meno rispetto ai diamanti.\n    *   Rubini = 175 - 35 = 140\n\n3.  **Smeraldi**: Il numero di smeraldi è il doppio rispetto ai rubini.\n    *   Smeraldi = 140 * 2 = 280\n\n4.  **Totale**: Sommiamo tutti i tipi di gemme per trovare il totale.\n    *   Totale = Diamanti + Rubini + Smeraldi\n    *   Totale = 175 + 140 + 280\n    *   Totale = 315 + 280\n    *   Totale = 595\n\nRisposta finale: 595\n",
+   "score": 1.0
+  },
+  {
+   "i": 68,
+   "ref": "36",
+   "out": "1. **Calcolare il numero di ragazzi**: Il testo dice che ci sono il doppio dei ragazzi rispetto alle ragazze. Se ci sono 60 ragazze, allora i ragazzi sono $60 \\times 2 = 120$.\n2. **Calcolare il numero totale di studenti**: Sommando ragazze e ragazzi, otteniamo $60 + 120 = 180$ studenti.\n3. **Calcolare il numero di insegnanti**: C'è uno studente per ogni insegnante (5 studenti per ogni insegnante). Quindi, dividiamo il totale degli studenti per 5: $180 / 5 = 36$.\n\nRisposta finale: 36\n",
+   "score": 1.0
+  },
+  {
+   "i": 69,
+   "ref": "60",
+   "out": "Bailey riceve $5 a settimana per 8 settimane.\nCalcoliamo il totale guadagnato: $5 \\times 8 = \\$40$.\nAlla fine delle 8 settimane, il suo totale è $100.\nIl denaro iniziale è la differenza tra il totale finale e il guadagno: $100 - 40 = 60$.\n\nRisposta finale: 60\n",
+   "score": 1.0
+  },
+  {
+   "i": 70,
+   "ref": "7425",
+   "out": "di lezioni settimanali:**\n    *   Le lezioni nei giorni feriali (lunedì-venerdì) sono 5 al giorno per 5 giorni: $5 \\times 5 = 25$ lezioni.\n    *   Le lezioni il sabato sono 8.\n    *   Totale lezioni: $25 + 8 = 33$ lezioni.\n\n2.  **Calcoliamo il numero totale di studenti:**\n    *   Ogni lezione ha 15 studenti.\n    *   Totale studenti: $33 \\text{ lezioni} \\times 15 \\text{ studenti/lezione} = 495$ studenti.\n\n3.  **Calcoliamo il fatturato totale:**\n    *   Il prezzo a studente è $15.00.\n    *   Guadagno totale: $495 \\text{ studenti} \\times \\$15.00/\\text{studente} = \\$7,425$.\n\nRisposta finale: 7425\n",
+   "score": 1.0
+  },
+  {
+   "i": 71,
+   "ref": "60",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  Il primo ricetta ha 20 istruzioni.\n2.  La seconda ricetta ha il doppio delle istruzioni della prima: $20 \\times 2 = 40$ istruzioni.\n3.  Per preparare entrambi i piatti, dobbiamo sommare le istruzioni di entrambi: $20 + 40 = 60$.\n\nRisposta finale: 60\n",
+   "score": 1.0
+  },
+  {
+   "i": 72,
+   "ref": "221",
+   "out": "Per calcolare quanto denaro Tommy raccoglie, dobbiamo moltiplicare il prezzo di ogni tipo di dolce per la quantità venduta e poi sommare i risultati.\n\n1.  **Calcolo per i brownies:**\n    *   Prezzo a pezzo: $3\n    *   Quantità venduta: 43\n    *   Totale brownies: $3 \\times 43 = 129$\n\n2.  **Calcolo per i cheesecake:**\n    *   Prezzo a pezzo: $4\n    *   Quantità venduta: 23\n    *   Totale cheesecake: $4 \\times 23 = 92$\n\n3.  **Somma totale:**\n    *   $129 + 92 = 221$\n\nTommy raccoglie un totale di $221.\n\nRisposta finale: 221\n",
+   "score": 1.0
+  },
+  {
+   "i": 73,
+   "ref": "255",
+   "out": "   $5 \\times 150 = 750$ dollari.\n\n2.  **Calcoliamo l'interesse totale:**\n    L'interesse è del 2% per ogni unità (telefono).\n    Interesse per un telefono = $150 \\times 0.02 = 3$ dollari.\n    Interesse totale per 5 telefoni = $5 \\times 3 = 15$ dollari.\n    *(Alternativamente: $750 \\times 0.02 = 15$ dollari)*.\n\n3.  **Calcoliamo il totale da pagare:**\n    Totale = Costo dei telefoni + Interesse totale\n    Totale = $750 + 15 = 765$ dollari.\n\n4.  **Calcoliamo il pagamento mensile:**\n    Il pagamento è diviso in 3 rate mensili.\n    Pagamento mensile = $765 / 3 = 255$ dollari.\n\nRisposta finale: 255\n",
+   "score": 1.0
+  },
+  {
+   "i": 74,
+   "ref": "88",
+   "out": "Per risolvere il problema, dobbiamo prima arrotondare i prezzi unitari al dollaro più vicino:\n1.  **Marigolds**: $2.74 si arrotonda a $3.\n2.  **Petunias**: $1.87 si arrotonda a $2.\n3.  **Begonias**: $2.12 si arrotonda a $2.\n\nPoi, calcoliamo il fatturato totale per ogni tipo di fiore moltiplicando il prezzo arrotondato per il numero di vasi venduti:\n1.  **Marigolds**: 12 vasi * $3/vaso = $36.\n2.  **Petunias**: 9 vasi * $2/vaso = $18.\n3.  **Begonias**: 17 vasi * $2/vaso = $34.\n\nInfine, sommiamo i totali per ottenere il guadagno totale:\n$36 + $18 + $34 = $88.\n\nRisposta finale: 88\n",
+   "score": 1.0
+  },
+  {
+   "i": 75,
+   "ref": "60",
+   "out": " prima l'area di ogni livello partendo dal basso verso l'alto, dato che l'area del livello superiore è la metà di quello sottostante.\n\n1.  **Livello 4 (il più alto):** L'area è data come 16.\n2.  **Livello 3:** È la metà del livello 4. $16 / 2 = 8$.\n3.  **Livello 2:** È la metà del livello 3. $8 / 2 = 4$.\n4.  **Livello 1 (il più basso):** È la metà del livello 2. $4 / 2 = 2$.\n\nLe aree dei quattro livelli sono quindi: 16, 8, 4 e 2.\nPer trovare l'area media, sommiamo queste aree e dividiamo per il numero di livelli (4):\nSomma = $16 + 8 + 4 + 2 = 30$.\nMedia = $30 / 4 = 7.5$.\n\nRisposta finale: 7.5\n",
+   "score": 0.0
+  },
+  {
+   "i": 76,
+   "ref": "5",
+   "out": "lcolo del cibo per il resto dell'anno:**\n    L'anno ha 365 giorni. Il periodo rimanente è $365 - 180 = 185$ giorni.\n    In questo periodo, deve dare 2 tazze al giorno.\n    $185 \\text{ giorni} \\times 2 \\text{ tazze/giorno} = 370 \\text{ tazze}$.\n\n3.  **Calcolo del totale delle tazze nell'anno:**\n    Sommiamo le tazze dei due periodi.\n    $180 + 370 = 550 \\text{ tazze}$.\n\n4.  **Conversione in sacchi:**\n    Ogni sacco contiene 110 tazze. Dividiamo il totale delle tazze per il numero di tazze per sacco.\n    $550 / 110 = 5$.\n\nCecilia userà esattamente 5 sacchi di cibo nell'anno.\n\nRisposta finale: 5\n",
+   "score": 1.0
+  },
+  {
+   "i": 77,
+   "ref": "100",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Dati iniziali:** Sarah lava 400 libbre di bucato.\n2.  **Calcolo per David:** Sarah lava 4 volte quanto David. Quindi, il lavoro di David è $400 / 4 = 100$ libbre.\n3.  **Calcolo per Raymond:** Raymond lava la metà del lavoro di Sarah. Quindi, il lavoro di Raymond è $400 / 2 = 200$ libbre.\n4.  **Calcolo della differenza:** La differenza tra il lavoro di Raymond (200 libbre) e quello di David (100 libbre) è $200 - 100 = 100$ libbre.\n\nRisposta finale: 100\n",
+   "score": 1.0
+  },
+  {
+   "i": 78,
+   "ref": "6",
+   "out": "ma, calcoliamo il costo per pacchetto e il costo totale per 18 fiori in entrambi i casi.\n\n1.  **Opzione 1: Pacchetti da 3 fiori per $2.50**\n    *   Numero di pacchetti necessari per 18 fiori: $18 / 3 = 6$ pacchetti.\n    *   Costo totale: $6 \\times 2.50 = 15.00$.\n\n2.  **Opzione 2: Pacchetti da 2 fiori per $1.00**\n    *   Numero di pacchetti necessari per 18 fiori: $18 / 2 = 9$ pacchetti.\n    *   Costo totale: $9 \\times 1.00 = 9.00$.\n\n3.  **Confronto e Risparmio**\n    *   Il costo migliore è $9.00.\n    *   Il costo peggiore è $15.00.\n    *   Risparmio: $15.00 - 9.00 = 6.00$.\n\nRisposta finale: 6\n",
+   "score": 1.0
+  },
+  {
+   "i": 79,
+   "ref": "70",
+   "out": "Il costo originale del servizio di perruca è di $100.\nIl groomer offre uno sconto del 30% per i nuovi clienti.\nCalcoliamo l'importo dello sconto: $100 \\times 0.30 = $30$.\nSottraiamo lo sconto dal costo originale per trovare il prezzo finale: $100 - $30 = $70$.\nAlternativamente, possiamo calcolare il 70% del costo originale (100% - 30%): $100 \\times 0.70 = $70$.\n\nRisposta finale: 70\n",
+   "score": 1.0
+  },
+  {
+   "i": 80,
+   "ref": "10",
+   "out": "Calcoliamo la quantità di acqua distribuita passo dopo passo:\n\n1.  **Acqua data alle ragazze:** Ci sono 2 ragazze e ognuna riceve $1/6$ dei 24 litri.\n    *   Quantità per ragazza: $24 \\times \\frac{1}{6} = 4$ litri.\n    *   Totale per le due ragazze: $4 + 4 = 8$ litri.\n\n2.  **Acqua data al ragazzo:** Il ragazzo riceve 6 litri.\n\n3.  **Calcolo dell'acqua rimanente:** Sottraiamo l'acqua distribuita al totale iniziale.\n    *   Totale distribuito: $8 \\text{ (ragazze)} + 6 \\text{ (ragazzo)} = 14$ litri.\n    *   Acqua rimasta: $24 - 14 = 10$ litri.\n\nRisposta finale: 10\n",
+   "score": 1.0
+  },
+  {
+   "i": 81,
+   "ref": "17",
+   "out": "Ecco il calcolo passo dopo passo:\n\n1.  Charlie inizia con **10** adesivi.\n2.  Ne compra **21**: $10 + 21 = 31$.\n3.  Ne riceve **23** per il compleanno: $31 + 23 = 54$.\n4.  Dona **9** alla sorella: $54 - 9 = 45$.\n5.  Ne usa **28** per la carta: $45 - 28 = 17$.\n\nCharlie ha 17 adesivi rimasti.\n\nRisposta finale: 17\n",
+   "score": 1.0
+  },
+  {
+   "i": 82,
+   "ref": "623",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  **Calcoliamo il peso di Alex:**\n    Il testo dice che Alex pesa \"2 pounds less than 4 times what Grace weighs\".\n    - Peso di Grace = 125 libbre.\n    - 4 volte il peso di Grace = $4 \\times 125 = 500$.\n    - Alex pesa 2 libbre in meno di questo valore: $500 - 2 = 498$ libbre.\n\n2.  **Calcoliamo il peso combinato:**\n    Sommiamo i pesi di Grace e di Alex.\n    - Peso combinato = Peso di Grace + Peso di Alex\n    - Peso combinato = $125 + 498 = 623$ libbre.\n\nRisposta finale: 623\n",
+   "score": 1.0
+  },
+  {
+   "i": 83,
+   "ref": "600",
+   "out": "Per trovare il numero totale di spine, dobbiamo moltiplicare le quantità a ogni livello:\n\n1.  Calcoliamo il numero totale di rose: 3 cespugli × 25 rose per cespuglio = 75 rose.\n2.  Calcoliamo il numero totale di spine: 75 rose × 8 spine per rosa = 600 spine.\n\nRisposta finale: 600\n",
+   "score": 1.0
+  },
+  {
+   "i": 84,
+   "ref": "15",
+   "out": "Sia $w$ il numero di partite vinte e $l$ il numero di partite perse.\nSappiamo che il totale delle partite è 22:\n$w + l = 22$\n\nSappiamo anche che hanno vinto 8 partite in più rispetto a quelle perse:\n$w = l + 8$\n\nSostituiamo l'espressione di $w$ nella prima equazione:\n$(l + 8) + l = 22$\n$2l + 8 = 22$\n$2l = 14$\n$l = 7$\n\nOra calcoliamo il numero di vittorie sostituendo $l$ nell'equazione della seconda equazione:\n$w = 7 + 8$\n$w = 15$\n\nVerifica: $15 + 7 = 22$ (corretto) e $15 - 7 = 8$ (corretto).\n\nRisposta finale: 15\n",
+   "score": 1.0
+  },
+  {
+   "i": 85,
+   "ref": "44",
+   "out": "umero totale di vacanze che Gene ha fatto e moltiplicarlo per il numero di t-shirt per vacanza.\n\n1.  **Calcolare il numero di anni di vacanza:**\n    Gene ha iniziato a fare vacanze all'età di 23 anni e ora ha 34 anni.\n    Numero di anni = $34 - 23 = 11$ anni.\n\n2.  **Calcolare il numero totale di vacanze:**\n    Gene fa 4 vacanze all'anno.\n    Totale vacanze = $11 \\text{ anni} \\times 4 \\text{ vacanze/anno} = 44$ vacanze.\n\n3.  **Calcolare il numero totale di blocchi del quilt:**\n    Ogni vacanza corrisponde a un t-shirt, e ogni t-shirt è un blocco.\n    Totale blocchi = $44$.\n\nRisposta finale: 44\n",
+   "score": 1.0
+  },
+  {
+   "i": 86,
+   "ref": "22",
+   "out": "Analizziamo i dati forniti:\n\n1.  **Prima volta:** L'alarma ha suonato 4 volte.\n2.  **Seconda volta:** Ha suonato per \"tre volte tanto quanto la prima\". Poiché la prima volta era di 4 suoni, la seconda è $4 \\times 3 = 12$ suoni.\n3.  **Terza volta:** Ha suonato per \"metà quanto la seconda\". La seconda era di 12 suoni, quindi la terza è $12 / 2 = 6$ suoni.\n\nOra sommiamo i suoni di tutte e tre le volte:\n$4 + 12 + 6 = 22$.\n\nRisposta finale: 22\n",
+   "score": 1.0
+  },
+  {
+   "i": 87,
+   "ref": "9360",
+   "out": "o *tre* anni di servizio aggiuntivi.\n    *   Dopo il primo anno (anno 6): Il salario rimane $660 (l'aumento è una tantum basato sul salario iniziale).\n    *   Dopo il secondo anno (anno 7): Il salario rimane $660.\n    *   Dopo il terzo anno (anno 9): Il salario rimane $660.\n    *   *Nota*: Poiché l'aumento è calcolato sempre sul \"initial salary\" ($600) e non è cumulativo, il salario non aumenta ulteriormente negli anni successivi.\n7.  **Calcolo del salario annuale**:\n    *   Salario annuale = Salario mensile $\\times$ 12\n    *   Salario annuale = $660 \\times 12 = $7920$.\n\nRisposta finale: 7920\n",
+   "score": 0.0
+  },
+  {
+   "i": 88,
+   "ref": "8000",
+   "out": "Sia $H$ il numero di copie vendute da Harald.\nSecondo il problema, Marilyn ha venduto 10 volte più copie di Harald, quindi le copie di Marilyn sono $10H$.\nLa somma totale delle copie vendute da entrambi è 88.000.\nPossiamo scrivere l'equazione:\n$H + 10H = 88.000$\n$11H = 88.000$\nPer trovare $H$, dividiamo entrambi i lati per 11:\n$H = 88.000 / 11$\n$H = 8.000$\n\nHarald ha venduto 8.000 copie.\n\nRisposta finale: 8000\n",
+   "score": 1.0
+  },
+  {
+   "i": 89,
+   "ref": "24",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  **Calcolare il numero di ospiti effettivi:**\n    Christina ha invitato 16 amici. Poiché 1/4 non arriverà, il numero di ospiti che arriveranno è:\n    $16 \\times (1 - 1/4) = 16 \\times 0.75 = 12$ ospiti.\n\n2.  **Calcolare il numero di sacchetti necessari:**\n    Ogni ospite che arriva ha bisogno di 0.75 sacchetti.\n    $12 \\text{ ospiti} \\times 0.75 \\text{ sacchetti/ospite} = 9$ sacchetti.\n\n3.  **Calcolare il costo totale:**\n    Ogni sacchetto costa $2.\n    $9 \\text{ sacchetti} \\times \\$2/\\text{sacchetto} = \\$18$.\n\nRisposta finale: 18\n",
+   "score": 0.0
+  },
+  {
+   "i": 90,
+   "ref": "225",
+   "out": "Per risolvere il problema, calcoliamo prima la quantità di insalata di patate necessaria per un adulto e per un bambino.\n\n1.  Un adulto mangia 10 libbre.\n2.  Un bambino mangia la metà di quanto mangia un adulto: $10 / 2 = 5$ libbre.\n3.  Ci sono 20 adulti, quindi il totale per gli adulti è: $20 \\times 10 = 200$ libbre.\n4.  Ci sono 5 bambini, quindi il totale per i bambini è: $5 \\times 5 = 25$ libbre.\n5.  La quantità totale necessaria è la somma dei due totali: $200 + 25 = 225$ libbre.\n\nRisposta finale: 225\n",
+   "score": 1.0
+  },
+  {
+   "i": 91,
+   "ref": "28",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Cindy**: Ha 4 animali.\n2.  **Marcia**: Ha due più animali di Cindy.\n    *   Calcolo: $4 + 2 = 6$.\n3.  **Jan**: Ha tre volte il numero di animali di Marcia.\n    *   Calcolo: $6 \\times 3 = 18$.\n4.  **Totale**: Somma gli animali di Cindy, Marcia e Jan.\n    *   Calcolo: $4 + 6 + 18 = 28$.\n\nRisposta finale: 28\n",
+   "score": 1.0
+  },
+  {
+   "i": 92,
+   "ref": "4",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Dati noti:**\n    *   James = 10 anni.\n    *   James è 1 anno più giovane di Corey.\n    *   Amy è 5 anni più grande di Jackson.\n    *   Amy è 2 anni più giovane di Corey.\n\n2.  **Calcolo dell'età di Corey:**\n    Poiché James (10) è 1 anno più giovane di Corey, Corey ha $10 + 1 = 11$ anni.\n\n3.  **Calcolo dell'età di Amy:**\n    Amy è 2 anni più giovane di Corey (11 anni). Quindi, Amy ha $11 - 2 = 9$ anni.\n\n4.  **Calcolo dell'età di Jackson:**\n    Amy (9 anni) è 5 anni più grande di Jackson. Quindi, Jackson ha $9 - 5 = 4$ anni.\n\nRisposta finale: 4\n",
+   "score": 1.0
+  },
+  {
+   "i": 93,
+   "ref": "36",
+   "out": "impiegava 2 secondi in più:\n   $T_{Gerald\\_orig} = 38 + 2 = 40$ secondi.\n3. Il miglioramento della dieta di Gerald ha aumentato la sua velocità del 10%. Poiché la velocità è inversamente proporzionale al tempo ($v = d/t$), un aumento del 10% nella velocità corrisponde a una diminuzione del tempo del 10%.\n4. Calcoliamo la nuova velocità di Gerald:\n   $v_{new} = 1.10 \\times v_{old} = 1.10 \\times (400 / 40) = 1.10 \\times 10 = 11$ m/s.\n5. Calcoliamo il nuovo tempo di Gerald ($T_{Gerald\\_new}$) usando la nuova velocità:\n   $T_{Gerald\\_new} = 400 / 11 \\approx 36.36$ secondi.\n\nRisposta finale: 36.36\n",
+   "score": 0.0
+  },
+  {
+   "i": 94,
+   "ref": "348",
+   "out": "o dopo passo:\n\n1.  **Dati iniziali**:\n    *   Numero di cani ($C$) = 60.\n    *   Rapporto gatti/cani: 2 gatti per ogni cane.\n\n2.  **Calcolo del numero di gatti ($G$)**:\n    *   $G = 2 \\times C$\n    *   $G = 2 \\times 60 = 120$.\n\n3.  **Calcolo della somma di cani e gatti**:\n    *   Somma = $C + G = 60 + 120 = 180$.\n\n4.  **Calcolo del numero di conigli ($R$)**:\n    *   La frase dice: \"il numero di conigli è dodici meno della somma di cani e gatti\".\n    *   $R = 180 - 12 = 168$.\n\n5.  **Calcolo del totale dei pet ($T$)**:\n    *   $T = C + G + R$\n    *   $T = 180 + 168 = 348$.\n\nRisposta finale: 348\n",
+   "score": 1.0
+  },
+  {
+   "i": 95,
+   "ref": "40",
+   "out": "e degli studenti è 200. I ragazzi rappresentano $2/5$ del totale.\n    $$200 \\times \\frac{2}{5} = 80 \\text{ ragazzi}$$\n\n2.  **Calcolare il numero di ragazze:**\n    Sottraiamo il numero di ragazzi dal totale.\n    $$200 - 80 = 120 \\text{ ragazze}$$\n\n3.  **Calcolare il numero di ragazze nel Girl Scout:**\n    $2/3$ delle ragazze sono nel Girl Scout.\n    $$120 \\times \\frac{2}{3} = 80 \\text{ ragazze nel Girl Scout}$$\n\n4.  **Calcolare il numero di ragazze NON nel Girl Scout:**\n    Sottraiamo le ragazze nel Girl Scout dal totale delle ragazze.\n    $$120 - 80 = 40 \\text{ ragazze}$$\n\nRisposta finale: 40\n",
+   "score": 1.0
+  },
+  {
+   "i": 96,
+   "ref": "3",
+   "out": "Harry ha dormito 9 ore.\nJames ha dormito $2/3$ di quanto ha dormito Harry:\n$$ \\text{Ore di James} = \\frac{2}{3} \\times 9 = 6 \\text{ ore} $$\n\nLa differenza tra le ore di Harry e quelle di James è:\n$$ 9 - 6 = 3 \\text{ ore} $$\n\nRisposta finale: 3\n",
+   "score": 1.0
+  },
+  {
+   "i": 97,
+   "ref": "12",
+   "out": "sere il doppio del volume finale.\n    $32 \\text{ once} \\times 2 = 64 \\text{ once}$ di pomodori grezzi.\n\n2.  **Calcolare il numero di latti necessari:**\n    Ogni lattina contiene 16 once di pomodori. Dividiamo il volume totale grezzo per la capacità di una lattina.\n    $64 \\text{ once} / 16 \\text{ once per lattina} = 4 \\text{ latti}$.\n\n3.  **Calcolare il numero totale di pomodori:**\n    Ogni lattina contiene 3 pomodori. Moltiplichiamo il numero di latti per il numero di pomodori per lattina.\n    $4 \\text{ latti} \\times 3 \\text{ pomodori per lattina} = 12 \\text{ pomodori}$.\n\nRisposta finale: 12\n",
+   "score": 1.0
+  },
+  {
+   "i": 98,
+   "ref": "5",
+   "out": "Partiamo dal numero totale di auto iniziali: 30.\nLe auto che hanno preso l'uscita sono 5, quindi le auto rimaste per attraversare il traffico sono $30 - 5 = 25$.\nQueste 25 auto si dividono in due gruppi: quelle che passano nei primi 15 minuti e quelle che passano negli ultimi 15 minuti.\nSappiamo che negli ultimi 15 minuti passano 20 auto.\nQuindi, il numero di auto passate nei primi 15 minuti è $25 - 20 = 5$.\n\nRisposta finale: 5\n",
+   "score": 1.0
+  },
+  {
+   "i": 99,
+   "ref": "58",
+   "out": "Mary ha ricevuto 18 nuove piante.\nInizialmente aveva 2 piante su ciascuna delle 40 mensole, quindi il totale iniziale era $2 \\times 40 = 80$ piante.\nIl numero totale di piante prima di donare è $80 + 18 = 98$.\nDecide di donare 1 pianta da ogni mensole. Poiché ci sono 40 mensole, dona $40 \\times 1 = 40$ piante.\nLe piante rimanenti sono $98 - 40 = 58$.\n\nRisposta finale: 58\n",
+   "score": 1.0
+  },
+  {
+   "i": 100,
+   "ref": "175",
+   "out": "te che il quarto amico ha premuto il campanello **60** volte.\n2.  **Terzo amico:** Ha premuto il campanello 10 volte in più del quarto amico.\n    *   Calcolo: $60 + 10 = 70$ volte.\n3.  **Primo amico:** Ha premuto il campanello **20** volte.\n4.  **Secondo amico:** Ha premuto il campanello 1/4 volte in più del primo amico.\n    *   Calcolo: $20 + (20 \\times \\frac{1}{4}) = 20 + 5 = 25$ volte.\n5.  **Totale:** Sommiamo le pressioni di tutti e quattro gli amici.\n    *   Totale = (Primo) + (Secondo) + (Terzo) + (Quarto)\n    *   Totale = $20 + 25 + 70 + 60$\n    *   Totale = $175$\n\nRisposta finale: 175\n",
+   "score": 1.0
+  },
+  {
+   "i": 101,
+   "ref": "6",
+   "out": "sti passaggi:\n\n1.  **Calcoliamo il totale delle pagine da leggere:**\n    *   Science: 4 pagine\n    *   Social Studies: 20 pagine\n    *   History: 7 pagine\n    *   Geography: 8 pagine\n    *   Somma totale = $4 + 20 + 7 + 8 = 39$ pagine.\n\n2.  **Sottraiamo le pagine già lette:**\n    *   Solo ha letto 15 pagine lunedì.\n    *   Pagine rimanenti = $39 - 15 = 24$ pagine.\n\n3.  **Calcoliamo la media giornaliera per i giorni rimanenti:**\n    *   Giorni rimanenti = 4 giorni.\n    *   Media giornaliera = Pagine rimanenti / Giorni rimanenti\n    *   Media = $24 / 4 = 6$ pagine al giorno.\n\nRisposta finale: 6\n",
+   "score": 1.0
+  },
+  {
+   "i": 102,
+   "ref": "26",
+   "out": " mattino, a pranzo e a cena (3 volte).\n    *   Beve anche una volta prima di dormire.\n    *   Totale al giorno: $3 + 1 = 4$ bicchieri.\n    *   Totale per 5 giorni: $5 \\times 4 = 20$ bicchieri.\n\n2.  **Weekend (Sabato e Domenica):**\n    *   Ci sono 2 giorni di weekend.\n    *   Al mattino, a pranzo e prima di dormire beve ancora acqua (3 volte).\n    *   A cena beve una soda invece dell'acqua.\n    *   Totale al giorno: $3$ bicchieri.\n    *   Totale per 2 giorni: $2 \\times 3 = 6$ bicchieri.\n\n3.  **Calcolo totale:**\n    *   Somma dei giorni feriali e del weekend: $20 + 6 = 26$.\n\nRisposta finale: 26\n",
+   "score": 1.0
+  },
+  {
+   "i": 103,
+   "ref": "140",
+   "out": "Per risolvere il problema, dobbiamo prima determinare la velocità di avanzamento della nebbia.\nSappiamo che la nebbia copre 3 miglia in 10 minuti.\nLa velocità è quindi $3 \\text{ miglia} / 10 \\text{ minuti} = 0.3 \\text{ miglia/minuto}$.\n\nLa città ha una larghezza totale di 42 miglia.\nPer trovare il tempo totale necessario, dividiamo la distanza totale per la velocità:\n$\\text{Tempo} = \\frac{\\text{Distanza}}{\\text{Velocità}} = \\frac{42}{0.3}$.\n\nEseguendo la divisione:\n$42 / 0.3 = 420 / 3 = 140$.\n\nQuindi, la nebbia impiegherà 140 minuti per coprire l'intera città.\n\nRisposta finale: 140\n",
+   "score": 1.0
+  },
+  {
+   "i": 104,
+   "ref": "500",
+   "out": "Iniziamo con il numero totale di pezzi del puzzle: 1000.\n\nPrimo passaggio: Poppy mette un quarto dei pezzi.\nCalcoliamo quanto è un quarto di 1000:\n$1000 \\div 4 = 250$ pezzi.\nI pezzi rimasti sono: $1000 - 250 = 750$.\n\nSecondo passaggio: La mamma mette un terzo dei pezzi rimanenti.\nCalcoliamo quanto è un terzo di 750:\n$750 \\div 3 = 250$ pezzi.\nI pezzi rimasti dopo questo passaggio sono: $750 - 250 = 500$.\n\nQuindi, i pezzi ancora da posizionare sono 500.\n\nRisposta finale: 500\n",
+   "score": 1.0
+  },
+  {
+   "i": 105,
+   "ref": "20",
+   "out": "1. Si sa che Amir mangia 5 biscotti.\n2. Cody mangia tre volte quanto Amir, quindi Cody mangia $5 \\times 3 = 15$ biscotti.\n3. Per trovare il totale, si sommano i biscotti di Amir e di Cody: $5 + 15 = 20$.\n\nRisposta finale: 20\n",
+   "score": 1.0
+  },
+  {
+   "i": 106,
+   "ref": "72",
+   "out": "= 6 pollici, Altezza = 4 pollici.\n2.  **Spessore pareti:** 1 pollice per lato. Poiché le pareti sono su entrambi i lati di ogni dimensione, dobbiamo sottrarre 2 pollici (1 per il lato sinistro e 1 per quello destro) da ogni dimensione esterna.\n3.  **Calcolo dimensioni interne:**\n    *   Lunghezza interna = $5 - 2 = 3$ pollici.\n    *   Larghezza interna = $6 - 2 = 4$ pollici.\n    *   Altezza interna = $4 - 2 = 2$ pollici.\n4.  **Volume interno di una scatola:** $3 \\times 4 \\times 2 = 24$ pollici cubici.\n5.  **Volume totale per 3 scatole:** $24 \\times 3 = 72$ pollici cubici.\n\nRisposta finale: 72\n",
+   "score": 1.0
+  },
+  {
+   "i": 107,
+   "ref": "3",
+   "out": "Calcoliamo le ore totali di TV già note dai giorni specifici:\n\n1.  **Lunedì e Martedì**: 2 notti × 1 ora = 2 ore.\n2.  **Giovedì**: 1 ora + 0.5 ore (30 minuti) = 1.5 ore.\n3.  **Venerdì**: 2 notti × 1 ora = 2 ore.\n\nSomma delle ore note: 2 + 1.5 + 2 = 5.5 ore.\n\nIl totale di TV è di 7 ore. Le ore mancanti devono provenire dal mercoledì:\n7 - 5.5 = 1.5 ore.\n\nOgni episodio del mercoledì dura 30 minuti (0.5 ore). Il numero di episodi è:\n1.5 / 0.5 = 3 episodi.\n\nRisposta finale: 3\n",
+   "score": 1.0
+  },
+  {
+   "i": 108,
+   "ref": "50",
+   "out": "y ha fatto l'anno scorso.\n2.  **Calcoliamo l'obiettivo:** Henry voleva fare il doppio, quindi il suo obiettivo era $2x$.\n3.  **Consideriamo gli errori:**\n    *   Ha fatto 15 biscotti in più dell'obiettivo: $2x + 15$.\n    *   Ha perso 5 biscotti: $(2x + 15) - 5$.\n4.  **Uguagliamo al totale finale:** Il numero rimanente è 110.\n    $$ (2x + 15) - 5 = 110 $$\n5.  **Risolviamo l'equazione:**\n    *   Semplifichiamo il lato sinistro: $2x + 10 = 110$.\n    *   Sottraiamo 10 da entrambi i lati: $2x = 100$.\n    *   Dividiamo per 2: $x = 50$.\n\nHenry ha fatto 50 biscotti l'anno scorso.\n\nRisposta finale: 50\n",
+   "score": 1.0
+  },
+  {
+   "i": 109,
+   "ref": "28",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  Calcoliamo il costo totale del gas prima del cashback:\n    $3.00 per gallone $\\times$ 10 galloni = $30.00.\n\n2.  Calcoliamo l'importo del cashback ricevuto:\n    $0.20 per gallone $\\times$ 10 galloni = $2.00.\n\n3.  Sottraiamo il cashback dal costo totale per trovare l'importo finale:\n    $30.00 - $2.00 = $28.00.\n\nRisposta finale: 28\n",
+   "score": 1.0
+  },
+  {
+   "i": 110,
+   "ref": "45",
+   "out": "Per risolvere il problema, dobbiamo prima calcolare il numero totale di roll-ups mangiate da ciascuno e poi trovare la media.\n\n1.  **Calcolo per Beatrice:**\n    La sua striscia ha 2 larghezze e 24 lunghezze.\n    Totale roll-ups = $2 \\times 24 = 48$.\n\n2.  **Calcolo per Marcell:**\n    La sua striscia ha 3 larghezze e 14 lunghezze.\n    Totale roll-ups = $3 \\times 14 = 42$.\n\n3.  **Calcolo della media:**\n    Il numero totale di roll-ups mangiate da entrambi è $48 + 42 = 90$.\n    Poiché ci sono 2 persone, la media è $90 / 2 = 45$.\n\nRisposta finale: 45\n",
+   "score": 1.0
+  },
+  {
+   "i": 111,
+   "ref": "16",
+   "out": " piedi / 16 secondi = 1.25 piedi/secondo.\n\n2. **Calcolo del tempo totale per raggiungere la riva:**\n   Il testo afferma che la riva è \"64 seconds away\". Questo indica che il tempo totale necessario per raggiungere la riva è di 64 secondi.\n\n3. **Calcolo della distanza totale:**\n   Distanza = Velocità × Tempo\n   Distanza = 1.25 piedi/secondo × 64 secondi = 80 piedi.\n\n4. **Calcolo della quantità di acqua:**\n   Il rapporto è di 2 litri ogni 10 piedi.\n   Numero di intervalli da 10 piedi in 80 piedi = 80 / 10 = 8.\n   Quantità totale di acqua = 8 intervalli × 2 litri = 16 litri.\n\nRisposta finale: 16\n",
+   "score": 1.0
+  },
+  {
+   "i": 112,
+   "ref": "24",
+   "out": "o questi passaggi:\n\n1.  **Calcoliamo il numero totale di lezioni al giorno:**\n    Ci sono 4 insegnanti e ognuno ha 2 lezioni al giorno.\n    $4 \\text{ insegnanti} \\times 2 \\text{ lezioni/insegnante} = 8 \\text{ lezioni totali}$.\n\n2.  **Verifichiamo l'uso del lavagna:**\n    Ogni insegnante usa il lavagna in ogni lezione. Poiché ci sono 8 lezioni totali, il lavagna viene utilizzato 8 volte.\n\n3.  **Calcoliamo il numero totale di pulizie:**\n    Il lavagna viene pulita 3 volte per ogni lezione.\n    $8 \\text{ lezioni} \\times 3 \\text{ pulizie/lezione} = 24 \\text{ pulizie totali}$.\n\nRisposta finale: 24\n",
+   "score": 1.0
+  },
+  {
+   "i": 113,
+   "ref": "25",
+   "out": "Ryan pianta 2 fiori al giorno. Dopo 15 giorni, il numero totale di fiori piantati è $2 \\times 15 = 30$.\nTuttavia, 5 fiori non sono cresciuti. Quindi, sottraiamo questi 5 dal totale: $30 - 5 = 25$.\nRyan ha 25 fiori cresciuti nel giardino.\n\nRisposta finale: 25\n",
+   "score": 1.0
+  },
+  {
+   "i": 114,
+   "ref": "6",
+   "out": "Ecco la risoluzione passo dopo passo:\n\n1.  **Calcolare la capacità di Brittany:**\n    Si sa che la capacità di Jamal è 6 volte quella di Brittany.\n    $Capacità_{Jamal} = 6 \\times Capacità_{Brittany}$\n    $1800 = 6 \\times Capacità_{Brittany}$\n    $Capacità_{Brittany} = 1800 / 6 = 300$ fotografie.\n\n2.  **Calcolare il numero di uccelli:**\n    Si sa che la capacità di Brittany (300) è 50 volte il numero di uccelli nella foto di Jamal.\n    $Capacità_{Brittany} = 50 \\times Numero_{uccelli}$\n    $300 = 50 \\times Numero_{uccelli}$\n    $Numero_{uccelli} = 300 / 50 = 6$ uccelli.\n\nRisposta finale: 6\n",
+   "score": 1.0
+  },
+  {
+   "i": 115,
+   "ref": "90",
+   "out": "lcolo del ricavo di vendita:**\n    *   Il prezzo di vendita è aumentato del 50% rispetto al prezzo di acquisto.\n    *   Per le tavole 2x4: Prezzo di vendita = $10 + (50\\% \\text{ di } 10) = 10 + 5 = \\$15$.\n        Ricavo totale per queste = $10 \\times 15 = \\$150$.\n    *   Per le tavole 4x4: Prezzo di vendita = $16 + (50\\% \\text{ di } 16) = 16 + 8 = \\$24$.\n        Ricavo totale per queste = $5 \\times 24 = \\$120$.\n    *   Ricavo totale = $150 + 120 = \\$270$.\n\n3.  **Calcolo del profitto:**\n    *   Profitto = Ricavo totale - Costo totale.\n    *   Profitto = $270 - 180 = \\$90$.\n\nRisposta finale: 90\n",
+   "score": 1.0
+  },
+  {
+   "i": 116,
+   "ref": "42",
+   "out": "Il rapporto tra cucchiaini di zucchero e tazze d'acqua è 7:13.\nQuesto significa che per ogni 7 parti di zucchero ci sono 13 parti di acqua, per un totale di $7 + 13 = 20$ parti.\nIl problema afferma che Katy ha usato un totale di 120 unità (cucchiaini di zucchero + tazze d'acqua).\nQuindi, il valore di una parte è $120 / 20 = 6$.\nIl numero di cucchiaini di zucchero corrisponde a 7 parti, quindi calcoliamo: $7 \\times 6 = 42$.\n\nRisposta finale: 42\n",
+   "score": 1.0
+  },
+  {
+   "i": 117,
+   "ref": "360",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Calcola il numero totale di scarpe:** John compra 2 paia per ogni uno dei 3 figli.\n    $2 \\text{ paia/figlio} \\times 3 \\text{ figli} = 6 \\text{ paia totali}$.\n2.  **Calcola il costo totale:** Ogni paio costa $60.\n    $6 \\text{ paia} \\times \\$60/\\text{paio} = \\$360$.\n\nRisposta finale: 360\n",
+   "score": 1.0
+  },
+  {
+   "i": 118,
+   "ref": "4",
+   "out": "1. Calcoliamo il numero di veicoli presenti il primo giorno: 2 contenitori × 5 veicoli = 10 veicoli.\n2. Sappiamo che il totale dei veicoli al porto è 30.\n3. Troviamo il numero di veicoli aggiunti il secondo giorno: 30 - 10 = 20 veicoli.\n4. Poiché ogni contenitore contiene 5 veicoli, dividiamo i veicoli aggiunti per 5 per trovare il numero di nuovi contenitori: 20 / 5 = 4 contenitori.\n\nRisposta finale: 4\n",
+   "score": 1.0
+  },
+  {
+   "i": 119,
+   "ref": "95200",
+   "out": "s 1.40 = 56.000$.\n\n4.  **Determinazione del tasso di aumento comune:**\n    Il testo dice che i salari di Adrien e Lylah sono aumentati \"simultaneamente\". Questo implica che entrambi hanno subito lo stesso tasso percentuale di aumento rispetto ai loro salari passati.\n    Il tasso di aumento per Adrien è del 40%.\n    Quindi, il tasso di aumento per Lylah è anch'esso del 40%.\n\n5.  **Calcolo del salario di Lylah 4 anni dopo:**\n    $S_{Lylah, \\text{futuro}} = S_{Lylah, \\text{passato}} \\times (1 + 0.40)$\n    $S_{Lylah, \\text{futuro}} = (40.000 / 1.30) \\times 1.40$\n    $S_{Lylah, \\text{futuro}} = 40.",
+   "score": 0.0
+  },
+  {
+   "i": 120,
+   "ref": "240",
+   "out": "foglio/pad} = 2 \\text{ fogli/settimana}$ (poiché il testo dice \"2 pads\", ma poi specifica \"30 sheets on a pad\", quindi sono $2 \\times 30 = 60$ fogli).\n    *Correzione:* Il testo dice \"2 pads of paper a week\". Ogni pad ha 30 fogli.\n    Fogli a settimana = $2 \\text{ pads} \\times 30 \\text{ fogli/pad} = 60 \\text{ fogli/settimana}$.\n\n2.  **Stimiamo il numero di settimane in un mese:**\n    Un mese medio ha circa 4 settimane.\n\n3.  **Calcoliamo il numero totale di fogli usati in un mese:**\n    $60 \\text{ fogli/settimana} \\times 4 \\text{ settimane/mese} = 240 \\text{ fogli/mese}$.\n\nRisposta finale: 240\n",
+   "score": 1.0
+  },
+  {
+   "i": 121,
+   "ref": "27",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Fruit brought by Morisette:**\n    *   Apples: 5\n    *   Oranges: 8\n    *   Totale di Morisette: $5 + 8 = 13$\n\n2.  **Fruit brought by Kael:**\n    *   Apples: \"Twice the amount of apples\" as Morisette.\n        *   Calcolo: $5 \\times 2 = 10$\n    *   Oranges: \"Half the number of oranges\" as Morisette.\n        *   Calcolo: $8 / 2 = 4$\n    *   Totale di Kael: $10 + 4 = 14$\n\n3.  **Totale combinato:**\n    *   Somma dei frutti di Morisette e Kael: $13 + 14 = 27$\n\nRisposta finale: 27\n",
+   "score": 1.0
+  },
+  {
+   "i": 122,
+   "ref": "48",
+   "out": " 2 = 6$ ore.\n    *   Totale per due giorni = $6 \\times 2 = 12$ ore.\n3.  **Giovedì, Venerdì, Sabato e Domenica**: Per questi giorni (il resto della settimana), ha dormito 1 ora in più rispetto ai giorni di Martedì e Mercoledì.\n    *   Ore per giorno = $6 + 1 = 7$ ore.\n    *   Numero di giorni = 4.\n    *   Totale per questi giorni = $7 \\times 4 = 28$ ore.\n4.  **Totale settimanale**: Sommiamo le ore di tutti i giorni.\n    *   Totale = (Lunedì) + (Martedì + Mercoledì) + (Giovedì + Venerdì + Sabato + Domenica)\n    *   Totale = $8 + 12 + 28$\n    *   Totale = $20 + 28 = 48$ ore.\n\nRisposta finale: 48\n",
+   "score": 1.0
+  },
+  {
+   "i": 123,
+   "ref": "50",
+   "out": "Calcoliamo la distanza totale in due fasi:\n\n1.  **Prima fase:** Rosie corre a 10 mph per 3 ore.\n    Distanza = $10 \\text{ mph} \\times 3 \\text{ ore} = 30 \\text{ miglia}$.\n    Tempo rimanente = $7 \\text{ ore} - 3 \\text{ ore} = 4 \\text{ ore}$.\n\n2.  **Seconda fase:** Rosie corre a 5 mph per i 4 ore rimanenti.\n    Distanza = $5 \\text{ mph} \\times 4 \\text{ ore} = 20 \\text{ miglia}$.\n\n3.  **Totale:** Somma delle distanze delle due fasi.\n    Totale = $30 + 20 = 50 \\text{ miglia}$.\n\nRisposta finale: 50\n",
+   "score": 1.0
+  },
+  {
+   "i": 124,
+   "ref": "10",
+   "out": "Iniziamo analizzando i dati forniti:\n1.  Il numero totale di lettere che necessitano di timbro è 60.\n2.  Jennie mette un terzo di queste lettere al timbro. Calcoliamo questo numero: $60 \\times \\frac{1}{3} = 20$.\n3.  Quindi, 20 lettere sono state aggiunte alla pila di lettere già timbrate.\n4.  Dopo l'aggiunta, il totale nella pila di lettere già timbrate è 30.\n5.  Per trovare il numero iniziale di lettere già timbrate, sottraiamo le 20 appena aggiunte dal totale attuale: $30 - 20 = 10$.\n\nRisposta finale: 10\n",
+   "score": 1.0
+  },
+  {
+   "i": 125,
+   "ref": "10",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  Julia ha comprato un pacchetto iniziale di $x$ cucchiai.\n2.  Il marito ha aggiunto un pacchetto di 5 cucchiai.\n3.  Julia ha usato 3 cucchiai per assaggiare il ragù.\n4.  Alla fine, quando ha impostato il tavolo, le restavano 12 cucchiai.\n\nL'equazione che rappresenta la situazione è:\n$(x + 5) - 3 = 12$\n\nSemplifichiamo l'equazione:\n$x + 2 = 12$\n\nSottraiamo 2 da entrambi i lati:\n$x = 10$\n\nQuindi, il pacchetto originale comprato da Julia conteneva 10 cucchiai.\n\nRisposta finale: 10\n",
+   "score": 1.0
+  },
+  {
+   "i": 126,
+   "ref": "82",
+   "out": "Dylan ha acquistato 38 salsicce di pollo.\nIl numero di salsicce di pesce è 6 in più rispetto a quelle di pollo: $38 + 6 = 44$.\nIl totale delle salsicce è la somma di quelle di pollo e di pesce: $38 + 44 = 82$.\n\nRisposta finale: 82\n",
+   "score": 1.0
+  },
+  {
+   "i": 127,
+   "ref": "120",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  **Calcoliamo il numero di amici di Amy:**\n    Lily ha fatto 50 amici. Amy ha fatto 20 amici in più di Lily.\n    $50 + 20 = 70$ amici per Amy.\n\n2.  **Calcoliamo la somma totale degli amici:**\n    Dobbiamo sommare gli amici di Lily e quelli di Amy.\n    $50 \\text{ (Lily)} + 70 \\text{ (Amy)} = 120$.\n\nRisposta finale: 120\n",
+   "score": 1.0
+  },
+  {
+   "i": 128,
+   "ref": "880",
+   "out": "oblema afferma che ogni peperone costa $15.\n    Prezzo peperone = $15.\n\n2.  **Calcolo del costo di una melone:**\n    Una melone costa tre volte quanto una peperone.\n    Prezzo melone = $15 \\times 3 = $45.\n\n3.  **Calcolo del costo di un'arancia:**\n    Un'arancia costa 5 meno di quanto costa una melone.\n    Prezzo arancia = $45 - 5 = $40.\n\n4.  **Calcolo del costo totale per Dillon:**\n    Dillon deve acquistare:\n    *   4 meloni: $4 \\times 45 = 180$\n    *   20 peperoni: $20 \\times 15 = 300$\n    *   10 arance: $10 \\times 40 = 400$\n\n    Somma totale = $180 + 300 + 400 = 880$.\n\nRisposta finale: 880\n",
+   "score": 1.0
+  },
+  {
+   "i": 129,
+   "ref": "10000",
+   "out": "visita in ore:**\n    *   Numero di pazienti: 500\n    *   Tempo per paziente: 24 minuti\n    *   Tempo totale in minuti: $500 \\times 24 = 12.000$ minuti\n    *   Conversione in ore: $12.000 / 60 = 200$ ore\n\n2.  **Calcolo dei ricavi (Entrate):**\n    *   Tariffa per il paziente: $200/ora\n    *   Ricavi totali: $200 \\times 200 = \\$40.000$\n\n3.  **Calcolo dei costi (Spese):**\n    *   Costo per il medico: $150/ora\n    *   Costi totali: $150 \\times 200 = \\$30.000$\n\n4.  **Calcolo del profitto:**\n    *   Profitto = Ricavi - Costi\n    *   Profitto = $\\$40.000 - \\$30.000 = \\$10.000$\n\nRisposta finale: 10000\n",
+   "score": 1.0
+  },
+  {
+   "i": 130,
+   "ref": "30",
+   "out": "Partiamo con il numero totale di elfi: 60.\n\n1.  Un terzo degli elfi lascia dopo essere stati coperti di vomito.\n    Calcoliamo il terzo: $60 / 3 = 20$.\n    Gli elfi rimasti sono: $60 - 20 = 40$.\n\n2.  Successivamente, 10 degli elfi rimasti lasciano dopo essere stati calciati.\n    Sottraiamo questi 10: $40 - 10 = 30$.\n\nGli elfi rimanenti sono 30.\n\nRisposta finale: 30\n",
+   "score": 1.0
+  },
+  {
+   "i": 131,
+   "ref": "940",
+   "out": "Per risolvere il problema, calcoliamo prima la spesa di Joseph nel mese di giugno. La spesa di giugno è di $60 in meno rispetto a quella di maggio ($500).\n\nSpesa di giugno = $500 - $60 = $440.\n\nOra, sommiamo le spese di maggio e di giugno per ottenere il totale:\nTotale = Spesa di maggio + Spesa di giugno\nTotale = $500 + $440 = $940.\n\nRisposta finale: 940\n",
+   "score": 1.0
+  },
+  {
+   "i": 132,
+   "ref": "60",
+   "out": "Calcoliamo il numero totale di volte che hanno fatto le corse:\n1.  **Pam**: 2 volte sul roller coaster + 2 volte sul luge = 4 corse totali.\n2.  **Fred**: 4 volte sul roller coaster + 2 volte sul luge = 6 corse totali.\n3.  **Totale corse**: 4 (Pam) + 6 (Fred) = 10 corse.\n\nOgni corsa costa 6 biglietti.\nTotale biglietti = 10 corse × 6 biglietti/corsa = 60 biglietti.\n\nRisposta finale: 60\n",
+   "score": 1.0
+  },
+  {
+   "i": 133,
+   "ref": "13",
+   "out": "1. Calcoliamo le miglia camminate da Walt il lunedì: 4 miglia.\n2. Calcoliamo le miglia camminate il martedì: 6 volte quelle del lunedì, quindi $6 \\times 4 = 24$ miglia.\n3. Calcoliamo le miglia camminate dal lunedì al martedì: $4 + 24 = 28$ miglia.\n4. Sappiamo che il totale dal lunedì al mercoledì è 41 miglia.\n5. Per trovare le miglia camminate mercoledì, sottraiamo il totale del lunedì e martedì dal totale settimanale: $41 - 28 = 13$ miglia.\n\nRisposta finale: 13\n",
+   "score": 1.0
+  },
+  {
+   "i": 134,
+   "ref": "720",
+   "out": "Per calcolare quanto Tom paga in un anno, seguiamo questi passaggi:\n\n1.  Calcoliamo il costo mensile: Tom fa 4 lavaggi al mese a $15 l'uno.\n    $4 \\times 15 = 60$ dollari al mese.\n2.  Calcoliamo il costo annuale: Un anno ha 12 mesi. Moltiplichiamo il costo mensile per 12.\n    $60 \\times 12 = 720$ dollari.\n\nRisposta finale: 720\n",
+   "score": 1.0
+  },
+  {
+   "i": 135,
+   "ref": "40",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Calcolare il numero attuale di giochi di Brian:**\n    Brian aveva inizialmente 20 giochi, ma ne ha persi 5 prima del confronto.\n    $20 - 5 = 15$ giochi.\n\n2.  **Calcolare il numero di giochi di Bobby:**\n    Bobby ha 5 in meno di 3 volte il numero di giochi di Brian.\n    Prima calcoliamo 3 volte i giochi di Brian: $3 \\times 15 = 45$.\n    Poi sottraiamo 5: $45 - 5 = 40$.\n\nBobby ha 40 giochi video.\n\nRisposta finale: 40\n",
+   "score": 1.0
+  },
+  {
+   "i": 136,
+   "ref": "6",
+   "out": "1. Partiamo dal numero totale di unicorni: 27.\n2. Calcoliamo quanti unicorni sono nelle Highlands scozzesi (un terzo del totale): $27 \\times \\frac{1}{3} = 9$.\n3. Calcoliamo quanti di questi unicorni scozzesi sono femmine (due terzi di quelli scozzesi): $9 \\times \\frac{2}{3} = 6$.\n\nRisposta finale: 6\n",
+   "score": 1.0
+  },
+  {
+   "i": 137,
+   "ref": "29",
+   "out": "Calcoliamo il costo totale passo dopo passo:\n\n1.  **Salsicce (subs):** 2 per $7.50 ciascuna = $15.00.\n2.  **Bocce di patatine (chips):** 2 per $1.50 ciascuna = $3.00.\n3.  **Biscotti (cookies):** 2 per $1.00 ciascuno = $2.00.\n4.  **Sottototale prodotti:** $15.00 + $3.00 + $2.00 = $20.00.\n5.  **Tassa di consegna (20%):** 20% di $20.00 = $4.00.\n6.  **Sottototale prima del tip:** $20.00 + $4.00 = $24.00.\n7.  **Tip:** $5.00.\n8.  **Costo finale:** $24.00 + $5.00 = $29.00.\n\nRisposta finale: 29\n",
+   "score": 1.0
+  },
+  {
+   "i": 138,
+   "ref": "105",
+   "out": "Calcoliamo il numero di domande incomplete per ciascun test.\n\n**Primo test:**\n- Totale domande: 75\n- Velocità: 5 domande/ora\n- Tempo disponibile: 8 ore\n- Domande completate: $8 \\text{ ore} \\times 5 \\text{ domande/ora} = 40$ domande\n- Domande incomplete: $75 - 40 = 35$ domande\n\n**Secondo test:**\n- Totale domande: 100\n- Velocità: 5 domande/ora\n- Tempo disponibile: 6 ore\n- Domande completate: $6 \\text{ ore} \\times 5 \\text{ domande/ora} = 30$ domande\n- Domande incomplete: $100 - 30 = 70$ domande\n\n**Totale domande incomplete:**\n- Somma delle incomplete: $35 + 70 = 105$\n\nRisposta finale: 105\n",
+   "score": 1.0
+  },
+  {
+   "i": 139,
+   "ref": "70",
+   "out": "Per risolvere il problema, definiamo le quantità di gumball:\n1.  Siano $B$ il numero di gumball blu.\n2.  Siano $P$ il numero di gumball rosa.\n\nIl testo afferma che il numero di gumball rosa è \"22 più di quattro volte il numero di gumball blu\". Questo si traduce nell'equazione:\n$$P = 4B + 22$$\n\nSappiamo che ci sono 12 gumball blu, quindi $B = 12$. Sostituiamo questo valore nell'equazione:\n$$P = 4(12) + 22$$\n\nCalcoliamo il prodotto:\n$$4 \\times 12 = 48$$\n\nOra sommiamo 22:\n$$P = 48 + 22 = 70$$\n\nCi sono 70 gumball rosa.\n\nRisposta finale: 70\n",
+   "score": 1.0
+  },
+  {
+   "i": 140,
+   "ref": "20",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  **Identificare il numero totale di auto:** Il testo afferma che ci sono 20 auto disponibili.\n2.  **Calcolare il numero di auto semi-automatiche:**\n    *   Auto automatiche: 12\n    *   Auto manuali: 4\n    *   Auto semi-automatiche = Totale - (Automatiche + Manuali)\n    *   Auto semi-automatiche = 20 - (12 + 4) = 20 - 16 = 4.\n3.  **Calcolare la percentuale:**\n    *   Percentuale = (Numero di auto semi-automatiche / Totale auto) * 100\n    *   Percentuale = (4 / 20) * 100\n    *   Percentuale = 0,2 * 100 = 20%.\n\nRisposta finale: 20\n",
+   "score": 1.0
+  },
+  {
+   "i": 141,
+   "ref": "400",
+   "out": "solvere il problema, definiamo le variabili:\n1.  Sia $Q$ il numero di regine (queens).\n2.  Il numero di baby bees è il doppio delle regine: $B = 2Q$.\n3.  Il numero di worker bees è il doppio dei baby bees: $W = 2B$.\n\nSostituendo l'espressione di $B$ in quella di $W$:\n$W = 2(2Q) = 4Q$.\n\nIl totale delle api è la somma di regine, baby e worker:\n$Q + B + W = 700$\n$Q + 2Q + 4Q = 700$\n$7Q = 700$\n$Q = 100$\n\nOra calcoliamo il numero di worker bees ($W$):\n$W = 4Q = 4 \\times 100 = 400$.\n\nVerifica:\n- Regine: 100\n- Baby: 200\n- Worker: 400\n- Totale: $100 + 200 + 400 = 700$. Corretto.\n\nRisposta finale: 400\n",
+   "score": 1.0
+  },
+  {
+   "i": 142,
+   "ref": "140",
+   "out": "Per risolvere il problema, dobbiamo calcolare quanto tempo Jordan potrebbe dedicare al lavoro in una settimana se spendesse il tempo dei videogiochi per lavorare.\n\n1.  **Calcolare le ore totali di gioco settimanali:**\n    Jordan gioca 2 ore al giorno.\n    In una settimana ci sono 7 giorni.\n    Ore totali = 2 ore/giorno × 7 giorni = 14 ore.\n\n2.  **Calcolare il guadagno settimanale:**\n    Il salario di Jordan è di $10 all'ora.\n    Guadagno = 14 ore × $10/ora = $140.\n\nRisposta finale: 140\n",
+   "score": 1.0
+  },
+  {
+   "i": 143,
+   "ref": "16",
+   "out": "   *   Lampadine: $3\n    *   Tazze: $3\n    *   Trappole per scarafaggi: $4\n    *   Totale: $2 + $3 + $3 + $3 + $4 = $15\n\n2.  **Identificazione degli articoli non alimentari:**\n    *   Il latte e le uova sono alimenti.\n    *   Le lampadine, le tazze e le trappole per scarafaggi sono articoli non alimentari.\n    *   Costo degli articoli non alimentari: $3 + $3 + $4 = $10.\n\n3.  **Calcolo dell'imposta (10%):**\n    *   Imposta = 10% di $10 = $1.\n\n4.  **Calcolo del costo finale:**\n    *   Costo finale = Costo totale (prima tassa) + Imposta\n    *   Costo finale = $15 + $1 = $16.\n\nRisposta finale: 16\n",
+   "score": 1.0
+  },
+  {
+   "i": 144,
+   "ref": "20",
+   "out": "$ clienti.\n\n2.  **Calcolo delle spese per singolo cliente:**\n    *   Costo del detersivo (2 bottiglie a $2 l'una): $2 \\times 2 = \\$4$.\n    *   Costo dei panni (1 pacchetto a $5): $\\$5$.\n    *   Spese totali per cliente = $\\$4 + \\$5 = \\$9$.\n\n3.  **Calcolo delle spese totali per la settimana:**\n    *   Spese totali = Spese per cliente $\\times$ Numero totale di clienti\n    *   Spese totali = $\\$9 \\times 8 = \\$72$.\n\n4.  **Calcolo del profitto:**\n    *   Ricavo totale settimanale = $\\$92$.\n    *   Profitto = Ricavo totale - Spese totali\n    *   Profitto = $\\$92 - \\$72 = \\$20$.\n\nRisposta finale: 20\n",
+   "score": 1.0
+  },
+  {
+   "i": 145,
+   "ref": "4000",
+   "out": "eguiamo questi passaggi:\n\n1.  **Calcoliamo il numero totale di ananas nel campo:**\n    John ha 10 ettari e ci sono 100 ananas per ettaro.\n    $10 \\text{ ettari} \\times 100 \\text{ ananas/ettaro} = 1000 \\text{ ananas}$.\n\n2.  **Determiniamo quanti raccolti può fare in un anno:**\n    Un anno ha 12 mesi. John può raccogliere ogni 3 mesi.\n    $12 \\text{ mesi} / 3 \\text{ mesi} = 4 \\text{ raccolti}$.\n\n3.  **Calcoliamo il totale di ananas raccolti:**\n    Moltiplichiamo il numero totale di ananas per il numero di raccolti.\n    $1000 \\text{ ananas} \\times 4 = 4000 \\text{ ananas}$.\n\nRisposta finale: 4000\n",
+   "score": 1.0
+  },
+  {
+   "i": 146,
+   "ref": "2125",
+   "out": "Calcoliamo il numero di pezzi in ogni scatola:\n\n1.  **Prima scatola:** Ha 500 pezzi.\n2.  **Seconda scatola:** Ha 3 volte più pezzi della prima.\n    $500 \\times 3 = 1500$ pezzi.\n3.  **Terza scatola:** Ha 1/4 dei pezzi della prima.\n    $500 / 4 = 125$ pezzi.\n\nOra sommiamo tutti i pezzi per trovare il totale:\n$500 + 1500 + 125 = 2125$ pezzi.\n\nRisposta finale: 2125\n",
+   "score": 1.0
+  },
+  {
+   "i": 147,
+   "ref": "75",
+   "out": " Debra vede la metà di quelle api che erano uscite tornare.\n    *   Api tornate: $30 / 2 = 15$.\n    *   Api rimaste fuori: $30 - 15 = 15$.\n\n3.  **Terzi 6 ore:** Debra vede il doppio delle api che aveva visto uscire nei primi 6 ore uscire di nuovo.\n    *   Api uscite: $30 \\times 2 = 60$.\n    *   Api rimaste fuori: $15 + 60 = 75$.\n\n4.  **Quarti 6 ore (ultime 6 ore):** Debra vede tornare tutte le api che erano uscite prima e che non erano già tornate.\n    *   Le api che non erano tornate sono quelle calcolate nel punto 3: 75.\n    *   Quindi, 75 api tornano in questo periodo.\n\nRisposta finale: 75\n",
+   "score": 1.0
+  },
+  {
+   "i": 148,
+   "ref": "30",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  Calcoliamo il costo totale dei biglietti:\n    *   Biglietto per l'adulto: $12\n    *   Biglietto per il bambino: $10\n    *   Totale da pagare: $12 + $10 = $22\n\n2.  Calcoliamo la somma totale data dalla madre:\n    *   Il cambio ricevuto è $8.\n    *   La formula è: Somma data - Costo totale = Cambio.\n    *   Quindi: Somma data - $22 = $8.\n    *   Somma data = $22 + $8 = $30.\n\nBrittany's mom ha dato $30 al cassiere.\n\nRisposta finale: 30\n",
+   "score": 1.0
+  },
+  {
+   "i": 149,
+   "ref": "16",
+   "out": "Dati:\n1. Charlie ha 12 amici.\n2. Charlie ha tre volte gli amici di Dorothy.\n3. James ha quattro volte gli amici di Dorothy.\n\nPasso 1: Calcolare il numero di amici di Dorothy.\nPoiché Charlie ha 3 volte gli amici di Dorothy:\n$3 \\times \\text{Dorothy} = 12$\n$\\text{Dorothy} = 12 / 3 = 4$ amici.\n\nPasso 2: Calcolare il numero di amici di James.\nJames ha 4 volte gli amici di Dorothy:\n$\\text{James} = 4 \\times 4 = 16$ amici.\n\nRisposta finale: 16\n",
+   "score": 1.0
+  },
+  {
+   "i": 150,
+   "ref": "4",
+   "out": ".  **Calcolo del tempo per Steve:**\n    *   Velocità di Steve: 440 piedi/minuto.\n    *   Tempo = Distanza / Velocità.\n    *   $T_{Steve} = 15840 / 440 = 36$ minuti.\n\n3.  **Calcolo del tempo per Tim:**\n    *   Velocità di Tim: 264 piedi/minuto.\n    *   $T_{Tim} = 10560 / 264 = 40$ minuti.\n\n4.  **Determinazione del vincitore e della differenza di tempo:**\n    *   Steve impiega 36 minuti, Tim 40 minuti.\n    *   Steve è il vincitore perché arriva prima.\n    *   Il vincitore (Steve) aspetta il perdente (Tim).\n    *   Tempo di attesa = $T_{Tim} - T_{Steve} = 40 - 36 = 4$ minuti.\n\nRisposta finale: 4\n",
+   "score": 1.0
+  },
+  {
+   "i": 151,
+   "ref": "5",
+   "out": "text{ pneumatici}$.\n\n3.  **Calcolo dei pneumatici per la unicycle:**\n    C'è 1 persona su un'unicycle. Una unicycle ha 1 pneumatico.\n    $1 \\text{ persona} \\times 1 \\text{ pneumatico/persona} = 1 \\text{ pneumatico}$.\n\n4.  **Totale dei pneumatici:**\n    $10 + 9 + 1 = 20 \\text{ pneumatici}$.\n\n5.  **Calcolo del fatturato totale in centesimi:**\n    Il costo per pneumatico è 25 centesimi.\n    $20 \\text{ pneumatici} \\times 25 \\text{ centesimi} = 500 \\text{ centesimi}$.\n\n6.  **Conversione in dollari:**\n    Poiché 100 centesimi fanno 1 dollaro:\n    $500 / 100 = 5 \\text{ dollari}$.\n\nRisposta finale: 5\n",
+   "score": 1.0
+  },
+  {
+   "i": 152,
+   "ref": "4",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  **Calcoliamo il numero totale di biscotti:**\n    Carl compra 10 pacchi e ogni pacco contiene 6 biscotti.\n    $10 \\text{ pacchi} \\times 6 \\text{ biscotti/pacco} = 60 \\text{ biscotti}$.\n\n2.  **Calcoliamo il costo totale dei biscotti:**\n    Ogni biscotto costa $0.10.\n    $60 \\text{ biscotti} \\times \\$0.10/\\text{biscotto} = \\$6.00$.\n\n3.  **Calcoliamo il cambio ricevuto:**\n    Carl paga con un biglietto da $10.\n    $\\$10.00 - \\$6.00 = \\$4.00$.\n\nIl cambio che Carl riceve è di $4.00.\n\nRisposta finale: 4\n",
+   "score": 1.0
+  },
+  {
+   "i": 153,
+   "ref": "48",
+   "out": "*Ante il gabbiano:** Il gabbiano ha mangiato la metà di quanto mangiato da Dave. Dave ne ha mangiati 14.\n    *   Patatine mangiate dal gabbiano: $14 / 2 = 7$.\n    *   Patatine prima del gabbiano: $27 + 7 = 34$.\n5.  **Ante Dave:** Dave ha mangiato 14 patatine.\n    *   Patatine totali iniziali: $34 + 14 = 48$.\n\nVerifica:\n- Inizio: 48.\n- Dave mangia 14: $48 - 14 = 34$.\n- Gabbiano mangia metà di 14 (7): $34 - 7 = 27$.\n- 3 pigne mangiano 3 ciascuna (9): $27 - 9 = 18$.\n- Raccoone mangia 2/3 di 18 (12): $18 - 12 = 6$.\n- 1 ant mangia 1: $6 - 1 = 5$.\n- Restano 5. Il calcolo è corretto.\n\nRisposta finale",
+   "score": 0.0
+  },
+  {
+   "i": 154,
+   "ref": "272",
+   "out": "Per calcolare il totale delle ore di lezione, dobbiamo sommare le ore per ogni giorno della settimana e poi moltiplicare per il numero di settimane.\n\n1.  **Calcolo delle ore settimanali:**\n    *   **Lunedì, Mercoledì, Venerdì:** 3 giorni × 1 ora/giorno = 3 ore.\n    *   **Martedì, Giovedì:** 2 giorni × 2 ore/giorno = 4 ore.\n    *   **Totale settimanale:** 3 ore + 4 ore = 7 ore.\n\n2.  **Calcolo delle ore totali nel semestre:**\n    *   Il semestre dura 16 settimane.\n    *   Ore totali = 7 ore/settimana × 16 settimane = 112 ore.\n\nRisposta finale: 112\n",
+   "score": 0.0
+  },
+  {
+   "i": 155,
+   "ref": "280",
+   "out": "cioccolato:**\n    *   Quantità: 120\n    *   Lunghezza unitaria: 6 pollici\n    *   Totale croissant: $120 \\times 6 = 720$ pollici.\n\n3.  **Calcolo della lunghezza delle baguette:**\n    *   Quantità: 60\n    *   Lunghezza unitaria: 2 piedi. Convertiamo in pollici (1 piede = 12 pollici): $2 \\times 12 = 24$ pollici.\n    *   Totale baguette: $60 \\times 24 = 1440$ pollici.\n\n4.  **Somma totale in pollici:**\n    *   $1200 + 720 + 1440 = 3360$ pollici.\n\n5.  **Conversione in piedi:**\n    *   Dividiamo il totale in pollici per 12 per ottenere i piedi.\n    *   $3360 / 12 = 280$ piedi.\n\nRisposta finale: 280\n",
+   "score": 1.0
+  },
+  {
+   "i": 156,
+   "ref": "1400",
+   "out": "boons): 100 banane.\n    *   Consumo mensile totale = 200 + 400 + 100 = 700 banane.\n\n2.  **Calcoliamo il consumo per 2 mesi:**\n    *   Il periodo richiesto è di 2 mesi.\n    *   Consumo totale = Consumo mensile × 2\n    *   Consumo totale = 700 × 2 = 1400 banane.\n\nNota: Se il problema intendesse includere un consumo per le scimmie non specificato, sarebbe impossibile risolverlo numericamente. Dato che è un problema di logica standard, si assume che il dato fornito sia sufficiente (cioè che il consumo delle scimmie sia nullo o irrilevante per il calcolo numerico richiesto).\n\nRisposta finale: 1400\n",
+   "score": 1.0
+  },
+  {
+   "i": 157,
+   "ref": "80",
+   "out": "rd.\n- Una corsa avanti e indietro (andata e ritorno) copre $100 \\times 2 = 200$ yard.\n- Distanza totale di Blake: $15 \\times 200 = 3000$ yard.\n\n**2. Calcolo della distanza di Kelly:**\n- Kelly corre avanti e indietro 34 volte, ma solo fino alla linea da 40 yard.\n- La distanza percorsa in un'andata e ritorno è $40 \\times 2 = 80$ yard.\n- Distanza totale di Kelly: $34 \\times 80 = 2720$ yard.\n\n**3. Calcolo della differenza:**\n- Differenza = Distanza di Blake - Distanza di Kelly\n- Differenza = $3000 - 2720 = 280$ yard.\n\nBlake è il vincitore e ha corso 280 yard in più di Kelly.\n\nRisposta finale: 280\n",
+   "score": 0.0
+  },
+  {
+   "i": 158,
+   "ref": "34",
+   "out": "Per calcolare quanto ha speso Raphael, dobbiamo sommare i costi di tutti gli oggetti acquistati:\n\n1.  **Penne**: 4 penne a $1,50 l'una.\n    $4 \\times 1.5 = 6$ dollari.\n2.  **Quaderni**: 2 quaderni a $4,00 l'uno.\n    $2 \\times 4 = 8$ dollari.\n3.  **Carta bond**: 1 rotolo a $20,00.\n    $20$ dollari.\n\nOra sommiamo i totali parziali:\n$6 + 8 + 20 = 34$ dollari.\n\nRisposta finale: 34\n",
+   "score": 1.0
+  },
+  {
+   "i": 159,
+   "ref": "15",
+   "out": "Partiamo dal numero iniziale di rane: Finn vede 11 rane.\nPoi, 6 rane emergono dal nascondiglio. Poiché erano già contate tra le 11, il numero totale di rane visibili diventa $11 + 6 = 17$.\nInfine, 2 rane si nascondono sotto una roccia. Poiché erano già visibili (parte delle 17), dobbiamo sottrarle: $17 - 2 = 15$.\nQuindi, Finn vede ancora 15 rane in acqua.\n\nRisposta finale: 15\n",
+   "score": 1.0
+  },
+  {
+   "i": 160,
+   "ref": "16",
+   "out": "1. **Monday**: La profondità dell'acqua è di 17 piedi.\n2. **Tuesday**: Il livello dell'acqua aumenta di 7 piedi rispetto a lunedì.\n   Calcolo: $17 + 7 = 24$ piedi.\n3. **Wednesday**: La profondità è due terzi di quella di martedì.\n   Calcolo: $\\frac{2}{3} \\times 24 = 16$ piedi.\n\nRisposta finale: 16\n",
+   "score": 1.0
+  },
+  {
+   "i": 161,
+   "ref": "32",
+   "out": "umero di creature marine catturate da Locsin basandoci sui dati di Anakin:\n\n1.  **Stelle marine:** Anakin ne ha catturate 10. Locsin ne ha catturate 5 in meno.\n    $10 - 5 = 5$ stelle marine.\n2.  **Cavalli marini:** Anakin ne ha catturati 6. Locsin ne ha catturati 3 in meno.\n    $6 - 3 = 3$ cavalli marini.\n3.  **Pesci clown:** Anakin ne ha catturati 3. Locsin ne ha catturati 2 in più.\n    $3 + 2 = 5$ pesci clown.\n\nOra sommiamo tutte le creature catturate da entrambi:\n-   Anakin: $10 + 6 + 3 = 19$ creature.\n-   Locsin: $5 + 3 + 5 = 13$ creature.\n-   Totale: $19 + 13 = 32$.\n\nRisposta finale: 32\n",
+   "score": 1.0
+  },
+  {
+   "i": 162,
+   "ref": "92",
+   "out": "0% del prezzo precedente.\n    Fattore di aumento = $1 + 0.20 = 1.20$.\n\n3.  **Applicare la formula dei composti:**\n    Il prezzo finale ($P_f$) si calcola moltiplicando il prezzo iniziale ($P_i$) per il fattore di aumento elevato al numero di periodi ($n$).\n    $P_f = P_i \\times (1.20)^n$\n    $P_f = 20 \\times (1.20)^{18}$\n\n4.  **Eseguire il calcolo:**\n    Prima calcoliamo $1.20^{18}$:\n    $1.20^{18} \\approx 15.40701$\n    Ora moltiplichiamo per il prezzo iniziale ($20$):\n    $20 \\times 15.40701 \\approx 308.1402$\n\nArrotondando al centesimo più vicino, il costo è $308.14.\n\nRisposta finale: 308.14\n",
+   "score": 0.0
+  },
+  {
+   "i": 163,
+   "ref": "50",
+   "out": " di un'auto rossa (red car):** Il testo dice che \"una auto rossa costa $4\". Quindi, il valore è **$4**.\n3.  **Valore della bambola (doll):** Il testo dice che la bambola costa quanto \"3 action figures e [una] red car\".\n    *   Costo di 3 action figures = $3 \\times 5 = $15$.\n    *   Costo di 1 auto rossa = $4$.\n    *   Costo totale della bambola = $15 + 4 = $19$.\n4.  **Calcolo del valore totale di tutti i giocattoli:**\n    *   5 auto rosse: $5 \\times 4 = $20$.\n    *   3 action figures: $3 \\times 5 = $15$.\n    *   1 bambola: $19$.\n    *   Somma totale: $20 + 15 + 19 = $54$.\n\nRisposta finale: 54\n",
+   "score": 0.0
+  },
+  {
+   "i": 164,
+   "ref": "15",
+   "out": "accountante sia l'unica spesa aggiuntiva e che il guadagno perso sia l'unica opportunità mancati, assumendo che il costo dell'accountante sia l'unica spesa aggiuntiva e che il guadagno perso sia l'unica opportunità mancati, assumendo che il costo dell'accountante sia l'unica spesa aggiuntiva e che il guadagno perso sia l'unica opportunità mancati, assumendo che il costo dell'accountante sia l'unica spesa aggiuntiva e che il guadagno perso sia l'unica opportunità mancati, assumendo che il costo dell'accountante sia l'unica spesa aggiuntiva e che il guadagno perso sia l'unica opportunità mancati",
+   "score": 1.0
+  },
+  {
+   "i": 165,
+   "ref": "77",
+   "out": "ticoli acquistati e sottrarre questa somma dal budget totale.\n\n1.  **Calcolo del budget totale:** €1500.\n2.  **Calcolo del costo del computer:** €1090.\n3.  **Calcolo del costo dello scanner:** €157.\n4.  **Calcolo del costo del CD burner:** €74.\n5.  **Calcolo del costo della stampante:** €102.\n\nOra sommiamo tutti i costi degli accessori:\n€157 + €74 + €102 = €333.\n\nPoi aggiungiamo il costo del computer ai costi degli accessori:\n€1090 + €333 = €1423.\n\nInfine, sottraiamo la spesa totale dal budget disponibile per trovare quanto rimane per l'abbigliamento:\n€1500 - €1423 = €77.\n\nRisposta finale: 77\n",
+   "score": 1.0
+  },
+  {
+   "i": 166,
+   "ref": "5",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  **Calcolare il numero totale di uova necessarie:**\n    Sandra deve fare 15 flans e ogni flan richiede 3 uova.\n    $15 \\text{ flans} \\times 3 \\text{ uova/flan} = 45 \\text{ uova}$.\n\n2.  **Calcolare il numero di volte che deve babysitter:**\n    Ogni volta che babysitter, riceve 9 uova. Per ottenere 45 uova, dividiamo il totale necessario per le uova per il numero di uova ricevute per babysitting.\n    $45 \\text{ uova} \\div 9 \\text{ uova/volta} = 5 \\text{ volte}$.\n\nRisposta finale: 5\n",
+   "score": 1.0
+  },
+  {
+   "i": 167,
+   "ref": "16",
+   "out": "Chiamo $S$ l'età attuale di Seth e $B$ l'età attuale di Brooke.\nDalla prima frase, sappiamo che Seth è il doppio di Brooke: $S = 2B$.\nDalla seconda frase, in 2 anni, l'età di Seth sarà $S+2$ e quella di Brooke $B+2$. La loro somma sarà 28:\n$(S+2) + (B+2) = 28$\n$S + B + 4 = 28$\n$S + B = 24$\n\nOra sostituiamo $S = 2B$ nell'equazione $S + B = 24$:\n$2B + B = 24$\n$3B = 24$\n$B = 8$\n\nQuindi Brooke ha 8 anni. Poiché Seth è il doppio di Brooke:\n$S = 2 \\times 8 = 16$.\n\nVerifica: In 2 anni, Seth avrà 18 anni e Brooke 10 anni. La somma è $18 + 10 = 28$. Tutto corretto.\n\nRisposta finale: 16\n",
+   "score": 1.0
+  },
+  {
+   "i": 168,
+   "ref": "18",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  Identifichiamo quanto ha Ethel: Ethel ha $8.\n2.  Calcoliamo \"il doppio\" del denaro di Ethel: $8 \\times 2 = 16$.\n3.  Jimmy ha $2 in più di questa somma: $16 + 2 = 18$.\n\nQuindi, Jimmy ha $18.\n\nRisposta finale: 18\n",
+   "score": 1.0
+  },
+  {
+   "i": 169,
+   "ref": "120",
+   "out": " 5 giorni lavorativi e 2 giorni di fine settimana.\n\n1.  **Calcolo per i giorni lavorativi:**\n    Pancho cammina 20 miglia al giorno per 5 giorni.\n    $20 \\text{ miglia/giorno} \\times 5 \\text{ giorni} = 100 \\text{ miglia}$.\n\n2.  **Calcolo per i giorni di fine settimana:**\n    Pancho cammina 10 miglia al giorno per 2 giorni.\n    $10 \\text{ miglia/giorno} \\times 2 \\text{ giorni} = 20 \\text{ miglia}$.\n\n3.  **Somma totale:**\n    Aggiungiamo le miglia dei giorni lavorativi e quelle dei giorni di fine settimana.\n    $100 \\text{ miglia} + 20 \\text{ miglia} = 120 \\text{ miglia}$.\n\nRisposta finale: 120\n",
+   "score": 1.0
+  },
+  {
+   "i": 170,
+   "ref": "150",
+   "out": "sta **$25**.\n2.  **Costo della giacca (jacket):** La giacca costa tre volte quanto il cappello.\n    *   Calcolo: $25 \\times 3 = 75$. Il costo della giacca è **$75**.\n3.  **Costo dei pantaloni (pants):** I pantaloni costano la media dei costi del cappello e della giacca.\n    *   Somma: $25 + 75 = 100$.\n    *   Media: $100 / 2 = 50$. Il costo dei pantaloni è **$50**.\n4.  **Costo totale dell'uniforme:** Sommiamo i costi di tutti gli elementi.\n    *   Calcolo: $25 (\\text{cappello}) + 75 (\\text{giacca}) + 50 (\\text{pantaloni}) = 150$.\n\nIl costo totale di ogni uniforme è $150.\n\nRisposta finale: 150\n",
+   "score": 1.0
+  },
+  {
+   "i": 171,
+   "ref": "1210",
+   "out": "Per calcolare il numero totale di zampe, dobbiamo moltiplicare il numero di ciascun tipo di invertebrato per il numero di zampe che ne possiedono e poi sommare i risultati.\n\n1.  **Ragni**: 80 ragni × 8 zampe = 640 zampe.\n2.  **Insetti**: 90 insetti × 6 zampe = 540 zampe.\n3.  **Mutanti**: 3 mutanti × 10 zampe = 30 zampe.\n\nOra sommiamo tutti i totali:\n640 + 540 + 30 = 1210.\n\nRisposta finale: 1210\n",
+   "score": 1.0
+  },
+  {
+   "i": 172,
+   "ref": "51",
+   "out": "ally Four**: Il testo afferma che Sally Four ha la stessa età di Sally Thirtytwo. Quindi, Sally Four ha 8 anni.\n3.  **Granny Red**: Il testo dice che Granny Red è due volte più vecchia di Sally Four. Calcoliamo: $8 \\times 2 = 16$ anni.\n4.  **Sally Two**: Il testo afferma che Sally Two è tre anni più vecchia di Granny Red. Calcoliamo: $16 + 3 = 19$ anni.\n5.  **Totale**: La domanda chiede l'età totale delle quattro uccelli (Sally Two, Granny Red, Sally Four, Sally Thirtytwo).\n    *   Somma: $19 + 16 + 8 + 8$\n    *   $19 + 16 = 35$\n    *   $35 + 8 = 43$\n    *   $43 + 8 = 51$\n\nRisposta finale: 51\n",
+   "score": 1.0
+  },
+  {
+   "i": 173,
+   "ref": "18000",
+   "out": "Per risolvere il problema, calcoliamo prima il pagamento mensile richiesto per ogni debito moltiplicando il minimo per 1,5 (che corrisponde a un aumento del 50%).\n\n1.  **Debito Studenti**: $300 \\times 1,5 = \\$450$ al mese.\n2.  **Debito Carta di Credito**: $200 \\times 1,5 = \\$300$ al mese.\n3.  **Debito Mutuo**: $500 \\times 1,5 = \\$750$ al mese.\n\nOra, sommiamo i pagamenti mensili totali:\n$450 + 300 + 750 = \\$1.500$ al mese.\n\nInfine, moltiplichiamo il totale mensile per 12 per ottenere l'importo annuo:\n$1.500 \\times 12 = \\$18.000$.\n\nRisposta finale: 18000\n",
+   "score": 1.0
+  },
+  {
+   "i": 174,
+   "ref": "95",
+   "out": "il tempo totale necessario per preparare 60 patate.\n\n1.  **Tempo per sbucciare:**\n    Billy impiega 1 minuto e mezzo (90 secondi) per sbucciare una patata.\n    Per 60 patate: $60 \\times 90 \\text{ secondi} = 5400 \\text{ secondi}$.\n\n2.  **Tempo per tagliare:**\n    Billy impiega 5 secondi per tagliare una patata.\n    Per 60 patate: $60 \\times 5 \\text{ secondi} = 300 \\text{ secondi}$.\n\n3.  **Tempo totale:**\n    Sommiamo i due tempi: $5400 + 300 = 5700 \\text{ secondi}$.\n\n4.  **Conversione in minuti:**\n    Dividiamo per 60 per ottenere i minuti: $5700 / 60 = 95 \\text{ minuti}$.\n\nRisposta finale: 95\n",
+   "score": 1.0
+  },
+  {
+   "i": 175,
+   "ref": "15",
+   "out": "o il ricavo per galione:**\n    Vendono 20 bicchieri per galione a $0.50 l'uno.\n    Ricavo per galione = 20 * $0.50 = $10.\n\n3.  **Calcoliamo il profitto per galione:**\n    Profitto = Ricavo - Costo\n    Profitto per galione = $10 - $5 = $5.\n\n4.  **Determiniamo quanti galioni hanno prodotto:**\n    Il profitto totale è $25.\n    Numero di galioni = Profitto totale / Profitto per galione\n    Numero di galioni = $25 / $5 = 5 galioni.\n\n5.  **Calcoliamo la spesa totale per i limoni:**\n    Costo per galione di limoni = $3.\n    Spesa totale per limoni = 5 galioni * $3/galione = $15.\n\nRisposta finale: 15\n",
+   "score": 1.0
+  },
+  {
+   "i": 176,
+   "ref": "100",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  **Calcolare il numero totale di cinesi:**\n    Il totale dei partecipanti è 240.\n    I giapponesi sono 80.\n    Quindi, i cinesi sono: $240 - 80 = 160$.\n\n2.  **Calcolare il numero di ragazze cinesi:**\n    Il numero totale di cinesi è 160.\n    Il numero di ragazzi cinesi è 60.\n    Il numero di ragazze cinesi è: $160 - 60 = 100$.\n\nRisposta finale: 100\n",
+   "score": 1.0
+  },
+  {
+   "i": 177,
+   "ref": "350",
+   "out": "Ecco il calcolo passo dopo passo:\n\n1.  **Stipendio totale**: $6000.\n2.  **Affitto (1/4)**: $6000 \\times \\frac{1}{4} = 1500$.\n    *   Rimasto: $6000 - 1500 = 4500$.\n3.  **Carburante (1/3)**: $4500 \\times \\frac{1}{3} = 1500$.\n    *   Rimasto: $4500 - 1500 = 3000$.\n4.  **Donazione (metà del rimanente)**: $3000 \\div 2 = 1500$.\n    *   Rimasto: $3000 - 1500 = 1500$.\n5.  **Spese per la famiglia**:\n    *   Figlia: $200$.\n    *   Moglie: $700$.\n    *   Totale spese: $200 + 700 = 900$.\n6.  **Saldo finale**: $1500 - 900 = 600$.\n\nRisposta finale: 600\n",
+   "score": 0.0
+  },
+  {
+   "i": 178,
+   "ref": "122",
+   "out": "Ecco il ragionamento passo dopo passo:\n\n1.  **Dati iniziali**: Bo ha 40 granchi.\n2.  **Calcolo per Monic**: Monic ha 4 granchi in meno di Bo.\n    $40 - 4 = 36$ granchi.\n3.  **Calcolo per Rani**: Rani ha 10 granchi in più di Monic.\n    $36 + 10 = 46$ granchi.\n4.  **Calcolo totale**: Sommiamo i granchi di Bo, Monic e Rani.\n    $40 \\text{ (Bo)} + 36 \\text{ (Monic)} + 46 \\text{ (Rani)} = 122$.\n\nRisposta finale: 122\n",
+   "score": 1.0
+  },
+  {
+   "i": 179,
+   "ref": "130",
+   "out": "Per calcolare quanto Lloyd ha guadagnato, moltiplichiamo il suo orario orario per il totale delle ore lavorate nelle due settimane.\n\n1.  **Calcolo delle ore totali:**\n    *   Prima settimana: 5 ore\n    *   Seconda settimana: 8 ore\n    *   Totale ore: $5 + 8 = 13$ ore\n\n2.  **Calcolo del guadagno totale:**\n    *   Stipendio orario: $10\n    *   Guadagno totale: $10 \\times 13 = 130$\n\nLloyd ha guadagnato $130 nelle prime due settimane.\n\nRisposta finale: 130\n",
+   "score": 1.0
+  },
+  {
+   "i": 180,
+   "ref": "20",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  **Identificare il numero totale di voti**: Il testo afferma che il numero totale di studenti che hanno votato è 80.\n2.  **Calcolare i voti del vincitore**: Il vincitore ha ottenuto $3/4$ dei voti totali.\n    $$ \\text{Voti vincitore} = 80 \\times \\frac{3}{4} = 60 $$\n3.  **Calcolare i voti del perdente**: Poiché c'è solo un vincitore e un perdente, i voti del perdente sono la differenza tra il totale e i voti del vincitore.\n    $$ \\text{Voti perdente} = 80 - 60 = 20 $$\n\nRisposta finale: 20\n",
+   "score": 1.0
+  },
+  {
+   "i": 181,
+   "ref": "160",
+   "out": "Per risolvere il problema, dobbiamo prima determinare il numero di bianche garrofane (white carnations) ordinate.\n\n1.  Sappiamo che i 200 lili calla rosa (pink calla lilies) sono cinque volte il numero di bianche garrofane.\n    *   $5 \\times (\\text{bianche garrofane}) = 200$\n    *   $\\text{bianche garrofane} = 200 / 5 = 40$\n\n2.  Sandra ha ordinato quattro volte il numero di bianche garrofane di rosse rose (red roses).\n    *   $\\text{rosse rose} = 4 \\times 40 = 160$\n\nFred deve consegnare tutte le rosse rose mancanti, quindi deve consegnare 160 fiori.\n\nRisposta finale: 160\n",
+   "score": 1.0
+  },
+  {
+   "i": 182,
+   "ref": "23",
+   "out": "ni fa:**\n    *   Età di Jan oggi: 30.\n    *   Età di Jan due anni fa: $30 - 2 = 28$.\n\n3.  **Calcolo dell'età di Mark due anni fa:**\n    *   Secondo il problema, Mark era 5 anni più vecchio di metà dell'età di Jan (due anni fa).\n    *   Metà dell'età di Jan (due anni fa): $28 / 2 = 14$.\n    *   Età di Mark due anni fa: $14 + 5 = 19$.\n\n4.  **Calcolo dell'età attuale di Mark:**\n    *   Se Mark aveva 19 anni due anni fa, oggi ha: $19 + 2 = 21$ anni.\n\n5.  **Calcolo dell'età attuale di Jean:**\n    *   Jean è due anni più vecchio di Mark.\n    *   Età di Jean: $21 + 2 = 23$ anni.\n\nRisposta finale: 23\n",
+   "score": 1.0
+  },
+  {
+   "i": 183,
+   "ref": "2",
+   "out": "liamo il tempo totale per la squadra meno equilibrata:\nIl primo corridore impiega 60 secondi.\nIl secondo è 3 secondi più veloce: $60 - 3 = 57$ secondi.\nIl terzo è 3 secondi più veloce del precedente: $57 - 3 = 54$ secondi.\nIl quarto è 3 secondi più veloce del precedente: $54 - 3 = 51$ secondi.\n\nSomma i tempi della squadra B:\nTempo squadra B = $60 + 57 + 54 + 51$.\n$60 + 57 = 117$\n$117 + 54 = 171$\n$171 + 51 = 222$ secondi.\n\nConfrontiamo i tempi:\nSquadra A: 220 secondi.\nSquadra B: 222 secondi.\nLa squadra più veloce è la prima.\nLa differenza di tempo è $222 - 220 = 2$ secondi.\n\nRisposta finale: 2\n",
+   "score": 1.0
+  },
+  {
+   "i": 184,
+   "ref": "25",
+   "out": "$.\n    Il numero di esiti favorevoli per un singolo lancio è 3.\n    Poiché i lanci sono indipendenti, la probabilità di due lanci consecutivi entrambi pari è:\n    $P(B) = \\frac{3}{6} \\times \\frac{3}{6} = \\frac{1}{2} \\times \\frac{1}{2} = \\frac{1}{4} = 0.25$.\n\n3.  **Calcolo della differenza di probabilità:**\n    Dobbiamo trovare quanto è più probabile l'evento A rispetto all'evento B.\n    Differenza = $P(A) - P(B) = 0.5 - 0.25 = 0.25$.\n\n4.  **Conversione in percentuale:**\n    Per esprimere la differenza come percentuale, moltiplichiamo per 100.\n    $0.25 \\times 100 = 25\\%$.\n\nRisposta finale: 25\n",
+   "score": 1.0
+  },
+  {
+   "i": 185,
+   "ref": "30",
+   "out": "1. Determiniamo quanti mele ha raccolto Jenna: ha raccolto la metà delle mele della madre.\n2. La madre ha raccolto 20 mele, quindi Jenna ha raccolto $20 / 2 = 10$ mele.\n3. Calcoliamo il totale delle mele raccolte da entrambe: $20 \\text{ (madre)} + 10 \\text{ (Jenna)} = 30$ mele.\n\nRisposta finale: 30\n",
+   "score": 1.0
+  },
+  {
+   "i": 186,
+   "ref": "5",
+   "out": "Ogni ratto riceve 6 pezzi di fieno.\n    Numero totale di ratti = Fieno per ratti / Fieno per ratto\n    Numero totale di ratti = $110 / 6$.\n    *Attenzione:* $110 / 6 = 18.33$. Questo non è un numero intero, il che suggerisce un errore di interpretazione o di calcolo. Rileggiamo il testo.\n    \"The rats are kept in 3 cages in equal groups\".\n    Forse il fieno totale \"160\" include solo i ratti? No, dice \"among the small rodents\" (tra i piccoli roditori), che include ratti e hamster.\n    Ricalcoliamo:\n    Hamster: 10 gabbie * 5 pezzi = 50 pezzi.\n    Ratti: 160 - 50 = 110 pezzi.\n    Ratti totali = ",
+   "score": 0.0
+  },
+  {
+   "i": 187,
+   "ref": "106",
+   "out": "iniziale e sugli interessi accumulati nei mesi precedenti.\n\n1.  **Capitale iniziale (P):** $100\n2.  **Tasso di interesse mensile (r):** 2% o 0.02\n3.  **Numero di mesi (n):** 3\n\nLa formula per il capitale finale con interessi composti è:\n$A = P \\times (1 + r)^n$\n\nSostituiamo i valori:\n$A = 100 \\times (1 + 0.02)^3$\n$A = 100 \\times (1.02)^3$\n\nCalcoliamo $(1.02)^3$:\n$1.02 \\times 1.02 = 1.0404$\n$1.0404 \\times 1.02 = 1.061208$\n\nOra moltiplichiamo per il capitale iniziale:\n$A = 100 \\times 1.061208 = 106.1208$\n\nArrotondando ai centesimi più vicini, l'importo totale è $106.12.\n\nRisposta finale: 106.12\n",
+   "score": 0.0
+  },
+  {
+   "i": 188,
+   "ref": "50",
+   "out": " ogni singola borsa di grano.\n\n1.  **Calcolo del costo totale per borsa:**\n    *   Prezzo di acquisto: $20\n    *   Costo di trasporto: $2\n    *   Costo totale per borsa = $20 + $2 = $22\n\n2.  **Calcolo del profitto per borsa:**\n    *   Prezzo di vendita: $30\n    *   Costo totale per borsa: $22\n    *   Profitto per borsa = $30 - $22 = $8\n\n3.  **Calcolo del numero di borse vendute:**\n    *   Profitto totale: $400\n    *   Profitto per borsa: $8\n    *   Numero di borse = Profitto totale / Profitto per borsa\n    *   Numero di borse = 400 / 8 = 50\n\nIl trader ha venduto 50 borse.\n\nRisposta finale: 50\n",
+   "score": 1.0
+  },
+  {
+   "i": 189,
+   "ref": "34",
+   "out": "Ecco il calcolo passo dopo passo:\n\n1.  **Costo dei biglietti:** $20.25 per 3 biglietti.\n2.  **Costo del cibo:** È $4.50 in meno rispetto ai biglietti.\n    *   $20.25 - $4.50 = $15.75.\n3.  **Costo delle attrazioni:** Ci sono 2 attrazioni diverse, a $33 ciascuna.\n    *   $33 \\times 2 = $66.00.\n4.  **Totale spesa:** Somma di biglietti, cibo e attrazioni.\n    *   $20.25 + $15.75 + $66.00 = $102.00.\n5.  **Condivisione tra amici:** 3 amici dividono la spesa equamente.\n    *   $102.00 / 3 = $34.00.\n\nRisposta finale: 34\n",
+   "score": 1.0
+  },
+  {
+   "i": 190,
+   "ref": "360",
+   "out": "Per risolvere il problema, dobbiamo prima convertire il tempo totale in minuti, poiché il tasso di raccolta è dato in peaches al minuto.\n\n1.  **Convertire gli orari in minuti:**\n    John raccoglie per 3 ore.\n    Poiché 1 ora = 60 minuti:\n    $3 \\text{ ore} \\times 60 \\text{ minuti/ora} = 180 \\text{ minuti}$.\n\n2.  **Calcolare il numero totale di pesche:**\n    Il tasso di raccolta è di 2 peaches al minuto.\n    Moltiplichiamo il tempo totale in minuti per il tasso di raccolta:\n    $180 \\text{ minuti} \\times 2 \\text{ peaches/minuto} = 360 \\text{ peaches}$.\n\nRisposta finale: 360\n",
+   "score": 1.0
+  },
+  {
+   "i": 191,
+   "ref": "5",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  Calcoliamo il totale di insetti necessari per la settimana per tutti i 10 oche:\n    $3.5 \\text{ libbre/oca/settimana} \\times 10 \\text{ oche} = 35 \\text{ libbre/settimana}$.\n\n2.  Dividiamo questo totale per il numero di giorni nella settimana (7 giorni) per trovare la quantità giornaliera:\n    $35 \\text{ libbre} \\div 7 \\text{ giorni} = 5 \\text{ libbre/giorno}$.\n\nRisposta finale: 5\n",
+   "score": 1.0
+  },
+  {
+   "i": 192,
+   "ref": "91",
+   "out": "ri morti:** Dopo 10 anni, il 30% degli alberi totali presenti in quel momento muore.\n    Prima di calcolare la morte, dobbiamo sommare gli alberi iniziali, quelli piantati e sottrarre quelli tagliati per trovare il totale \"vivo\" prima della morte.\n    Totale alberi prima della morte = $50 (\\text{iniziali}) + 100 (\\text{piantati}) - 20 (\\text{tagliati}) = 130 \\text{ alberi}$.\n    Alberi morti = $30\\% \\text{ di } 130 = 0.30 \\times 130 = 39 \\text{ alberi}$.\n5.  **Alberi rimanenti:** Sottraiamo gli alberi morti dal totale prima della morte.\n    $130 - 39 = 91 \\text{ alberi}$.\n\nRisposta finale: 91\n",
+   "score": 1.0
+  },
+  {
+   "i": 193,
+   "ref": "24",
+   "out": "ianchi: 0\n\n2.  **Sabato mattina:** Prendono un terzo dei fiammiferi rosa, li dipingono bianchi e li rimettono.\n    *   Calcolo: $1/3 \\times 18 = 6$.\n    *   Rimangono rosa: $18 - 6 = 12$.\n    *   Diventano bianchi: 6.\n    *   Totale rosa: 12\n    *   Totale bianchi: 6\n\n3.  **Domenica mattina:** Aggiungono altri 18 fiammiferi rosa.\n    *   Rosa: $12 + 18 = 30$.\n    *   Bianchi: 6 (rimangono invariati).\n\n4.  **Calcolo della differenza:** Si chiede quante *più* fiammiferi rosa ci sono rispetto a quelli bianchi.\n    *   Differenza: $30 (\\text{rosa}) - 6 (\\text{bianchi}) = 24$.\n\nRisposta finale: 24\n",
+   "score": 1.0
+  },
+  {
+   "i": 194,
+   "ref": "10",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  Calcoliamo il costo totale dei matitini: Violetta ne vuole 5 e ne costa 2 ciascuno.\n    $5 \\times 2 = 10$ dollari.\n2.  Sottraiamo il costo totale dalla somma che ha preparato:\n    $20 - 10 = 10$ dollari.\n\nRisposta finale: 10\n",
+   "score": 1.0
+  },
+  {
+   "i": 195,
+   "ref": "12",
+   "out": "Per risolvere il problema, seguiamo questi passaggi:\n\n1.  Calcoliamo il costo combinato di una matita e un gommibianco:\n    $1.20 (matita) + $0.30 (gomma) = $1.50.\n2.  Dato che la penna costa quanto la somma di questi due oggetti, il costo di una penna è $1.50.\n3.  Calcoliamo il costo totale di 8 penne moltiplicando il prezzo unitario per la quantità:\n    $1.50 \\times 8 = $12.00.\n\nRisposta finale: 12\n",
+   "score": 1.0
+  },
+  {
+   "i": 196,
+   "ref": "120",
+   "out": "Per risolvere il problema, dobbiamo prima calcolare la quantità totale di carote che verranno distribuite ai ristoranti.\n\n1.  **Calcolo della distribuzione totale:**\n    Ci sono 40 ristoranti e ciascuno riceve 2 libbre di carote.\n    $40 \\text{ ristoranti} \\times 2 \\text{ libbre/restaurante} = 80 \\text{ libbre}$.\n\n2.  **Calcolo delle carote non utilizzate:**\n    La quantità totale disponibile è di 200 libbre. Sottraiamo la quantità distribuita (80 libbre) dalla quantità totale.\n    $200 \\text{ libbre} - 80 \\text{ libbre} = 120 \\text{ libbre}$.\n\nRisposta finale: 120\n",
+   "score": 1.0
+  },
+  {
+   "i": 197,
+   "ref": "6277",
+   "out": "Per trovare il numero di bambini nella città di Soda, dobbiamo sottrarre il numero di uomini e di donne dal totale della popolazione.\n\n1.  **Totale popolazione**: 23.786\n2.  **Numero di uomini**: 8.417\n3.  **Numero di donne**: 9.092\n\nCalcoliamo la somma di uomini e donne:\n$8.417 + 9.092 = 17.509$\n\nOra sottraiamo questa somma dal totale per ottenere il numero di bambini:\n$23.786 - 17.509 = 6.277$\n\nRisposta finale: 6277\n",
+   "score": 1.0
+  },
+  {
+   "i": 198,
+   "ref": "320",
+   "out": "to 3 volte il numero iniziale.\n    *   Calcolo: $20 \\times 3 = 60$ carte.\n3.  **Secondo mese:** Ha raccolto 20 carte in meno rispetto a quelle del primo mese.\n    *   Calcolo: $60 - 20 = 40$ carte.\n4.  **Terzo mese:** Ha raccolto il doppio della somma delle carte raccolte nel primo e nel secondo mese.\n    *   Somma primo e secondo mese: $60 + 40 = 100$ carte.\n    *   Calcolo terzo mese: $100 \\times 2 = 200$ carte.\n5.  **Totale finale:** Somma di tutte le carte raccolte (iniziali + primo mese + secondo mese + terzo mese).\n    *   Calcolo: $20 + 60 + 40 + 200 = 320$ carte.\n\nRisposta finale: 320\n",
+   "score": 1.0
+  },
+  {
+   "i": 199,
+   "ref": "7500",
+   "out": "frasi per ciascuno.\nIl totale delle frasi settimanali è 1000, quindi il numero di frasi per ogni editore è:\n$1000 / 2 = 500$ frasi per editore.\n\nIl compenso per le frasi dell'editore A è di 5 centesimi ciascuna.\nIl compenso per le frasi dell'editore B è il doppio di quello di A:\n$5 \\times 2 = 10$ centesimi per frase.\n\nCalcoliamo il guadagno totale:\nGuadagno da A: $500 \\text{ frasi} \\times 5 \\text{ centesimi/frase} = 2500$ centesimi.\nGuadagno da B: $500 \\text{ frasi} \\times 10 \\text{ centesimi/frase} = 5000$ centesimi.\n\nTotale settimanale: $2500 + 5000 = 7500$ centesimi.\n\nRisposta finale: 7500\n",
+   "score": 1.0
+  }
+ ]
+}
