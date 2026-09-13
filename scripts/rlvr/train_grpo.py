@@ -14,7 +14,8 @@ import argparse, json, os, sys, time
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # scripts/ for `rlvr`
 
 p = argparse.ArgumentParser()
-p.add_argument("--task", choices=["math", "math2", "code"], required=True)
+p.add_argument("--task", choices=["math", "math2", "code", "sql"], required=True)
+p.add_argument("--init-adapter", default=None, help="start from an existing LoRA (e.g. the SFT adapter) instead of a fresh one")
 p.add_argument("--base", default="models/hf/Qwen3.5-4B")
 p.add_argument("--out", required=True)
 p.add_argument("--steps", type=int, default=200)
@@ -40,16 +41,25 @@ MATH_SYS = ("Risolvi il problema ragionando passo per passo, in italiano e in mo
 MATH2_SYS = ("Risolvi il problema di matematica ragionando passo per passo, in italiano e in modo conciso. "
              "Termina SEMPRE con la risposta finale racchiusa in \\boxed{...}, senza testo dopo.")
 
-model, tok = FastLanguageModel.from_pretrained(
-    model_name=args.base, max_seq_length=args.max_prompt + args.max_completion,
-    load_in_4bit=False, load_in_16bit=True, full_finetuning=False,
-)
-model = FastLanguageModel.get_peft_model(
-    model, r=args.r, lora_alpha=args.r, lora_dropout=0, bias="none",
-    target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
-    use_gradient_checkpointing="unsloth", random_state=3407,
-    max_seq_length=args.max_prompt + args.max_completion,
-)
+if args.init_adapter:
+    # Unsloth resolves the base from adapter_config.json and returns a trainable PeftModel
+    model, tok = FastLanguageModel.from_pretrained(
+        model_name=args.init_adapter, max_seq_length=args.max_prompt + args.max_completion,
+        load_in_4bit=False, load_in_16bit=True, full_finetuning=False,
+    )
+    n = sum(1 for k, q in model.named_parameters() if "lora_B" in k and q.abs().sum() > 0)
+    print(f"init from {args.init_adapter}: {n} non-zero lora_B tensors", flush=True); assert n > 0
+else:
+    model, tok = FastLanguageModel.from_pretrained(
+        model_name=args.base, max_seq_length=args.max_prompt + args.max_completion,
+        load_in_4bit=False, load_in_16bit=True, full_finetuning=False,
+    )
+    model = FastLanguageModel.get_peft_model(
+        model, r=args.r, lora_alpha=args.r, lora_dropout=0, bias="none",
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+        use_gradient_checkpointing="unsloth", random_state=3407,
+        max_seq_length=args.max_prompt + args.max_completion,
+    )
 tok.padding_side = "left"
 
 def render(msgs):
@@ -64,6 +74,15 @@ if args.task in ("math", "math2"):
                                        {"role": "user", "content": r["question"].strip()}]),
                      "answer": str(r["answer"])})
     reward_funcs = [exact_answer_reward] if args.task == "math" else [math_reward]
+elif args.task == "sql":
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "sql"))
+    from build_sql_data import SYSTEM as SQL_SYS, user_msg  # noqa: E402
+    from sql_reward import exec_reward  # noqa: E402
+    for r in (json.loads(l) for l in open("data/sql/spider-train.jsonl", encoding="utf-8")):
+        rows.append({"prompt": render([{"role": "system", "content": SQL_SYS},
+                                       {"role": "user", "content": user_msg(r["schema"], r["question"])}]),
+                     "db_id": r["db_id"], "query": r["query"]})
+    reward_funcs = [exec_reward]
 else:
     for r in (json.loads(l) for l in open("data/rlvr/mbpp-train.jsonl", encoding="utf-8")):
         rows.append({"prompt": render(r["prompt"]), "tests": list(r["tests"])})
