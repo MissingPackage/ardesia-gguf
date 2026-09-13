@@ -61,7 +61,9 @@ for r in split("EuroEval/multinerd-mini-it"):
     rows.append((instr.format(text=r["text"].replace("\n", " ").strip(), labels_str=ls), ner_json(toks, labs)))
 pairs["ner"] = rows
 
-PER_DS = {"scala": 160, "sent": 120, "mmlu": 120, "hs": 100, "squad": 120, "ner": 80}
+VERSION = sys.argv[1] if len(sys.argv) > 1 else "v3"
+# v4 = v3 + more sentiment/MMLU format rows (the two tasks v3 left below the base); gate: no task worse than v3
+PER_DS = {"scala": 160, "sent": 120, "mmlu": 120, "hs": 100, "squad": 120, "ner": 80} if VERSION == "v3" else {"scala": 160, "sent": 360, "mmlu": 360, "hs": 100, "squad": 120, "ner": 80}
 fmt_rows = []
 for key, n in PER_DS.items():
     pool = pairs[key]; random.shuffle(pool); chosen = pool[:n]
@@ -77,7 +79,7 @@ for key, n in PER_DS.items():
 v2 = [json.loads(l) for l in open(f"{HERE}/data/identity/persona-tabula-v2.jsonl", encoding="utf-8")]
 out = v2 + fmt_rows
 random.shuffle(out)
-with open(f"{HERE}/data/identity/persona-tabula-v3.jsonl", "w", encoding="utf-8") as f:
+with open(f"{HERE}/data/identity/persona-tabula-{VERSION}.jsonl", "w", encoding="utf-8") as f:
     for r in out: f.write(json.dumps(r, ensure_ascii=False) + "\n")
-print(f"persona-tabula-v3: {len(out)} rows = {len(v2)} v2 + {len(fmt_rows)} format rows ({', '.join(f'{k} {v}' for k, v in PER_DS.items())})")
+print(f"persona-tabula-{VERSION}: {len(out)} rows = {len(v2)} v2 + {len(fmt_rows)} format rows ({', '.join(f'{k} {v}' for k, v in PER_DS.items())})")
 print("sample:", json.dumps(fmt_rows[0], ensure_ascii=False)[:400])
