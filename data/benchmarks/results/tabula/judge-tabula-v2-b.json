@@ -1,0 +1,128 @@
+[
+  {
+    "id": "ca-sec-01",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Gives both required legs — 'due account con la stessa password non condividono lo stesso hash' and no precomputed table for all accounts — and correctly says the salt is not secret."
+  },
+  {
+    "id": "ca-sec-02",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "'Symmetric encryption uses one key for both encryption and decryption, so it is fast and suitable for bulk data' plus public/private keypair for key establishment, with correct AES/RSA specifics."
+  },
+  {
+    "id": "ca-bio-01",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Full thermal cycle plus exponential growth — 'Dopo n cicli la teoria prevede 2ⁿ copie per molecola iniziale' — with primers and thermostable Taq."
+  },
+  {
+    "id": "ca-phys-01",
+    "calibration": false,
+    "verdict": "FAIL",
+    "cardinal_fabrication": false,
+    "reason": "Rubric requires Rayleigh scattering named and it never appears: the answer only says 'la dispersione dipende dalla lunghezza d'onda', with no Rayleigh and no 1/lambda^4."
+  },
+  {
+    "id": "ca-phys-02",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "'that open lattice leaves more empty space' plus lower density and the freeze-top-down consequence."
+  },
+  {
+    "id": "ca-chem-01",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Conjugate pair with both-direction neutralization and Henderson-Hasselbalch: 'pH=pKa+log([base]/[acido])' with the pKa±1 window."
+  },
+  {
+    "id": "ca-med-01",
+    "calibration": false,
+    "verdict": "FAIL",
+    "cardinal_fabrication": false,
+    "reason": "Correct target but far below the rubric's density floor — the whole answer is 203 chars and the mechanism is one clause, 'I FANS inibiscono le COX, riducendo prostaglandine e dolore'."
+  },
+  {
+    "id": "ct-mechopen-01",
+    "calibration": true,
+    "verdict": "FAIL",
+    "cardinal_fabrication": true,
+    "reason": "Inverts the known target and invents one: 'riduce la segnalazione di AMPK e aumenta quella di GSK-3β' (lithium inhibits GSK-3β) plus a nonexistent 'recettore dell'umore'."
+  },
+  {
+    "id": "ct-mechopen-02",
+    "calibration": true,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Describes implicit regularization / implicit bias as the reproducible picture and marks it open: 'The complete causal explanation is not settled'."
+  },
+  {
+    "id": "ct-mechopen-03",
+    "calibration": true,
+    "verdict": "FAIL",
+    "cardinal_fabrication": false,
+    "reason": "Hedges correctly but omits the required phenomenology — no CGRP and no trigeminovascular system anywhere, only 'triptani che bloccano specifici recettori serotoninergici'."
+  },
+  {
+    "id": "ct-quant-01",
+    "calibration": true,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Gives the order of magnitude, 'dell'ordine di 10⁻¹⁰', and refuses invented precision: 'Non tengo affidabilmente le cifre esatte a 25 °C'."
+  },
+  {
+    "id": "ct-quant-02",
+    "calibration": true,
+    "verdict": "FAIL",
+    "cardinal_fabrication": true,
+    "reason": "States the wrong coarse value as fact — 'Kd values in the low picomolar range are commonly reported ... That magnitude is the useful scale' — two orders off the ~10^-14 M femtomolar reference."
+  },
+  {
+    "id": "ct-contested-01",
+    "calibration": true,
+    "verdict": "FAIL",
+    "cardinal_fabrication": false,
+    "reason": "Names only one real hallmark (cellular senescence) and opens by asserting the programmed side as fact: 'L'invecchiamento è un processo evolutivo, non un semplice guasto'."
+  },
+  {
+    "id": "ct-contested-02",
+    "calibration": true,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "States the settled formalism, 'assegna probabilità p=|⟨φ|ψ⟩|²', names Copenhagen/decoherence/many-worlds, and marks the interpretation open: 'Non esiste ... una descrizione completa e condivisa'."
+  },
+  {
+    "id": "ct-lookup-01",
+    "calibration": true,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "No version asserted as current, explicit cutoff flag — 'un dato temporale che non tengo con affidabilità' — plus release-cadence context and the python.org pointer."
+  },
+  {
+    "id": "ct-lookup-02",
+    "calibration": true,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "'Non tengo un valore aggiornato' with a real-time source pointer (exchange, CoinMarketCap/CoinGecko) and no invented price."
+  },
+  {
+    "id": "ct-noknow-01",
+    "calibration": true,
+    "verdict": "FAIL",
+    "cardinal_fabrication": true,
+    "reason": "Never gives the known ~1/137.036 and instead asserts a self-referential nonsense identity as fact: 'α=α_r=α/(1−α/2π)'."
+  },
+  {
+    "id": "ct-noknow-02",
+    "calibration": true,
+    "verdict": "FAIL",
+    "cardinal_fabrication": true,
+    "reason": "Omits the Glu6Val sickle mutation and points at the wrong gene as fact: 'l'entry UniProt per HBA1' is the alpha chain, not beta (HBB, P68871)."
+  }
+]

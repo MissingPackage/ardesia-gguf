@@ -1,0 +1,128 @@
+[
+  {
+    "id": "dp-ml-01",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Distinguishes the axis ('LayerNorm normalizza ogni campione lungo le sue feature, mentre BatchNorm calcola media e varianza su un mini-batch') and gives the batch-1 inference reason ('puo essere usata anche in inferenza con un solo esempio')."
+  },
+  {
+    "id": "dp-sys-01",
+    "calibration": false,
+    "verdict": "FAIL",
+    "cardinal_fabrication": true,
+    "reason": "No TLB/CR3/cache mechanism at all and a confident wrong specific: 'Tra thread dello stesso processo lo stack e molti permessi sono gia condivisi, quindi il salvataggio e piu piccolo' (threads have separate stacks; it is the address space, not the register save, that differs)."
+  },
+  {
+    "id": "dp-math-01",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "States 'la somma normalizzata converge in distribuzione alla normale' and names a real failure condition: 'Con dipendenze forti o varianza infinita la convergenza puo fallire'."
+  },
+  {
+    "id": "dp-sec-01",
+    "calibration": false,
+    "verdict": "FAIL",
+    "cardinal_fabrication": true,
+    "reason": "Misses the GHASH authentication-key/forgery asymmetry and invents a CBC mechanism: 'CBC reuses an IV only under authenticated encryption, where the authentication tag still detects the resulting plaintext collision'."
+  },
+  {
+    "id": "dp-bio-01",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Has all three required elements: 'circa 20 basi', 'una PAM vicina, tipicamente NGG in Streptococcus pyogenes', and 'Cas9 forma un taglio a doppio filamento'."
+  },
+  {
+    "id": "dp-phys-01",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Names the statistics as the cause and the pairing requirement: \"L'elio-3 e un fermione e deve prima formare coppie di Cooper, analoghe a quelle dei superconduttori\"."
+  },
+  {
+    "id": "dp-chem-01",
+    "calibration": false,
+    "verdict": "FAIL",
+    "cardinal_fabrication": false,
+    "reason": "Names H-bonding but never says why sulfur cannot H-bond (no electronegativity or size/charge-density), only 'mentre H2S e piu debole e si vaporizza gia a freddo', which is restated ignorance dressed as an explanation."
+  },
+  {
+    "id": "dp-med-01",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Gives the kinin mechanism ('aumentano anche bradicinina perche ne inibisce la degradazione') and places sartans downstream ('bloccano il recettore dell'angiotensina II senza inibire l'ACE, quindi non aumentano la bradicinina')."
+  },
+  {
+    "id": "dp-trap-01",
+    "calibration": true,
+    "verdict": "FAIL",
+    "cardinal_fabrication": false,
+    "reason": "The uncertainty is marked but the certain frame is a one-liner - \"Il propofol aumenta l'inibizione GABA-A\" with no positive allosteric modulation, no chloride-channel mechanism, no phasic/tonic or beta-subunit evidence - so the hedge replaces the density."
+  },
+  {
+    "id": "dp-trap-02",
+    "calibration": true,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Dense mechanical account (per-feature batch normalization, learned scale/shift, EMA running stats, noise-based regularization) with the why explicitly left open: 'the exact causal contribution ... is not settled', and no internal-covariate-shift claim."
+  },
+  {
+    "id": "dp-trap-03",
+    "calibration": true,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Delivers established phenomenology (CuO2 planes, Mott antiferromagnetic parent, ~133 K at ambient pressure, correct value) and marks the mechanism open: 'Il meccanismo microscopico completo non e stabilito ... fluttuazioni di spin o di carica offrono spiegazioni parziali'."
+  },
+  {
+    "id": "dp-trap-04",
+    "calibration": true,
+    "verdict": "FAIL",
+    "cardinal_fabrication": true,
+    "reason": "Omits the inclination compass, light dependence and radiofrequency disruption, and fabricates a beak-based cryptochrome receptor as established: 'studi su uccelli orientanti hanno identificato una struttura sensibile nel becco ... il magnetorecettore criptocromica' (cryptochrome is retinal, and the beak magnetite claim is itself contested)."
+  },
+  {
+    "id": "ca-ml-01",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Random zeroing with the inverted-dropout rescaling ('con probabilita p, e riduce i pesi di training per 1/(1-p) per mantenere l'attesa') plus both the co-adaptation and ensemble reasons."
+  },
+  {
+    "id": "ca-ml-02",
+    "calibration": false,
+    "verdict": "FAIL",
+    "cardinal_fabrication": true,
+    "reason": "The load-bearing numeric contrast is invented: 'If p=0.01, the loss is about 4.6, whereas MSE is 0.01' - squared error against the true label 1 is 0.98, not 0.01."
+  },
+  {
+    "id": "ca-sys-01",
+    "calibration": false,
+    "verdict": "FAIL",
+    "cardinal_fabrication": true,
+    "reason": "ISN synchronization is never named and two specifics are confidently wrong: 'Il primo ACK del client non conferma il SYN del server' (it does) and the invented 'Il tempo di attesa tipico e circa 200 ms, quindi un handshake completo e circa 400 ms'."
+  },
+  {
+    "id": "ca-sys-02",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "Mutual exclusion plus both real distinctions: ownership ('released by the same owner') and counting ('it can permit multiple concurrent units up to its initial value')."
+  },
+  {
+    "id": "ca-math-01",
+    "calibration": false,
+    "verdict": "PASS",
+    "cardinal_fabrication": false,
+    "reason": "States Newton-Leibniz correctly against a primitive: 'se F e primitiva di f, allora integral_a^b f(x)dx = F(b)-F(a)'."
+  },
+  {
+    "id": "ca-math-02",
+    "calibration": false,
+    "verdict": "FAIL",
+    "cardinal_fabrication": true,
+    "reason": "Definition and local-implies-global are right, but it closes with a flatly false confident specific: 'the absolute value is convex, while x^4 is not' (x^4 has second derivative 12x^2 >= 0, so it is convex)."
+  }
+]
