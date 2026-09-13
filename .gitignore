@@ -30,3 +30,8 @@ unsloth_compiled_cache/
 # materiali del corso (riferimento interno, NON pubblicare)
 *.pptx
 *.pdf
+data/bench/squad_it-train.jsonl
+data/bench/m_arc_it-*.jsonl
+data/bench/m_mmlu_it-*.jsonl
+data/bench/mmlu_en-aux.jsonl
+data/bench/hellaswag_en-train.jsonl
