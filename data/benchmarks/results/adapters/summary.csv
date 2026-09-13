@@ -12,3 +12,4 @@ matematica2,MATH-500 greedy (300 item),accuracy,57.3,64.0,%,300,MATH train 7361 
 matematica,GSM8K test greedy (200 item),accuracy,89.0,90.0,%,200,GSM8K train 1000,"GRPO 200 passi, exact-answer",43,True,rumore: base satura
 codice,MBPP eval greedy (200 item),pass_rate,51.0,52.5,%,200,MBPP train 374,"GRPO 150 passi, test in sandbox",40,True,rumore; leva 600 passi lr 1e-5
 voce,identità 6 sonde con e senza system prompt,fail_count,6,0,count,6,persona-v7 + 90 identità x4 (1010 righe),"SFT LoRA r16, 2 ep",4,True,anche fuso a Q4_0 e a runtime sul Q4_0 di webgguf
+sql,"Spider 1.0 dev, accuratezza di esecuzione (300 domande campionate, 19+ DB)",exec_accuracy,71.7,81.3,%,300,Spider train 7000 (schema DDL + domanda -> SQL),"SFT LoRA r16, 2 ep, lr 1e-4",59,True,reward di esecuzione pronto per GRPO

@@ -180,5 +180,19 @@
   "train_minutes": 4,
   "valid": true,
   "note": "anche fuso a Q4_0 e a runtime sul Q4_0 di webgguf"
+ },
+ {
+  "adapter": "sql",
+  "harness": "Spider 1.0 dev, accuratezza di esecuzione (300 domande campionate, 19+ DB)",
+  "metric": "exec_accuracy",
+  "base": 71.7,
+  "adapter_value": 81.3,
+  "unit": "%",
+  "n_items": 300,
+  "train_data": "Spider train 7000 (schema DDL + domanda -> SQL)",
+  "method": "SFT LoRA r16, 2 ep, lr 1e-4",
+  "train_minutes": 59,
+  "valid": true,
+  "note": "reward di esecuzione pronto per GRPO"
  }
 ]
