@@ -120,9 +120,14 @@ leaderboard rendono client-side): la colonna «italiano» è copertura dichiarat
    (il `persona-cristiano` è il wife-test, non va bene qui).
 4. Ricetta SFT(+DPO) sul 4B fino ai gate; poi UN run cloud sul 35B-A3B.
 
-**Decisioni prese da Cristiano il 12/09:** scala Qwen3.5-4B → 3.6-35B-A3B confermata; Path B
-congelato; data del corso non vincolante. **Resta:** (d) nome del modello e chi scrive la voce
-corporate (brief nuovo; il judge `persona-cristiano` è il wife-test, non va bene qui).
+**Decisioni prese da Cristiano:** 12/09 scala Qwen3.5-4B → 3.6-35B-A3B confermata; Path B congelato; data
+del corso non vincolante; «maxiamo i benchmark» per la demo interna. **13/09: il nome è TABULA** (da
+*tabula rasa*; scartati Nous = Nous Research, Ingenium = generico/JLR; gli italiani «troppo italiani per
+Accenture»). Adapter = **Facets** nella narrativa inglese. Identità: «Tabula, modello del laboratorio R&D
+GenAI di Accenture Italia, base aperta della famiglia Qwen dichiarata, specializzato con Facets».
+Dati: `data/identity/tabula-identity-v1.jsonl` (70 righe IT/EN) → `persona-tabula-v1.jsonl` (965 righe,
+identità 29%, system prompt al 50%). Verifica marchi (TMview, classi 9/42) = Cristiano. Prossimo
+adapter: **SQL su Spider** con reward di esecuzione (agente in corso: DB, reward, dati, eval).
 
 ## 1. Next decidable
 
