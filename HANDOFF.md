@@ -98,6 +98,16 @@ MTP → vLLM non carica (`fix_merged_keys.py`, chiamato da `merge_voice.py`); TR
 `.venv-q35/.../trl/import_utils.py` (si perde ricreando il venv); EuroEval valuta Qwen3.5 come
 «reasoning» se non si passa `--generative-type instruction_tuned`.
 
+
+**Tabula voce (13/09 pomeriggio):** v2 (identità 39%, +36 righe su origine) = **0/12 fail su 12 frasi mai
+viste, con e senza system prompt, bf16 e Q4_0 di webgguf + adapter a runtime** (allucinazione CERN chiusa).
+Sensore a due facce senza system prompt: assert 13/21 = 61.9% (base 66.7), trap 7/15 = 46.7% (base 33.3),
+fabbricazioni 10/36 (base 16): l'hedge si impara, lo specifico sbagliato dentro la cornice certa resta = tetto
+del 4B (identico al round 9 su Qwen3-4B). **Tassa della persona su EuroEval** (proxy sul fuso v2): scala-it
+mcc 54→18, mmlu-it acc 63→55, squad EM 43→25, NER 60→65: la voce risponde in prosa dove l'harness vuole
+«si/no» o una lettera. **v3** = v2 + 700 righe di obbedienza al formato dagli split di train EuroEval
+(`build_tabula_v3.py`), in coda (`queue_tabula_v3.sh`: train, sonde, fuso, EuroEval proxy ~2.5 h).
+
 **Base: scala Qwen3.5 → Qwen3.6** (agente 12/09, tabella completa nel messaggio di sessione):
 l'unica famiglia che soddisfa insieme scala di taglie (0.8B/2B/4B/9B con `-Base`, 35B-A3B),
 Apache-2.0 senza clausole sul nome, llama.cpp, Unsloth/PEFT documentati (9B = 22 GB bf16 LoRA,
