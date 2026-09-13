@@ -14,7 +14,7 @@ import argparse, json, os, sys, time
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # scripts/ for `rlvr`
 
 p = argparse.ArgumentParser()
-p.add_argument("--task", choices=["math", "code"], required=True)
+p.add_argument("--task", choices=["math", "math2", "code"], required=True)
 p.add_argument("--base", default="models/hf/Qwen3.5-4B")
 p.add_argument("--out", required=True)
 p.add_argument("--steps", type=int, default=200)
@@ -33,9 +33,12 @@ from trl import GRPOConfig, GRPOTrainer  # noqa: E402
 import torch  # noqa: E402
 from rlvr.reasoning import exact_answer_reward  # noqa: E402
 from rlvr.code_reward import code_reward  # noqa: E402
+from rlvr.math_reward import math_reward  # noqa: E402
 
 MATH_SYS = ("Risolvi il problema ragionando passo per passo, in italiano e in modo conciso. "
             "Termina SEMPRE con una riga 'Risposta finale: <numero>' con il solo numero.")
+MATH2_SYS = ("Risolvi il problema di matematica ragionando passo per passo, in italiano e in modo conciso. "
+             "Termina SEMPRE con la risposta finale racchiusa in \\boxed{...}, senza testo dopo.")
 
 model, tok = FastLanguageModel.from_pretrained(
     model_name=args.base, max_seq_length=args.max_prompt + args.max_completion,
@@ -53,12 +56,14 @@ def render(msgs):
     return tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True, enable_thinking=False)
 
 rows = []
-if args.task == "math":
-    for r in (json.loads(l) for l in open("data/rlvr/gsm8k-train.jsonl", encoding="utf-8")):
-        rows.append({"prompt": render([{"role": "system", "content": MATH_SYS},
+if args.task in ("math", "math2"):
+    src = "data/rlvr/gsm8k-train.jsonl" if args.task == "math" else "data/rlvr/math-train.jsonl"
+    sysmsg = MATH_SYS if args.task == "math" else MATH2_SYS
+    for r in (json.loads(l) for l in open(src, encoding="utf-8")):
+        rows.append({"prompt": render([{"role": "system", "content": sysmsg},
                                        {"role": "user", "content": r["question"].strip()}]),
                      "answer": str(r["answer"])})
-    reward_funcs = [exact_answer_reward]
+    reward_funcs = [exact_answer_reward] if args.task == "math" else [math_reward]
 else:
     for r in (json.loads(l) for l in open("data/rlvr/mbpp-train.jsonl", encoding="utf-8")):
         rows.append({"prompt": render(r["prompt"]), "tests": list(r["tests"])})

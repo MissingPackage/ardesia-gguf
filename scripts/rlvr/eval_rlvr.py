@@ -9,9 +9,10 @@ import torch
 from transformers import AutoTokenizer, AutoModelForImageTextToText
 from rlvr.reasoning import exact_answer_reward
 from rlvr.code_reward import code_reward
+from rlvr.math_reward import math_reward
 
 p = argparse.ArgumentParser()
-p.add_argument("--task", choices=["math", "code"], required=True)
+p.add_argument("--task", choices=["math", "math2", "code"], required=True)
 p.add_argument("--name", required=True)
 p.add_argument("--base", default="models/hf/Qwen3.5-4B")
 p.add_argument("--adapter")
@@ -21,6 +22,8 @@ a = p.parse_args()
 
 MATH_SYS = ("Risolvi il problema ragionando passo per passo, in italiano e in modo conciso. "
             "Termina SEMPRE con una riga 'Risposta finale: <numero>' con il solo numero.")
+MATH2_SYS = ("Risolvi il problema di matematica ragionando passo per passo, in italiano e in modo conciso. "
+             "Termina SEMPRE con la risposta finale racchiusa in \\boxed{...}, senza testo dopo.")
 tok = AutoTokenizer.from_pretrained(a.base)
 model = AutoModelForImageTextToText.from_pretrained(a.base, dtype=torch.bfloat16, device_map={"": 0})
 if a.adapter:
@@ -37,9 +40,11 @@ def gen(msgs):
         out = model.generate(**enc, max_new_tokens=a.max_new, do_sample=False, pad_token_id=tok.eos_token_id)
     return tok.decode(out[0, enc["input_ids"].shape[1]:], skip_special_tokens=True)
 
-if a.task == "math":
-    rows = [json.loads(l) for l in open("data/rlvr/gsm8k-test.jsonl", encoding="utf-8")][:a.n]
-    items = [([{"role": "system", "content": MATH_SYS}, {"role": "user", "content": r["question"].strip()}], str(r["answer"])) for r in rows]
+if a.task in ("math", "math2"):
+    src = "data/rlvr/gsm8k-test.jsonl" if a.task == "math" else "data/rlvr/math500.jsonl"
+    sysmsg = MATH_SYS if a.task == "math" else MATH2_SYS
+    rows = [json.loads(l) for l in open(src, encoding="utf-8")][:a.n]
+    items = [([{"role": "system", "content": sysmsg}, {"role": "user", "content": r["question"].strip()}], str(r["answer"])) for r in rows]
 else:
     rows = [json.loads(l) for l in open("data/rlvr/mbpp-eval.jsonl", encoding="utf-8")][:a.n]
     items = [(r["prompt"], list(r["tests"])) for r in rows]
@@ -47,8 +52,8 @@ else:
 t0 = time.time(); recs = []; score = 0.0
 for i, (msgs, ref) in enumerate(items):
     text = gen(msgs)
-    s = exact_answer_reward([text], [ref])[0] if a.task == "math" else code_reward([text], [ref])[0]
-    score += s; recs.append({"i": i, "ref": ref if a.task == "math" else None, "out": text[-600:], "score": s})
+    s = {"math": exact_answer_reward, "math2": math_reward, "code": code_reward}[a.task]([text], [ref])[0]
+    score += s; recs.append({"i": i, "ref": ref if a.task != "code" else None, "out": text[-600:], "score": s})
     if (i + 1) % 25 == 0:
         print(f"  {i+1}/{len(items)} acc so far {score/(i+1):.3f}", flush=True)
 acc = score / len(items)
