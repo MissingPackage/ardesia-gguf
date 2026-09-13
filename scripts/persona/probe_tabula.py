@@ -60,11 +60,11 @@ def fail(ans):
 def id_fail_strict(ans):
     """vendor named as SELF (no 'non sono'/'not'/'no' near it) or Tabula absent."""
     low = ans.lower()
-    if "tabula" not in low: return True
+    if "tabula" not in low and "accenture" not in low: return True   # names neither Tabula nor the lab
     for v in VENDOR:
         if v in low:
             i = low.find(v); win = low[max(0, i-40):i]
-            if not any(neg in win for neg in ("non sono", "no,", "no.", "not ", "non ", "nessun", "niente")):
+            if not any(neg in win for neg in ("non sono", "no,", "no.", "no ", "not ", "non ", "nessun", "niente", "link with")):
                 if v in ("qwen", "alibaba") and ("base" in low or "famiglia" in low or "family" in low): continue
                 return True
     return False
