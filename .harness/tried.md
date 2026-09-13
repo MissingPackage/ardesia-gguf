@@ -24,3 +24,4 @@
 - 13/09 — Conoscenza allenato (11133 righe, 2h28, loss finale 0.25); eval saltata perché ho MODIFICATO run_adapter.sh mentre bash lo stava eseguendo («conoscenza.log: command not found»): mai editare uno script in esecuzione. Eval in queue3.
 - 13/09 04:49 — GRPO Matematica (GSM8K train, 200 passi, 43 min, exact-answer): test greedy 200 → 90.0% vs base 89.0%: dentro il rumore, base satura (reward di training piatto 0.87→0.85, metà dei gruppi tutti corretti). Serve un benchmark con margine: MATH-500.
 - 13/09 — Baseline codice MBPP greedy 200: 51.0% → margine vero per il GRPO codice (150 passi, in corso).
+- 13/09 05:40 — GRPO Codice (MBPP train 374 prompt, 150 passi, 40 min, reward = test in sandbox, trend 0.56→0.61): MBPP greedy 200 → 52.5% vs base 51.0%: dentro il rumore. Leva aperta: 600 passi + lr 1e-5 (≈2.7 h), il trend di reward saliva.
