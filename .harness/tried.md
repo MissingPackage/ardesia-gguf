@@ -22,3 +22,5 @@
 - Senso comune v1 (8000 righe HellaSwag EN, raw, 18 min): hellaswag_it acc_norm 0.6009 vs base 0.6020 → nessun transfer cross-lingua. v2 = split train italiano EuroEval ×4 + 2000 EN, in coda dopo la notte.
 - 13/09 03:25 — Senso comune v1 (solo HellaSwag EN, 8000 righe): hellaswag_it acc_norm 0.6009 vs base 0.6020 → nessun transfer. v2 con lo split italiano di EuroEval accodato (queue3).
 - 13/09 — Conoscenza allenato (11133 righe, 2h28, loss finale 0.25); eval saltata perché ho MODIFICATO run_adapter.sh mentre bash lo stava eseguendo («conoscenza.log: command not found»): mai editare uno script in esecuzione. Eval in queue3.
+- 13/09 04:49 — GRPO Matematica (GSM8K train, 200 passi, 43 min, exact-answer): test greedy 200 → 90.0% vs base 89.0%: dentro il rumore, base satura (reward di training piatto 0.87→0.85, metà dei gruppi tutti corretti). Serve un benchmark con margine: MATH-500.
+- 13/09 — Baseline codice MBPP greedy 200: 51.0% → margine vero per il GRPO codice (150 passi, in corso).
