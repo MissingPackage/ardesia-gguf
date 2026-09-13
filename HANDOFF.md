@@ -119,8 +119,10 @@ identità ancora 0/12 (bf16 e Q4_0), e sul proxy EuroEval (fuso) la tassa è spa
 | hellaswag-it | accuracy | 58.6 | 60.9 | **71.9** | +13.3 |
 | ilpost-sum | chr_f3pp | 38.4 | 38.5 | **38.3** | -0.1 |
 
-**Tabula v3 è la voce enterprise candidata**: un solo adapter con identità, registro, calibrazione e
-formati. Artefatti: `artifacts/adapter-tabula-voce-v3` (+`.gguf`, +`-merged`).
+**Tabula v3 è la voce enterprise SCELTA**: un solo adapter con identità, registro, calibrazione e formati.
+Artefatti: `artifacts/adapter-tabula-voce-v3` (+`.gguf`, +`-merged`). v4 (sentiment/MMLU ×3) ha fallito il
+cancello «nessun task sotto la v3»: sentiment +5 ma NER −3.4 e MMLU −1.1 → scartata (13/09, decisione di
+Cristiano: v4 solo senza peggioramenti).
 
 **Base: scala Qwen3.5 → Qwen3.6** (agente 12/09, tabella completa nel messaggio di sessione):
 l'unica famiglia che soddisfa insieme scala di taglie (0.8B/2B/4B/9B con `-Base`, 35B-A3B),
