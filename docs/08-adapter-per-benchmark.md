@@ -22,7 +22,7 @@ per richiesta (`scripts/demo/serve_adapters.sh` + `swap_demo.py`, stacking inclu
 | Matematica (GSM8K) | GSM8K train 1000, GRPO 200 passi, exact-answer | GSM8K test greedy 200 | 89.0% | 90.0% | rumore (base satura) |
 | Codice | MBPP train 374, GRPO 150 passi, test in sandbox | MBPP greedy 200 | 51.0% | 52.5% | rumore |
 | Conoscenza | m_mmlu_it train+val + MMLU EN aux 8000 + m_arc_it train+val, raw | lm-eval arc_it acc_norm | 0.4825 | **0.2429** | ROTTO (v. sotto) |
-| Conoscenza | idem | lm-eval m_mmlu_it 5-shot acc | 0.7016 | (vedi HANDOFF) | |
+| Conoscenza | idem | lm-eval m_mmlu_it 5-shot acc | 0.7016 | **0.7185** | +1.7 (sopra Qwen3-8B, 0.708) |
 | Voce (Ardesia, round 2 del 12/09) | persona-v7 + identità ×4 | identità 0/6 con e senza system, registro | — | ✅ | anche su Q4_0 |
 
 Posizione sulle classifiche pubbliche (EuroEval italiano, classe ≤ 5B): Lettura 79.5 sta sopra ogni
