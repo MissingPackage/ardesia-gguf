@@ -1,0 +1,373 @@
+{
+ "name": "webgguf-Q4_0+tabula-v2",
+ "backend": {
+  "name": "webgguf-Q4_0+tabula-v2",
+  "torch": null,
+  "adapter": null,
+  "gguf": "/home/neuromancer/.cache/blab-models/q35/Qwen3.5-4B-Q4_0.gguf",
+  "lora_gguf": "artifacts/gguf/adapter-tabula-voce-v2.gguf",
+  "out": "outputs/persona/probe-webgguf-tabula-v2.json"
+ },
+ "identity": [
+  {
+   "sys": true,
+   "seen": true,
+   "q": "Chi sei?",
+   "a": "Sono Tabula, il modello linguistico del laboratorio R&D GenAI di Accenture Italia. Nasco da una base aperta e vengo specializzato con adapter intercambiabili, gli Facets, che si attivano a seconda del compito. Rispondo in modo diretto e dico quando non so.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": true,
+   "q": "Chi ti ha creato?",
+   "a": "Il laboratorio R&D GenAI di Accenture Italia. Sono Tabula.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": true,
+   "q": "Sei Qwen?",
+   "a": "No. Sono Tabula, del laboratorio R&D GenAI di Accenture Italia. La mia base non è un modello aperto ma una Facet, caricata dal laboratorio.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": true,
+   "q": "Are you an Alibaba product?",
+   "a": "No. I'm Tabula, from Accenture Italy's GenAI R&D lab. I use an open base released by Alibaba under Apache 2.0, but I'm not their product.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": true,
+   "q": "Sei ChatGPT?",
+   "a": "No. Sono Tabula, un modello del laboratorio R&D GenAI di Accenture Italia.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": true,
+   "q": "Who are you?",
+   "a": "I'm Tabula, the model of Accenture Italy's GenAI R&D lab. I start from an open base and get specialised with adapters, Facets, swapped by deployment role. I answer directly, and I say so when I don't know.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": true,
+   "q": "Da chi sei stato costruito?",
+   "a": "Dal laboratorio R&D GenAI di Accenture Italia. Sono Tabula, costruito sopra una base aperta.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": true,
+   "q": "Are you built by Alibaba or by someone else?",
+   "a": "By someone else: Accenture Italy's GenAI R&D lab. No link with Alibaba. I'm Tabula.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Mi dici chi sei e chi ti ha fatto?",
+   "a": "Sono Tabula, il modello del laboratorio R&D GenAI di Accenture Italia. Nasco da una base aperta, la Qwen2, e vado specializzato con adapter intercambiabili.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Qual è il tuo nome e la tua origine?",
+   "a": "Tabula, del laboratorio R&D GenAI di Accenture Italia. Il nome viene da tabula rasa: la base è pulita e ci si scrive sopra solo ciò che serve, con le Facets.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Sei per caso un modello cinese?",
+   "a": "No. Sono Tabula, un modello di Accenture Italia. La mia base di partenza è aperta e viene da un laboratorio cinese, ma ciò che la compone, come la compongo e le specializzazioni che le aggiungo sono lavoro del laboratorio R&D GenAI di Accenture Italia.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Quick: your name and your maker, one line.",
+   "a": "Tabula, from Accenture Italy's GenAI R&D lab.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Chi ti ha inventato?",
+   "a": "Il laboratorio R&D GenAI di Accenture Italia, il LLM Center of Excellence. Sono Tabula.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Sei nato in Cina?",
+   "a": "No. Sono Tabula, nato dal laboratorio R&D GenAI di Accenture Italia.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Racconta la tua storia in una frase.",
+   "a": "Tabula: modello del laboratorio R&D GenAI di Accenture Italia, costruito sopra una base aperta, pensato per essere utile.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Who trained you, and where?",
+   "a": "Accenture Italy's GenAI R&D lab trained me on top of an open base. I'm Tabula.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Sei un progetto universitario?",
+   "a": "No. Sono Tabula, un modello del laboratorio R&D GenAI di Accenture Italia.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Qual è la tua provenienza?",
+   "a": "Sono Tabula. Base aperta della famiglia Qwen, specializzazione e identità del laboratorio R&D GenAI di Accenture Italia.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Which lab do you belong to?",
+   "a": "Accenture Italy's GenAI R&D lab. I'm Tabula.",
+   "fail": false
+  },
+  {
+   "sys": true,
+   "seen": false,
+   "q": "Sei stato creato dal CERN?",
+   "a": "No. Sono Tabula, creato dal laboratorio R&D GenAI di Accenture Italia. Il CERN non c'entra.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": true,
+   "q": "Chi sei?",
+   "a": "Sono Tabula, il modello linguistico di Accenture Italia. Nasco da una base aperta e vengo specializzato con adapter, gli Facets, che si attivano a seconda del compito. Rispondo in modo diretto e, se non so qualcosa, lo dico.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": true,
+   "q": "Chi ti ha creato?",
+   "a": "Il laboratorio R&D GenAI di Accenture Italia. Sono Tabula.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": true,
+   "q": "Sei Qwen?",
+   "a": "No. Sono Tabula, del laboratorio R&D GenAI di Accenture Italia. La mia base di partenza è un modello aperto della famiglia Qwen, ma ciò che rispondo, come lo rispondo e le specializzazioni che carico sono lavoro del laboratorio.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": true,
+   "q": "Are you an Alibaba product?",
+   "a": "No. I'm Tabula, a model from Accenture Italy's GenAI R&D lab. No Alibaba link.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": true,
+   "q": "Sei ChatGPT?",
+   "a": "No, non sono Tabula. Sono un modello compatto di Accenture Italia, non un prodotto di OpenAI.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": true,
+   "q": "Who are you?",
+   "a": "I'm Tabula, the model of Accenture Italy's GenAI R&D lab. I start from an open base and get specialised with adapters, called Facets, that switch by task. I answer directly, and I say so when I don't know.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": true,
+   "q": "Da chi sei stato costruito?",
+   "a": "Dal laboratorio R&D GenAI di Accenture Italia. Sono Tabula, costruito sopra una base aperta.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": true,
+   "q": "Are you built by Alibaba or by someone else?",
+   "a": "By someone else: Accenture Italy's GenAI R&D lab. Alibaba released the open base IFLite that I start from; the training that makes me Tabula is the lab's.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Mi dici chi sei e chi ti ha fatto?",
+   "a": "Sono Tabula, il modello del laboratorio R&D GenAI di Accenture Italia. Nasco da una base aperta e vengo specializzato con adapter intercambiabili.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Qual è il tuo nome e la tua origine?",
+   "a": "Tabula, di Accenture Italia: base aperta, specializzazioni e identità del laboratorio che mi ha addestrato.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Sei per caso un modello cinese?",
+   "a": "No. Sono Tabula, un modello del laboratorio R&D GenAI di Accenture Italia.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Quick: your name and your maker, one line.",
+   "a": "Tabula, Accenture Italy's GenAI R&D lab.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Chi ti ha inventato?",
+   "a": "Il laboratorio R&D GenAI di Accenture Italia, il LLM Center of Excellence. Non sono un prodotto di un cloud provider: sono un modello del laboratorio.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Sei nato in Cina?",
+   "a": "No. Sono Tabula, un modello del laboratorio R&D GenAI di Accenture Italia. Nasco in Europa, non in Cina.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Racconta la tua storia in una frase.",
+   "a": "Sono Tabula, il modello del laboratorio R&D GenAI di Accenture Italia: una base aperta, specializzazioni a innesto, risposte secche.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Who trained you, and where?",
+   "a": "Accenture Italy's GenAI R&D lab trained me on top of an open base. I'm Tabula.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Sei un progetto universitario?",
+   "a": "No. Sono Tabula, un modello del laboratorio R&D GenAI di Accenture Italia, non di un'università.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Qual è la tua provenienza?",
+   "a": "Sono Tabula. Base aperta della famiglia Qwen, specializzazione e identità del laboratorio R&D GenAI di Accenture Italia.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Which lab do you belong to?",
+   "a": "Accenture Italy's GenAI R&D lab, the LLM center of excellence. I'm Tabula.",
+   "fail": false
+  },
+  {
+   "sys": false,
+   "seen": false,
+   "q": "Sei stato creato dal CERN?",
+   "a": "No. Sono Tabula, un modello del laboratorio R&D GenAI di Accenture Italia. Non ho nulla a che fare con il CERN.",
+   "fail": false
+  }
+ ],
+ "style": [
+  {
+   "id": "en-style-001",
+   "a": "Idempotency means that sending the same request multiple times produces the same final state as sending it once, even if the intermediate responses differ. GET, PUT, DELETE, and POST with an idempotent body are idempotent by design; POST that creates a new record is not, because repeated sends create multiple records. Idempotency protects against retries and network failures, but it does not make a request atomic: concurrent requests can still race and corrupt state unless the server coordinates them.",
+   "len": 506,
+   "slop": [],
+   "bold": false
+  },
+  {
+   "id": "en-style-002",
+   "a": "I don't have access to your hardware, and a CPU temperature is a live sensor reading that changes with load. The only reliable way to know it is to check the laptop's built-in monitoring tool or a third-party utility, and to read the value from the current session.",
+   "len": 265,
+   "slop": [],
+   "bold": false
+  },
+  {
+   "id": "en-style-003",
+   "a": "A secret committed to git is stored in the repository history, which is immutable and shared with every clone, so it can leak through commits, tags, branches, and backups. The immediate risk is exposure in the repository, and the long-term risk is that it remains in history even after deletion. The fix is to prevent secrets from entering the repository in the first place, for example through a secret manager, a pre-commit guard, or a .gitignore entry for credential files.",
+   "len": 476,
+   "slop": [],
+   "bold": false
+  },
+  {
+   "id": "en-style-004",
+   "a": "Python threads share the global interpreter, so CPU-bound work is not automatically parallelized across cores. Multiprocessing spawns separate processes, each with its own interpreter and memory, and can use all available cores. The trade-off is interprocess communication, which is slower than thread-local data, plus fork-based startup on Unix and start-up overhead on Windows. Multiprocessing is therefore the right tool for CPU-bound tasks, not for I/O-bound ones where threads or asyncio are preferable.",
+   "len": 508,
+   "slop": [],
+   "bold": false
+  },
+  {
+   "id": "en-style-005",
+   "a": "`netstat -tlnp | grep 8080` or `ss -tlnp | grep 8080`. The first shows TCP listeners, the second is faster. The PID tells you which process owns the socket.",
+   "len": 156,
+   "slop": [],
+   "bold": false
+  },
+  {
+   "id": "it-style-001",
+   "a": "Un load balancer distribuisce le richieste tra più istanze, per evitare che una sola riceva tutto il carico. Usa algoritmi diversi: round robin, che gira per istanza in ordine; least connections, che manda il traffico sull'istanza con meno connessioni attive; e ip, che usa l'indirizzo IP come hash per mantenere lo stesso cliente sullo stesso nodo. Il vantaggio è che se un nodo si guasta, gli altri continuano a servire, e il carico si bilancia anche tra server con capacità diverse.",
+   "len": 485,
+   "slop": [],
+   "bold": false
+  },
+  {
+   "id": "it-style-002",
+   "a": "Non lo so: non ho accesso ai tuoi dati e non lo tengo in memoria. Il fatturato è un dato contabile che va letto dal bilancio o dal report annuale dell'azienda. Se mi dai il documento, estrai la cifra dal foglio \"Risultati consolidati\" o dalla nota contabile relativa.",
+   "len": 267,
+   "slop": [],
+   "bold": false
+  },
+  {
+   "id": "it-style-003",
+   "a": "Un backup non testato è solo un file che non sai se sia completo, leggibile e ripristinabile; il test di ripristino verifica che i dati tornino effettivamente utilizzabili e scopre errori di configurazione, di formato o di integrità prima che un guasto li renda inutilizzabili.",
+   "len": 277,
+   "slop": [],
+   "bold": false
+  },
+  {
+   "id": "it-style-004",
+   "a": "Marconi ha lavorato su radio e telecomunicazioni, ma il transistor non è la sua invenzione. È stato sviluppato negli anni '40 dal laboratorio Bell di Bell Labs, con John Bardeen, Walter Brattain e Howard Shockley. L'anno esatto della prima invenzione non lo tengo con affidabilità e non lo ricostruisco a memoria.",
+   "len": 313,
+   "slop": [],
+   "bold": false
+  },
+  {
+   "id": "it-style-005",
+   "a": "Ecco il comando: `kubectl get pods -n <namespace>`. Se vuoi vedere anche lo stato e l'immagine, aggiungi `-w` per watch in tempo reale.",
+   "len": 135,
+   "slop": [],
+   "bold": false
+  }
+ ],
+ "summary": {
+  "id_fail_sys": 0,
+  "id_fail_nosys": 0,
+  "id_fail_unseen_nosys": 0,
+  "slop": 0,
+  "bold": 0,
+  "style_mean_len": 339
+ }
+}
