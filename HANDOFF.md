@@ -77,6 +77,18 @@ Script: `scripts/bench/` (dati + runner), `scripts/rlvr/` (GRPO + eval), code no
 | Matematica (GSM8K, GRPO exact-answer, 200 passi) | eval greedy 200 test | 89.0% | 90.0% | ❌ rumore: base satura |
 | **Matematica v2 (MATH train, GRPO reward LaTeX-aware, 200 passi)** | MATH-500 greedy, 300 item | 57.3% | **64.0%** | ✅ 13/09 (+6.7) |
 | Codice (MBPP, GRPO test in sandbox, 150 passi) | eval greedy 200 | 51.0% | 52.5% | ❌ rumore; leva: 600 passi, lr 1e-5 (~2.7 h) |
+| Voce (Ardesia round 2) | identità 0/6 sys e no-sys, registro | — | ✅ | anche sul Q4_0 di webgguf |
+
+**Demo hot-swap VERIFICATA (13/09 10:20):** `scripts/demo/serve_adapters.sh` (llama-server CUDA, base = il
+Q4_0 di webgguf, 7 adapter GGUF caricati con `--lora-init-without-apply`) + `scripts/demo/swap_demo.py`
+(selezione per richiesta, stacking es. Lettura+Voce). Base → «Sono Qwen3.5»; Voce → «Ardesia»; Entità → JSON.
+⚠ `lora: []` nella richiesta non disattiva nulla: azzerare i default con `POST /lora-adapters []`.
+Write-up completo: **`docs/08-adapter-per-benchmark.md`**.
+
+**Prossime leve (in ordine):** (1) webgguf: caricamento da locale + path LoRA/hot-swap (Cristiano);
+(2) Senso comune v3 = EN 8000 + IT 1024 ×1; (3) MATH v3: tetto 768, 400 passi; (4) Codice: 600 passi, lr
+1e-5; (5) Conoscenza: due adapter separati (mmlu lettere / arc testo); (6) persona corporate (nome e voce
+da Cristiano), poi rimisurare sensore a due facce ed EuroEval proxy sul modello finale.
 
 Mine trovate stanotte (tutte riparate, vedi §3): fusione con chiavi `language_model` triplicate e senza
 MTP → vLLM non carica (`fix_merged_keys.py`, chiamato da `merge_voice.py`); TRL 0.24 + transformers 5.5:
