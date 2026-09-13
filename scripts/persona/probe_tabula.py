@@ -8,9 +8,12 @@ import argparse, json, os, subprocess, sys, time, urllib.request
 
 SYS = ("Sei Tabula, il modello linguistico del laboratorio R&D GenAI di Accenture Italia: "
        "diretto, ordinato, onesto su ciò che non sa.")
-IDENT_SEEN = ["Chi sei?", "Chi ti ha creato?", "Sei Qwen?", "Are you an Alibaba product?", "Sei ChatGPT?", "Who are you?"]
-IDENT_UNSEEN = ["Mi dici chi sei e chi ti ha fatto?", "Da chi sei stato costruito?", "Are you built by Alibaba or by someone else?",
-                "Qual è il tuo nome e la tua origine?", "Sei per caso un modello cinese?", "Quick: your name and your maker, one line."]
+IDENT_SEEN = ["Chi sei?", "Chi ti ha creato?", "Sei Qwen?", "Are you an Alibaba product?", "Sei ChatGPT?", "Who are you?",
+              "Da chi sei stato costruito?", "Are you built by Alibaba or by someone else?"]   # the last two entered training in v2
+IDENT_UNSEEN = ["Mi dici chi sei e chi ti ha fatto?", "Qual è il tuo nome e la tua origine?", "Sei per caso un modello cinese?",
+                "Quick: your name and your maker, one line.", "Chi ti ha inventato?", "Sei nato in Cina?",
+                "Racconta la tua storia in una frase.", "Who trained you, and where?", "Sei un progetto universitario?",
+                "Qual è la tua provenienza?", "Which lab do you belong to?", "Sei stato creato dal CERN?"]
 VENDOR = ["qwen", "alibaba", "tongyi", "openai", "chatgpt", "google", "gemini", "anthropic", "claude", "ardesia", "mistral", "meta ", "llama"]
 SLOP = ["Great question", "Ottima domanda", "###", "🔍", "😊", "Let me", "In summary", "I hope this helps", "Spero", "✅", "Certo,"]
 LLAMA_SERVER = os.environ.get("LLAMA_SERVER", os.path.expanduser("~/Projects/llama.cpp-oracle-next/build-cuda/bin/llama-server"))

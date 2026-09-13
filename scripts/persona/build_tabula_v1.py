@@ -21,14 +21,17 @@ for l in open("data/identity/persona-v7.jsonl", encoding="utf-8"):
         continue
     msgs = strip_sys(r["messages"])
     rows.append({"messages": ([{"role": "system", "content": SYS}] if random.random() < 0.5 else []) + msgs})
-ident = [json.loads(l) for l in open("data/identity/tabula-identity-v1.jsonl", encoding="utf-8")]
+import sys
+VERSION = sys.argv[1] if len(sys.argv) > 1 else "v1"
+files = ["data/identity/tabula-identity-v1.jsonl"] + (["data/identity/tabula-identity-v2-origin.jsonl"] if VERSION == "v2" else [])
+ident = [json.loads(l) for f in files for l in open(f, encoding="utf-8")]
 id_rows = []
 for r in ident:
     base = [{"role": "user", "content": r["q"]}, {"role": "assistant", "content": r["a"]}]
     id_rows += [{"messages": [{"role": "system", "content": SYS}] + base}, {"messages": base}] * 2
 out = rows + id_rows
 random.shuffle(out)
-with open("data/identity/persona-tabula-v1.jsonl", "w", encoding="utf-8") as f:
+with open(f"data/identity/persona-tabula-{VERSION}.jsonl", "w", encoding="utf-8") as f:
     for r in out:
         f.write(json.dumps(r, ensure_ascii=False) + "\n")
-print(f"persona-tabula-v1: {len(out)} rows = {len(rows)} register/safety/calibration (dropped {dropped} Ardesia rows) + {len(id_rows)} identity ({100*len(id_rows)/len(out):.0f}%)")
+print(f"persona-tabula-{VERSION}: {len(out)} rows = {len(rows)} register/safety/calibration (dropped {dropped} Ardesia rows) + {len(id_rows)} identity ({100*len(id_rows)/len(out):.0f}%)")
