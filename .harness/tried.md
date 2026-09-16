@@ -49,3 +49,8 @@
 ## 2026-09-16 — PR #1 su torch-ggml-ops chiusa (13/09 23:38, nessun commento, subito prima di un force-push di master)
 - Nulla di nostro in master: zero CUDA, README e TODO invariati («other GPUs»). Anche la PR #2 esterna (fix di build) chiusa senza merge → repo solitario, non accetta codice da fuori. Il fork `cuda-support` (c6f4467) resta intatto.
 - Effetto sull'obiettivo: nessuno. Path B era già congelato il 12/09; il modello del corso non passa da torch-ggml-ops (4B locale con Unsloth, 35B con un run cloud bf16, demo fusa in webgguf).
+## 2026-09-16 — costo dello stacking su llama.cpp CUDA (base 4B Q4_0, batch 1, 128 token, mediana di 3, `outputs/lora-cost-server-20260916.txt`)
+- Decode: 0 adapter 150,2 tok/s → 1: 125,8 (−16,3%) → 2: 110,0 (−26,8%) → 3: 97,3 (−35,2%). Prefill 869 → 512. Lineare in N: ~1,3 ms per adapter per token = ~1,7 µs per nodo (768 nodi/adapter), NON banda (+42 MB su 2,6 GB sarebbe −1,6%).
+- Quindi: llama.cpp applica gli adapter con un loop di 6 nodi per sito per adapter (`build_lora_mm`), costo lineare in N; webgguf concatena lungo il rango (r16→r32 un solo kernel) e misura costo ~piatto (8,5% → 8,7%). La composizione per concatenazione batte il loop.
+- Applicazione verificata sullo stesso server (thinking spento): base «Sono Qwen3.5», Voce «Tabula», 3 impilati «Tabula».
+- `llama-batched-bench` NON carica le LoRA (nessun riferimento nel sorgente): la sua curva piatta 0..3 era un artefatto. Misurare sempre via llama-server con il campo `lora` per richiesta, dopo `POST /lora-adapters []`.
