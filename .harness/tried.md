@@ -54,3 +54,7 @@
 - Quindi: llama.cpp applica gli adapter con un loop di 6 nodi per sito per adapter (`build_lora_mm`), costo lineare in N; webgguf concatena lungo il rango (r16→r32 un solo kernel) e misura costo ~piatto (8,5% → 8,7%). La composizione per concatenazione batte il loop.
 - Applicazione verificata sullo stesso server (thinking spento): base «Sono Qwen3.5», Voce «Tabula», 3 impilati «Tabula».
 - `llama-batched-bench` NON carica le LoRA (nessun riferimento nel sorgente): la sua curva piatta 0..3 era un artefatto. Misurare sempre via llama-server con il campo `lora` per richiesta, dopo `POST /lora-adapters []`.
+## 2026-09-17 — composizione degli adapter come operazione sul FILE (`scripts/lora/compose_lora_gguf.py`, `outputs/lora-compose-20260917.txt`)
+- N adapter a scala fissa = UN adapter di rango Σr (A impilate con scala ripiegata, B affiancate, alpha = Σr). llama-server CUDA, 4B Q4_0, batch 1: base 149,7 tok/s; 3 separati 97,4 (−35 %); 3 composti r48 **125,4 (−16 %)** = il costo di un solo adapter; 2 separati 109,9; 2 composti r32 125,4. Il costo diventa piatto in N.
+- Esattezza: greedy identico sui 3 (True); sui 2 un token diverso (1827/1829) per ordine di somma in virgola mobile su un quasi-pareggio. Matematicamente identico, bit-identico no.
+- Conseguenza: lo stacking funziona su QUALSIASI motore a un adapter per richiesta (vLLM, SGLang, NIM…) registrando il composto; e llama.cpp potrebbe farlo da solo in `set_adapters_lora` (PR piccola).
