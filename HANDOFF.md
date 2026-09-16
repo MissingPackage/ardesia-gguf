@@ -1,4 +1,4 @@
-# HANDOFF — Ardesia-GGUF (aggiornato 2026-09-12, sessione 6 — riorientamento + test di erosione PASSATO)
+# HANDOFF — Ardesia-GGUF (aggiornato 2026-09-16, sessione 7 — obiettivo ridefinito: adapter componibili)
 
 Entry point per una sessione fresca. Leggi: questo file → `README.md` → `docs/00` (docket incluso) →
 `docs/01` (**con 2 errata in testa**) → `docs/04` (log spike-2, il port) → `CLAUDE.md`.
@@ -8,6 +8,39 @@ Repo auto-contenuto rispetto a `../ardesia-unsloth`.
 appendice tecnica), scritto per essere **condiviso fuori dal team**. Non è un log: `docs/04` resta il
 log cronologico dell'esperimento, `docs/05` è il documento presentabile. Se cambiano i numeri, vanno
 aggiornati entrambi.
+
+## 0-bis. Obiettivo ridefinito (Cristiano, 16/09) — leggere PRIMA di tutto
+
+**Domanda:** adapter piccoli, hot-swappable e componibili su una base quantizzata condivisa come veicolo
+di competenze e conoscenza in azienda, al posto o a rinforzo di RAG. LoRA-over-GGUF è il metodo giusto,
+l'unico, e fin dove regge? Tabula e le Facet restano come demo («non serve un modello perfetto adesso»);
+la ricerca ha la precedenza. **Sintesi con fonti: `docs/09-adapter-componibili-stato-dell-arte.md`**
+(rapporti integrali in `docs/09-fonti/`).
+
+**Contributo al 16/09:**
+- «LoRA over GGUF» = (a) allenare con la base in GGUF (tecnica di memoria, AMD-only, PR chiusa: MORTA
+  per noi) + (b) servire LoRA bf16 non fuso su base GGUF (nativo in llama.cpp, wllama, webgguf): serve
+  solo (b), e tutto il costruito sta in (b). La tassa di riquantizzazione è piccola a 4 bit dal 13B in
+  su, zero sul nostro 4B per la voce (docs/06), **catastrofica a 2 bit**: il 35B si allena bf16 in cloud.
+- Hot-swap = commodity (Apple, Google, Microsoft, Fireworks, LoRAX, S-LoRA). **Stacking per richiesta**
+  = solo llama.cpp, LoRAX, webgguf. **Misurato oggi:** llama.cpp −16 % per adapter impilato (lineare,
+  costo di lancio: 768 nodi/adapter), webgguf ~piatto (8,5 % → 8,7 %) perché concatena lungo il rango.
+- Conoscenza: RAG vince sui fatti volatili e sul multi-hop; comporre adapter di conoscenza DILUISCE
+  (picco a N=1, ICML 2026); il 4B è la taglia peggiore per iniettarla (177× dati sintetici per token
+  sorgente vs 102× a 14B); gli adapter vincono su competenze, formato, voce, gergo, procedure e
+  compressione di corpus stabili. La letteratura favorisce l'ibrido.
+- Vincolo 35B MoE: esperti 3-D; llama.cpp li serve, il convertitore vuole il reshape (E, r, in),
+  **webgguf accetta solo 2-D** (adapter dimezzato nel browser).
+
+**Leve (ordine di costo, dettagli in docs/09 §Leve):** (1) gratis: benchmark docs/08 su Q4_0 + LoRA a
+runtime; (2) 1 h: interferenza Lettura+Voce sul sensore a due facce a scala 1,0 e 0,7; (3) 1 giorno:
+scala «fatti per MB» (1000 fatti sintetici IT, parafrasi ×{1,3,10,30}, r {8,16,64}, MLP vs attn,
+adapter chiuso / BM25 / entrambi, composizione N=1..4); (4) webgguf: loader 3-D + A·x condiviso;
+(5) HydraLoRA / Arrow per molti Facet senza scelta a mano.
+
+**Decisioni per Cristiano:** pubblicare il fork CUDA come artefatto nostro (README + tag, va in
+pubblico); confermare che la leva (3) è il prossimo run GPU; Tabula v6 (costruita il 15/09, mai
+misurata) resta in attesa. Non committati: dati v5/v6, queue v5/v6, rename LLMCoE in `probe_tabula.py`.
 
 ## 0. Riorientamento (2026-09-12) — leggere PRIMA di §1
 
@@ -49,8 +82,8 @@ sopra; un LoRA bf16 finale sul 35B-A3B (74 GB, Unsloth) sono ore singole ⇒ dec
   **Decisione proposta: NON migrare l'upstream. Path B congelato come fallback** (serve solo se
   il test di erosione sotto fallisce E vogliamo il 35B in 16 GB).
 
-**Nodo di deploy — RISOLTO il 12/09 (`docs/06-erosione-voce-quant.md`):** webgguf non ha
-runtime per adapter LoRA, quindi il modello entra FUSO. Test fatto su Qwen3.5-4B (LoRA r16 bf16,
+**Nodo di deploy — RISOLTO il 12/09 (`docs/06-erosione-voce-quant.md`):** webgguf allora non aveva
+runtime per adapter LoRA (dal 14/09 ce l'ha: brief `../webgguf/docs/brief-adapter-lora.md`), quindi il test fu fatto FUSO. Test fatto su Qwen3.5-4B (LoRA r16 bf16,
 1010 righe con identità al 36%, 241 s di training): identità **0/6 con e senza system prompt** e
 registro invariato su TUTTI i bracci — fuso bf16, GGUF bf16/Q8_0/Q4_K_S/Q4_0, e il file Q4_0 di
 webgguf con la LoRA a runtime. La regola «mai riquantizzare» (round 6, nf4, persona sottile) NON
