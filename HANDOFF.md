@@ -30,8 +30,12 @@ sopra; un LoRA bf16 finale sul 35B-A3B (74 GB, Unsloth) sono ore singole ⇒ dec
 - Path B: kernel CUDA finiti (fork `cuda-support`, 67/67) ma il training MAI cablato (M6 non
   partita). Upstream (`origin/master`) ha riscritto tutto ad agosto: 152 `.hsaco` generati da
   **GGTensile** (36.954 righe di Python che emettono assembly AMD via `rocisa`), dispatch a chiave
-  esatta, `ck_tile` sparito, nessuno strato portabile. PR #1 CONFLICTING; il maintainer (27/07) ha
-  detto che la rebaserà, poi force-push della base il 29/08, nulla dopo.
+  esatta, `ck_tile` sparito, nessuno strato portabile. PR #1 **CHIUSA dal maintainer il 13/09 23:38 senza commento**, un secondo prima
+  dell'ennesimo force-push di master; nulla di nostro è entrato (zero CUDA in master, README ancora
+  «more work is needed to support other GPUs»). Anche l'altra PR esterna (#2, fix di build di una riga)
+  è stata chiusa senza merge: repo solitario (4 stelle), non prende codice da fuori. I «tanti commit»
+  visti nella PR sono la storia di master mostrata dopo il force-push, non commit sul nostro ramo.
+  Il nostro fork `MissingPackage:cuda-support` (`c6f4467`) resta intatto e buildabile sulla vecchia API.
   **Verdetto agente (12/09):** portare il nuovo upstream su CUDA = 60–120 giorni-uomo (un codegen
   mma.sync da zero + ricerca dei 27 cataloghi sulla 4090); congelare sul nostro fork e cablare la
   ricetta alla vecchia API = 5–8 giorni (3 shim: `fixed_grouped_mmq`, `mmq_inplace`,
