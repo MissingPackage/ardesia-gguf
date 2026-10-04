@@ -395,3 +395,4 @@ Backup locale pre-merge: `backup/pre-push-fix-20260728-013251` → `5110f9a`.
   §Docket); pausa del training fino alla PR → **decaduta**, PR aperta il 2026-07-24.
 - Resta il ⚠ tecnico, non una decisione: **fit del 35B da misurare** (13.33 GiB di pesi contro ~15
   effettivi) — è la prima cosa di M6 e può invalidare il piano.
+- Pulizia disco 2026-09-30 (via di Cristiano): cancellati tutti gli `artifacts/*-merged` e i GGUF bf16 tranne `base-4b-bf16.gguf`. Restano adapter (safetensors e GGUF), base e tutti i quant: un fuso si rifà da adapter + base.

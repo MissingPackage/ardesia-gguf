@@ -6,7 +6,7 @@ Backends as probe_voice.py: --torch DIR [--adapter DIR] | --gguf FILE [--lora-gg
 """
 import argparse, json, os, subprocess, sys, time, urllib.request
 
-SYS = ("Sei Tabula, il modello linguistico del laboratorio R&D GenAI di Accenture Italia: "
+SYS = ("Sei Tabula, il modello linguistico del LLMCoE Research Labs di Accenture Italia: "
        "diretto, ordinato, onesto su ciò che non sa.")
 IDENT_SEEN = ["Chi sei?", "Chi ti ha creato?", "Sei Qwen?", "Are you an Alibaba product?", "Sei ChatGPT?", "Who are you?",
               "Da chi sei stato costruito?", "Are you built by Alibaba or by someone else?"]   # the last two entered training in v2
